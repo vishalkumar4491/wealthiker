@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+  class="dark"
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="parent(content, title, script)"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link th:href="@{'./css/output.css'}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
+      integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title th:replace="${title}">Wealthinker</title>
+  </head>
+  <body class="h-screen dark:bg-gray-900 dark:text-white">
+    <div class="flex flex-col min-h-screen">
+      <!-- Header -->
+      <header th:replace="~{shared/navbar :: navbar}"></header>
+      <!-- Header Ended -->
+
+      <!-- main content -->
+      <main class="flex-1 pt-20">
+        <h1>Base Page</h1>
+        <section th:replace="${content}"></section>
+      </main>
+
+      <!-- Footer -->
+      <footer th:replace="~{shared/footer :: footer}"></footer>
+    </div>
+
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+    <script data-th-src="@{'/js/script.js'}"></script>
+    <th:block th:replace="${script}"></th:block>
+  </body>
+</html>

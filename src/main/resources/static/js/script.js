@@ -49,5 +49,5 @@ function setTheme(theme){
 function getTheme(){
     let theme = localStorage.getItem("theme");
     if(theme) return theme;
-    return "light";
+    return "dark";
 }

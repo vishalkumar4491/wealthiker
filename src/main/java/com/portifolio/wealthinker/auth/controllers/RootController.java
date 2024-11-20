@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
-
-// This controller's APIs will be common for all the controllers
-
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -36,7 +33,7 @@ public class RootController {
 
         // System.out.println(user.getName());
         // System.out.println(user.getEmail());
-        // if user came then user add other iwse null will add
+        // if user came then user add otheriwse null will add
         model.addAttribute("loggedInUser", user);
 
     }

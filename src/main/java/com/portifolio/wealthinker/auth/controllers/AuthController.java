@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.portifolio.wealthinker.auth.dto.UserFormDTO;
 import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.user.services.UserService;
+import com.portifolio.wealthinker.utils.Message;
+import com.portifolio.wealthinker.utils.MessageType;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -64,11 +66,11 @@ public class AuthController {
     
             // message = "Registration Successfull"
     
-            // Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+            Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
     
             System.out.println("User Saved");
     
-            // session.setAttribute("message", message);
+            session.setAttribute("message", message);
     
             // redirect
             return "redirect:/register";

@@ -47,9 +47,10 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
                 DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
 
                 // checking which attributes comes from which authenticator
-                // user.getAttributes().forEach((key, value) -> {
-                //     System.out.println(key + " " + value);
-                // });
+                System.out.println("Authentication user detaails");
+                user.getAttributes().forEach((key, value) -> {
+                    System.out.println(key + " " + value);
+                });
 
                 User user1 = new User();
                 user1.setId(UUID.randomUUID().toString());
@@ -86,6 +87,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
                     // user1.setProfilePic(picture);
                     user1.setPassword("password");
                     user1.setAbout("This account is created using Github");
+                    user1.setUsername(user.getAttribute("login"));
                     user1.setProvider(Providers.GITHUB);
                 }
 

@@ -27,11 +27,15 @@ public class RootController {
         if(authentication == null) return;
         logger.info("Adding model attribute");
         String username = Helper.getEmailOfLoggedInUser(authentication);
+        
         logger.info("User Logged in: {}", username);
         // fetchinfg data from db
         User user = userservice.getUserByEmail(username);
 
-        // System.out.println(user.getName());
+        logger.info("User is: {}", user);
+
+
+        // System.out.println("User name " + user.getName());
         // System.out.println(user.getEmail());
         // if user came then user add otheriwse null will add
         model.addAttribute("loggedInUser", user);

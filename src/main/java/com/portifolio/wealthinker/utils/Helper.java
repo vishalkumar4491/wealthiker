@@ -28,6 +28,11 @@ public class Helper {
         }else{
             // it means user logged in with gmail and password
             // in this case we get directly gmail via getName
+            System.out.println("Autheticatio user " + authentication);
+            System.out.println("Autheticatio user name " + authentication.getName());
+            System.out.println("Autheticatio user name " + authentication.getDetails().toString());
+            System.out.println("Autheticatio user name " + authentication.getPrincipal().toString());
+
             return authentication.getName();
         }
     }

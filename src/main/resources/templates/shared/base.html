@@ -21,7 +21,15 @@
   <body class="h-screen dark:bg-gray-900 dark:text-white">
     <div class="flex flex-col min-h-screen">
       <!-- Header -->
-      <header th:replace="~{shared/navbar :: navbar}"></header>
+      <!-- if user is logged in then this navbar -->
+      <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/user_navbar :: user-navbar}"></div>
+      </div>
+
+      <div th:unless="${loggedInUser}">
+        <header th:replace="~{shared/navbar :: navbar}"></header>
+      </div>
+
       <!-- Header Ended -->
 
       <!-- main content -->

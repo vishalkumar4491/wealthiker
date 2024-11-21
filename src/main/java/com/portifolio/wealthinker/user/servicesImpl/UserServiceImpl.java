@@ -122,4 +122,11 @@ public class UserServiceImpl implements UserService {
         return user2 != null ? true : false;
     }
 
+    @Override
+    public boolean isUserExists(String username, String email, String phoneNumber) {
+        return userRepo.existsByUsername(username) || 
+               userRepo.existsByEmail(email) || 
+               userRepo.existsByPhoneNumber(phoneNumber);
+    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portifolio.wealthinker.auth.dto.UserFormDTO;
 import com.portifolio.wealthinker.user.models.User;
@@ -27,10 +28,13 @@ public class AuthController {
         return "Home";
     }
 
-    // This is for login page view
+    // Render the login page with potential error messages
     @RequestMapping("/login")
-    public String loginPage() {
-        return "auth/login";
+    public String loginPage(@RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
+        return "auth/login"; // the login page template
     }
 
     // This is for registration page view
@@ -45,9 +49,21 @@ public class AuthController {
     // processing registration form
     @RequestMapping(value="/process-register", method=RequestMethod.POST)
     public String processRegister(@Valid @ModelAttribute UserFormDTO userForm, BindingResult rBindingResult, HttpSession session) {
+        
+        // Check for existing username, email, or phone number
+        if(userService.isUserExistByUsername(userForm.getUsername())){
+            rBindingResult.rejectValue("username", "error.username", "Username is already taken. Please choose a different one.");
+        }
+        if(userService.isUserExistByEmail(userForm.getEmail())){
+            rBindingResult.rejectValue("email", "error.email", "Email is already taken. Please choose a different one.");
+        }
+        if(userService.isUserExistByPhoneNumber(userForm.getPhoneNumber())){
+            rBindingResult.rejectValue("phoneNumber", "error.phoneNumber", "Phone Number is already taken. Please choose a different one.");
+        }
         if(rBindingResult.hasErrors()){
             return "auth/register";
         }
+
 
         User user = new User();
             user.setName(userForm.getName());

@@ -70,7 +70,8 @@ public class SecurityConfig {
             formLogin.failureForwardUrl("/login?error=true");
 
             // form me jo field username rhega wo
-            formLogin.usernameParameter("email");
+             // Allow username parameter to be dynamic (email, username, phone)
+            formLogin.usernameParameter("login");
 
             formLogin.passwordParameter("password");
 
@@ -102,4 +103,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

@@ -48,7 +48,7 @@ public class User implements UserDetails{
     private String name;
 
     @Getter(value=AccessLevel.NONE)
-    // @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String username;
 
     @Column(unique = true, nullable = false)
@@ -58,7 +58,7 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    // @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = true)
     private String phoneNumber;
 
     @Column(length=1000)

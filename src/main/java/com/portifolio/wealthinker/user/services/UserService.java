@@ -15,4 +15,5 @@ public interface UserService {
     boolean isUserExistByEmail(String email);
     boolean isUserExistByUsername(String username);
     boolean isUserExistByPhoneNumber(String phoneNumber);
+    boolean isUserExists(String username, String email, String phoneNumber);
 }

@@ -1,8 +1,11 @@
 package com.portifolio.wealthinker.utils;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+
+import com.portifolio.wealthinker.user.models.User;
 
 public class Helper {
 
@@ -27,14 +30,16 @@ public class Helper {
             return username;  
         }else{
             // it means user logged in with gmail and password
-            // in this case we get directly gmail via getName
-            System.out.println("Autheticatio user " + authentication);
-            System.out.println("Autheticatio user name " + authentication.getName());
-            System.out.println("Autheticatio user name " + authentication.getDetails().toString());
-            System.out.println("Autheticatio user name " + authentication.getPrincipal().toString());
 
-            return authentication.getName();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Assuming the principal is a User object, which has an email field
+            if (userDetails instanceof User) {
+                User user = (User) userDetails;
+                return user.getEmail();  // Directly return the email
+            }
         }
+        return null;
     }
 
 }

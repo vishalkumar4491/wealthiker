@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.portifolio.wealthinker.auth.models.Providers;
+import com.portifolio.wealthinker.exceptions.OAuthLoginException;
 import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.user.repositories.UserRepo;
 
@@ -26,7 +27,7 @@ public class SecurityCustomUserDetailService implements UserDetailsService {
 
             // Check if the user logged in with Google (OAuth)
             if (user.getProvider() == Providers.GOOGLE) {
-                throw new UsernameNotFoundException("This account was created with Google. Please login with Google.");
+                throw new OAuthLoginException("This account was created with Google. Please login using Google.");
             }
         }
         // Check if input is a phone number (only digits, or optionally starts with +)

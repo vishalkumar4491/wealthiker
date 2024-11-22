@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portifolio.wealthinker.auth.dto.UserFormDTO;
 import com.portifolio.wealthinker.user.models.User;
@@ -30,10 +29,8 @@ public class AuthController {
 
     // Render the login page with potential error messages
     @RequestMapping("/login")
-    public String loginPage(@RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
-        if (errorMessage != null) {
-            model.addAttribute("errorMessage", errorMessage);
-        }
+    public String loginPage(){
+        
         return "auth/login"; // the login page template
     }
 

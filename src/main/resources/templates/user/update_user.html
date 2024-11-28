@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="shared/base :: parent(~{::#content}, ~{::#title}, ~{})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Update User Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <div
+            class="block p-6 bg-white border-t-8 border-blue-700 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700"
+          >
+            <!-- Message  -->
+            <div th:replace="shared/message :: messagebox"></div>
+
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Update Here
+            </h5>
+            <p class="font-normal text-gray-400 dark:text-gray-500">
+              Your only portfolio manager for wealth
+            </p>
+
+            <!-- Form -->
+            <form th:action="@{/user/update/{id}(id=${id})}" method="post" th:object="${userFormDTO}" class="mt-5" novalidate>
+  
+                <!-- Name -->
+                <div class="mb-3">
+                  <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                  <input type="text" id="name" th:field="*{name}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter your user name" required />
+                  <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600 px-1 px-2">Name is Required</p>
+                </div>
+              
+                <!-- User Name -->
+                <div class="mb-3">
+                  <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                  <input type="text" id="username" th:field="*{username}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter username..." required />
+                  <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-red-600 px-1 px-2">Username is Required</p>
+                </div>
+              
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                  <input type="email" id="email" th:field="*{email}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter your email..." required />
+                  <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-600 px-1 px-2">Email is Required</p>
+                </div>
+              
+                <!-- Phone -->
+                <div class="mb-3">
+                  <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
+                  <input type="text" id="phone" th:field="*{phoneNumber}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter your contact number..." required />
+                  <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-red-600 px-1 px-2">Phone Number is Required</p>
+                </div>
+              
+                <!-- About -->
+                <div class="mb-3">
+                  <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About</label>
+                  <textarea id="about" th:field="*{about}" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" placeholder="Write something about yourself..."></textarea>
+                  <p th:if="${#fields.hasErrors('about')}" th:errors="*{about}" class="text-red-600 px-1 px-2">About is Required</p>
+                </div>
+              
+                <!-- Submit Button -->
+                <div class="mb-3 flex justify-center space-x-3">
+                  <button type="submit" class="px-3 py-2 rounded bg-gray-700 text-white">Update</button>
+                  <button type="reset" class="px-3 py-2 rounded bg-yellow-700 text-white">Reset</button>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -40,8 +40,8 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(authorize -> {
             // authorize.requestMatchers("/home", "/signup").permitAll();
             // authorize.requestMatchers("/logout").permitAll();
-            authorize.requestMatchers("/home").authenticated();
-            // authorize.requestMatchers("/user/**").authenticated();
+            // authorize.requestMatchers("/home").authenticated();
+            authorize.requestMatchers("/user/**").authenticated();
 
             authorize.anyRequest().permitAll();
         });

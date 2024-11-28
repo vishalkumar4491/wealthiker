@@ -72,22 +72,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(User user) {
+        System.out.println("Updated user1 is " + user.toString());
+
         User user2 = userRepo.findById(user.getId()).orElseThrow(() ->  new ResourceNotFoundException("User not found"));
         // update user2 from user
         user2.setName(user.getName());
         user2.setEmail(user.getEmail());
-        user2.setPassword(user.getPassword());
+        // user2.setPassword(user.getPassword());
         user2.setPhoneNumber(user.getPhoneNumber());
         user2.setAbout(user.getAbout());
         user2.setUsername(user.getUsername());
         // user2.setProfilePic(user.getProfilePic());
-        user2.setEnabled(user.isEnabled());
+        // user2.setEnabled(user.isEnabled());
         // user2.setEmailVerified(user.isEmailVerified());
         // user2.setPhoneVerified(user.isPhoneVerified());
-        user2.setProvider(user.getProvider());
-        user2.setProviderUserId(user.getProviderUserId());
+        // user2.setProvider(user.getProvider());
+        // user2.setProviderUserId(user.getProviderUserId());
+
+        // user2.setPassword(passwordEncoder.encode(user2.getPassword()));
+
 
         // save user in DB
+
+        System.out.println("Updated user2 Password is is " + user2.getPassword());
+        System.out.println("Updated user1 Password is is " + user.getPassword());
+        System.out.println("Updated user is " + user2.toString());
+
+        
+
         User save = userRepo.save(user2);
         return Optional.ofNullable(save);
     }

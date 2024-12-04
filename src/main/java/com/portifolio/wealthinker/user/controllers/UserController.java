@@ -39,6 +39,11 @@ public class UserController {
         return userService.getUserById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with ID : "+ id));
     }
 
+    @GetMapping("/profile")
+    public String getUserProfile(){
+        return "user/user_profile";
+    }
+
     // update user form view
     @RequestMapping("/view/{id}")
     public String updateUserFormView(@PathVariable String id, Model model){

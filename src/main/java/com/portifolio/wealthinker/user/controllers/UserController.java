@@ -39,8 +39,13 @@ public class UserController {
         return userService.getUserById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with ID : "+ id));
     }
 
+    // user profile page
     @GetMapping("/profile")
-    public String getUserProfile(){
+    public String getUserProfile(@ModelAttribute("loggedInUser") User loggedInUser, Model model){
+        if (loggedInUser == null) {
+        return "redirect:/login";
+        }
+        model.addAttribute("loggedInUser", loggedInUser);
         return "user/user_profile";
     }
 
@@ -107,7 +112,7 @@ public class UserController {
 
     }
 
-    // delete user
+    // delete user permanently
     @RequestMapping("/delete/{id}")
     public String deleteUser(@PathVariable String id) {
         userService.deleteUser(id);

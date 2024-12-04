@@ -10,7 +10,127 @@
   </head>
   <body>
     <div id="content">
-      <h1 class="text-red-700 text-5xl text-center">Profile Page</h1>
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <div
+            class="block p-6 bg-white border-t-8 border-blue-700 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-blue-700 dark:hover:bg-gray-700 text-center"
+          >
+            <!-- Message  -->
+            <!-- <div th:replace="shared/message :: messagebox"></div> -->
+
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Profile
+            </h5>
+            <p class="font-normal text-gray-400 text-lg">
+              Your only portfolio manager for wealth
+            </p>
+
+            <img
+              src="https://via.placeholder.com/100"
+              alt="Profile Picture"
+              class="w-24 h-24 mx-auto rounded-full border-2 border-gray-300 mt-5 mb-2"
+            />
+            <h1 th:text="${loggedInUser.name}" class="mb-2 text-2xl font-bold">
+              User Name
+            </h1>
+            <p class="text-gray-400 text-lg" th:text="${loggedInUser.about}">
+              About the user...
+            </p>
+
+            <!-- Profile Details -->
+            <div
+              class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow mt-5"
+            >
+              <!-- Username -->
+              <div class="mb-4">
+                <h2
+                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  Username
+                </h2>
+                <p
+                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  th:text="${loggedInUser.username}"
+                >
+                  example_username
+                </p>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-4">
+                <h2
+                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  Email
+                </h2>
+                <p
+                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  th:text="${loggedInUser.email}"
+                >
+                  user@example.com
+                </p>
+              </div>
+
+              <!-- Phone -->
+              <div class="mb-4">
+                <h2
+                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  Contact Number
+                </h2>
+                <p
+                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  th:text="${loggedInUser.phoneNumber}"
+                >
+                  123-456-7890
+                </p>
+              </div>
+
+              <!-- About -->
+              <div class="mb-4">
+                <h2
+                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  About
+                </h2>
+                <p
+                  class="text-lg text-gray-800 dark:text-gray-300"
+                  th:text="${loggedInUser.about}"
+                >
+                  This is a brief about the user...
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="mt-5 flex justify-center">
+              <a
+                th:href="@{'/user/view/'+*{loggedInUser.id}}"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+              >
+                Edit Profile
+              </a>
+            </div>
+            <div class="mt-5 flex justify-center">
+              <form
+                th:action="@{'/user/delete/'+*{loggedInUser.id}}"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to deactivate your account? You can reactivate it later.');"
+              >
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200"
+                >
+                  Delete Account
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

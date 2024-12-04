@@ -37,13 +37,6 @@
       >
         <span data-th-text="${loggedInUser.name}"></span>
       </a>
-      <a th:href="@{'/user/view/'+*{loggedInUser.id}}">
-        <i class="fa-solid fa-pen mr-1"></i>
-        </a>
-
-        <a th:href="@{'/user/delete/'+*{loggedInUser.id}}">
-          <i class="fa-solid fa-trash mr-1"></i>
-          </a>
 
       <a
         data-th-href="@{'/logout'}"

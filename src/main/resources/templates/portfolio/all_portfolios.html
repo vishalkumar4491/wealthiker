@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Portfolio List</title>
+  </head>
+  <body>
+    <h1>Your Portfolios</h1>
+    <a href="/portfolios/new">Create New Portfolio</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Total Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="portfolio : ${portfolios}">
+          <td th:text="${portfolio.name}"></td>
+          <td th:text="${portfolio.description}"></td>
+          <td th:text="${portfolio.totalValue}"></td>
+          <td>
+            <a th:href="@{'/portfolios/' + ${portfolio.id} + '/edit'}">Edit</a>
+            <form
+              th:action="@{'/portfolios/' + ${portfolio.id} + '/delete'}"
+              method="post"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

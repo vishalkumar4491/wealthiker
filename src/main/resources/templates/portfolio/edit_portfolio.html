@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit Portfolio</title>
+  </head>
+  <body>
+    <h1>Edit Portfolio</h1>
+    <form
+      th:action="@{'/portfolios/' + ${portfolio.id} + '/update'}"
+      method="post"
+    >
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        th:value="${portfolio.name}"
+        required
+      />
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        th:text="${portfolio.description}"
+      ></textarea>
+      <button type="submit">Update</button>
+    </form>
+  </body>
+</html>

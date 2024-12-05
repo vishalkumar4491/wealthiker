@@ -1,6 +1,7 @@
 package com.portifolio.wealthinker.portfolio.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -53,5 +54,8 @@ public class Portfolio {
 
     @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Transaction> transactions;  // List of associated stock transactions
+
+    @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<StockAdditionalInfo> additionalInfo = new ArrayList<>();  // Associated stock additional info
 
 }

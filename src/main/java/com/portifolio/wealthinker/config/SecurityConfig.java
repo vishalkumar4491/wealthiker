@@ -42,6 +42,7 @@ public class SecurityConfig {
             // authorize.requestMatchers("/logout").permitAll();
             // authorize.requestMatchers("/home").authenticated();
             authorize.requestMatchers("/user/**").authenticated();
+            authorize.requestMatchers("/portfolios/**").authenticated();
 
             authorize.anyRequest().permitAll();
         });

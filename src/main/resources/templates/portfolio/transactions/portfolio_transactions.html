@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Portfolio Transactions</title>
+  </head>
+  <body>
+    <h1>Transactions for Portfolio</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Value</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="transaction : ${transactions}">
+          <td th:text="${transaction.stock.name}"></td>
+          <td th:text="${transaction.transactionType}"></td>
+          <td th:text="${transaction.quantity}"></td>
+          <td th:text="${transaction.price}"></td>
+          <td th:text="${transaction.totalValue}"></td>
+          <td th:text="${transaction.transactionAt}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

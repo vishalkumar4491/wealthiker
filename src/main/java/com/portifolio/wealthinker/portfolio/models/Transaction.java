@@ -63,6 +63,7 @@ public class Transaction {
     @Column(name="total_value", nullable=false)
     private Double totalValue = 0.0;
 
+    @Column(name = "notes")
     private String notes;  // optional notes about the transaction
 
 }

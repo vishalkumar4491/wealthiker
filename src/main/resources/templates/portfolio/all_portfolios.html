@@ -1,36 +1,121 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  lang="en"
+  th:replace="shared/base :: parent(~{::#content}, ~{::#title}, ~{})"
+>
   <head>
-    <title>Portfolio List</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Your Portfolios</title>
   </head>
   <body>
-    <h1>Your Portfolios</h1>
-    <a href="/portfolios/new">Create New Portfolio</a>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Total Value</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="portfolio : ${portfolios}">
-          <td th:text="${portfolio.name}"></td>
-          <td th:text="${portfolio.description}"></td>
-          <td th:text="${portfolio.totalValue}"></td>
-          <td>
-            <a th:href="@{'/portfolios/' + ${portfolio.id} + '/edit'}">Edit</a>
-            <form
-              th:action="@{'/portfolios/' + ${portfolio.id} + '/delete'}"
-              method="post"
+    <div id="content">
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-2 lg:col-span-2 xl:col-span-2"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+          <h1
+            class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white text-center"
+          >
+            Your Portfolios
+          </h1>
+          <p class="font-normal text-gray-400 dark:text-gray-500 text-center">
+            Manage your portfolios and stocks effortlessly
+          </p>
+
+          <div class="mt-6 space-y-6">
+            <!-- Portfolio List -->
+            <div
+              th:each="portfolio, iter : ${portfolios}"
+              class="relative block p-6 bg-white border-t-8 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"
+              th:classappend="${iter.index % 2 == 0} ? 'border-blue-700 dark:border-gray-500' : 'border-green-700 dark:border-gray-600'"
             >
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <!-- Actions -->
+              <div class="absolute top-4 right-4 flex space-x-2">
+                <a
+                  th:href="@{'/portfolios/' + ${portfolio.id} + '/edit'}"
+                  class="px-2 py-1 rounded bg-blue-700 text-white text-sm dark:bg-blue-700 dark:hover:bg-blue-800 hover:bg-blue-900"
+                  >Edit</a
+                >
+                <form
+                  th:action="@{'/portfolios/' + ${portfolio.id} + '/delete'}"
+                  method="post"
+                  class="inline-block"
+                >
+                  <button
+                    type="submit"
+                    class="px-2 py-1 rounded bg-red-700 text-white text-sm dark:bg-red-700 dark:hover:bg-red-800 hover:bg-red-900"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </div>
+
+              <!-- Portfolio Details -->
+              <h2
+                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                th:text="${portfolio.name}"
+              ></h2>
+              <p
+                class="font-normal text-gray-500 dark:text-gray-400"
+                th:text="${portfolio.description}"
+              ></p>
+              <p
+                class="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
+              >
+                Total Value: <span th:text="${portfolio.totalValue}"></span>
+              </p>
+
+              <!-- Stocks List -->
+              <div class="mt-6">
+                <h3
+                  class="mb-3 text-lg font-bold text-gray-900 dark:text-white"
+                >
+                  Stocks in this Portfolio
+                </h3>
+                <table
+                  class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                >
+                  <thead
+                    class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
+                  >
+                    <tr>
+                      <th class="px-4 py-2">Stock Name</th>
+                      <th class="px-4 py-2">Ticker</th>
+                      <th class="px-4 py-2">Quantity</th>
+                      <th class="px-4 py-2">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr
+                      th:each="stock : ${portfolio.stocks}"
+                      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
+                      <td th:text="${stock.name}" class="px-4 py-2"></td>
+                      <td th:text="${stock.ticker}" class="px-4 py-2"></td>
+                      <td th:text="${stock.quantity}" class="px-4 py-2"></td>
+                      <td
+                        th:text="${stock.value}"
+                        class="px-4 py-2 text-right"
+                      ></td>
+                    </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- End Portfolio -->
+          </div>
+
+          <!-- Create New Portfolio -->
+          <div class="mt-6 text-center">
+            <a
+              th:href="@{'/portfolios/new'}"
+              class="px-4 py-2 rounded bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800 hover:bg-blue-900"
+            >
+              Create New Portfolio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

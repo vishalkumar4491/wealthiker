@@ -1,6 +1,7 @@
 package com.portifolio.wealthinker.portfolio.servicesImpl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public Portfolio createPortfolio(Portfolio portfolio, String userId) {
         User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+        String portfolioId = UUID.randomUUID().toString();
+        portfolio.setId(portfolioId);
         portfolio.setUser(user);
         return portfolioRepo.save(portfolio);
     }

@@ -32,6 +32,11 @@
               <!-- Actions -->
               <div class="absolute top-4 right-4 flex space-x-2">
                 <a
+                  th:href="@{/stock/search(portfolioId=${portfolio.id}, userId=${userId})}"
+                  class="px-2 py-1 rounded bg-green-700 text-white text-sm dark:bg-green-700 dark:hover:bg-green-800 hover:bg-greens-900"
+                  >Add Stock</a
+                >
+                <a
                   th:href="@{'/portfolios/' + ${portfolio.id} + '/edit'}"
                   class="px-2 py-1 rounded bg-blue-700 text-white text-sm dark:bg-blue-700 dark:hover:bg-blue-800 hover:bg-blue-900"
                   >Edit</a

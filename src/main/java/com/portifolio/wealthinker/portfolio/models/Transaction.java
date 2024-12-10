@@ -31,7 +31,7 @@ public class Transaction {
     @JoinColumn(name="portfolio_id", nullable=false)
     private Portfolio portfolio;    // The portfolio this transaction belongs to
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY, optional = false)
     @JoinColumn(name="stock_id", nullable=false)
     private Stock stock;    // The stock this transaction relates to
 

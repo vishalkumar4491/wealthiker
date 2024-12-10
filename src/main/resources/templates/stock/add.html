@@ -1,0 +1,25 @@
+<h1>Add Stock to Portfolio: <span th:text="${portfolio.name}"></span></h1>
+<form action="/stock/add" method="post">
+  <input type="hidden" name="portfolioId" th:value="${portfolio.id}" />
+  <input type="hidden" name="userId" th:value="${userId}" />
+  <input name="symbol" th:value="${stock.symbol}" />
+  <input name="name" th:value="${stock.name}" />
+  <label>Price per Share:</label>
+  <input type="number" name="price" th:value="${stock.marketPrice}" required />
+  <label>Quantity:</label>
+  <input type="number" name="quantity" required />
+  <label>Transaction Type:</label>
+  <select name="transactionType">
+    <option value="BUY">Buy</option>
+    <option value="SELL">Sell</option>
+  </select>
+  <label>Why Adding:</label>
+  <textarea name="whyAdding"></textarea>
+  <label>Fundamental Catalysts:</label>
+  <textarea name="fundamentalCatalysts"></textarea>
+  <label>Risks:</label>
+  <textarea name="risks"></textarea>
+  <label>Other Notes:</label>
+  <textarea name="otherNotes"></textarea>
+  <button type="submit">Add Stock</button>
+</form>

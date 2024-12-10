@@ -3,6 +3,7 @@ package com.portifolio.wealthinker.portfolio.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,6 +23,13 @@ public class Stock {
 
     @Id
     private String id;
+
+     @PrePersist
+    public void prePersist() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString(); // Set UUID if not already set
+        }
+    }
 
     @Column(unique=true, nullable=false)
     private String symbol;
@@ -46,5 +54,9 @@ public class Stock {
 
     @OneToMany(mappedBy="stock")
     private List<StockAdditionalInfo> additionalInfo = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "portfolio_id", nullable = false) // Ensure this matches your DB schema
+    private Portfolio portfolio;
 
 }

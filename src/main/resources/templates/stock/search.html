@@ -1,0 +1,6 @@
+<form action="/stock/search/results" method="get">
+  <input type="text" name="keyword" placeholder="Search for a stock" required />
+  <input type="hidden" name="portfolioId" th:value="${portfolioId}" />
+  <input type="hidden" name="userId" th:value="${userId}" />
+  <button type="submit">Search</button>
+</form>

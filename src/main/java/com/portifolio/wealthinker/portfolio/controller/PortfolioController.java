@@ -31,6 +31,7 @@ public class PortfolioController {
     public String getAllPortfolios(Model model, @AuthenticationPrincipal User user) {
         List<Portfolio> portfolios = portfolioService.getAllPortfolios(user.getId());
         model.addAttribute("portfolios", portfolios);
+        model.addAttribute("userId", user.getId());
         return "portfolio/all_portfolios";
     }
 

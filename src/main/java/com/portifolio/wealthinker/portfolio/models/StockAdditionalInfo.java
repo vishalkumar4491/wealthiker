@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="stocks")
+@Table(name="stock_additional_info")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class StockAdditionalInfo {
     @Id
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="stock_id", nullable=false)
     private Stock stock;    // The stock being added
 

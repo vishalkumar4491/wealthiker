@@ -1,0 +1,19 @@
+<h1>Search Results for <span th:text="${keyword}"></span></h1>
+<table>
+  <tr>
+    <th>Symbol</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  <tr th:each="stock : ${stocks}">
+    <td th:text="${stock.symbol}"></td>
+    <td th:text="${stock.name}"></td>
+    <td>
+      <a
+        th:href="@{/stock/add/{symbol}(symbol=${stock.symbol}, portfolioId=${portfolioId}, userId=${userId}, name=${stock.name})}"
+      >
+        Add to Portfolio
+      </a>
+    </td>
+  </tr>
+</table>

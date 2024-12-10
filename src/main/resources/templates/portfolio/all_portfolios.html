@@ -91,18 +91,26 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr
-                      th:each="stock : ${portfolio.stocks}"
-                      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <td th:text="${stock.name}" class="px-4 py-2"></td>
-                      <td th:text="${stock.ticker}" class="px-4 py-2"></td>
-                      <td th:text="${stock.quantity}" class="px-4 py-2"></td>
+                    <!-- Add the stocks of that portfolio -->
+
+                    <tr th:each="transaction : ${portfolio.transactions}">
                       <td
-                        th:text="${stock.value}"
-                        class="px-4 py-2 text-right"
+                        class="px-4 py-2"
+                        th:text="${transaction.stock.name}"
                       ></td>
-                    </tr> -->
+                      <td
+                        class="px-4 py-2"
+                        th:text="${transaction.stock.symbol}"
+                      ></td>
+                      <td
+                        class="px-4 py-2"
+                        th:text="${transaction.quantity}"
+                      ></td>
+                      <td
+                        class="px-4 py-2"
+                        th:text="${transaction.quantity != null && transaction.stock?.marketPrice != null ? transaction.quantity * transaction.stock.marketPrice : 0}"
+                      ></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

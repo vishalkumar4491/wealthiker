@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.portifolio.wealthinker.exceptions.ResourceNotFoundException;
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
+import com.portifolio.wealthinker.portfolio.models.Stock;
+import com.portifolio.wealthinker.portfolio.models.Transaction;
 import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
+import com.portifolio.wealthinker.portfolio.repositories.StockRepo;
+import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.PortfolioService;
 import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.user.repositories.UserRepo;
@@ -22,8 +26,21 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     private final UserRepo userRepo;
 
+    private final TransactionRepo transactionRepo;
+
+    private final StockRepo stockRepo;
+
     @Override
     public List<Portfolio> getAllPortfolios(String userId) {
+        List<Portfolio> portfolios = portfolioRepo.findByUserId(userId);
+        portfolios.forEach(portfolio -> {
+            List<Transaction> transactions = transactionRepo.findByPortfolioId(portfolio.getId());
+            transactions.forEach(transaction -> {
+                Stock stock = stockRepo.findById(transaction.getStock().getId()).orElse(null);
+                transaction.setStock(stock);
+            });
+            portfolio.setTransactions(transactions);
+        });
         return portfolioRepo.findByUserId(userId);
     }
 

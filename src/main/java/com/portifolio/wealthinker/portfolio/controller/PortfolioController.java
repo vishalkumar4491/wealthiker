@@ -27,12 +27,22 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
 
+    // Get all portfolios
     @GetMapping
     public String getAllPortfolios(Model model, @AuthenticationPrincipal User user) {
         List<Portfolio> portfolios = portfolioService.getAllPortfolios(user.getId());
         model.addAttribute("portfolios", portfolios);
         model.addAttribute("userId", user.getId());
         return "portfolio/all_portfolios";
+    }
+
+    // get single portfolio
+    @GetMapping("/{portfolioId}")
+    public String getPortfolioById(@PathVariable String portfolioId, Model model, @AuthenticationPrincipal User user) {
+        Portfolio portfolio = portfolioService.getPortfolioById(portfolioId, user.getId());
+        model.addAttribute("portfolio", portfolio);
+        model.addAttribute("userId", user.getId());
+        return "portfolio/portfolio_details";
     }
 
     // create portfolio form

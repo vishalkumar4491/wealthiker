@@ -71,48 +71,65 @@
               </p>
 
               <!-- Stocks List -->
-              <div class="mt-6">
+              <div
+                class="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg"
+              >
                 <h3
-                  class="mb-3 text-lg font-bold text-gray-900 dark:text-white"
+                  class="mb-3 text-lg font-bold text-gray-900 dark:text-white text-center"
                 >
                   Stocks in this Portfolio
                 </h3>
-                <table
-                  class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                <div
+                  class="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg"
                 >
-                  <thead
-                    class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
+                  <table
+                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                   >
-                    <tr>
-                      <th class="px-4 py-2">Stock Name</th>
-                      <th class="px-4 py-2">Ticker</th>
-                      <th class="px-4 py-2">Quantity</th>
-                      <th class="px-4 py-2">Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Add the stocks of that portfolio -->
+                    <thead
+                      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                    >
+                      <tr>
+                        <th scope="col" class="px-6 py-3">Stock Name</th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Symbol
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Quantity
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Add the stocks of that portfolio -->
 
-                    <tr th:each="transaction : ${portfolio.transactions}">
-                      <td
-                        class="px-4 py-2"
-                        th:text="${transaction.stock.name}"
-                      ></td>
-                      <td
-                        class="px-4 py-2"
-                        th:text="${transaction.stock.symbol}"
-                      ></td>
-                      <td
-                        class="px-4 py-2"
-                        th:text="${transaction.quantity}"
-                      ></td>
-                      <td
-                        class="px-4 py-2"
-                        th:text="${transaction.quantity != null && transaction.stock?.marketPrice != null ? transaction.quantity * transaction.stock.marketPrice : 0}"
-                      ></td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <tr
+                        th:each="transaction : ${portfolio.transactions}"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <td
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          th:text="${transaction.stock.name}"
+                        ></td>
+                        <td
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${transaction.stock.symbol}"
+                        ></td>
+                        <td
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${transaction.quantity}"
+                        ></td>
+                        <td
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${transaction.quantity != null && transaction.stock?.marketPrice != null ? transaction.quantity * transaction.stock.marketPrice : 0}"
+                        ></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
             <!-- End Portfolio -->

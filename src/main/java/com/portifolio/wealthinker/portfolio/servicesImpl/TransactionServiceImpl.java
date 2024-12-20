@@ -1,9 +1,12 @@
 package com.portifolio.wealthinker.portfolio.servicesImpl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.portifolio.wealthinker.portfolio.models.Portfolio;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
@@ -28,6 +31,17 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionsByStockInPortfolio(String portfolioId, String stockId) {
         return transactionRepo.findByPortfolioIdAndStockId(portfolioId, stockId);
+    }
+
+    @Override
+    public List<Transaction> getAllTransactions() {
+        return transactionRepo.findAll();
+    }
+
+    @Override
+    public Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId) {
+        List<Transaction> transactions = transactionRepo.findByStockId(stockId);
+        return transactions.stream().collect(Collectors.groupingBy(Transaction::getPortfolio));
     }
 
 }

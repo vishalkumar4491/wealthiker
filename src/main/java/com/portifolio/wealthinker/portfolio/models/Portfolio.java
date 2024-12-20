@@ -42,6 +42,9 @@ public class Portfolio {
     @Column
     private String description;
 
+    @Transient
+    private List<StockSummary> stocksSummary;  // for total stock in a portfolio
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

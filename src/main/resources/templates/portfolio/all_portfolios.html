@@ -100,31 +100,31 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- Add the stocks of that portfolio -->
-
                       <tr
-                        th:each="transaction : ${portfolio.transactions}"
+                        th:each="stockSummary : ${portfolio.stocksSummary}"
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
+                        <td>
+                          <a
+                            th:href="@{/stock/details/{stockId}(stockId=${stockSummary.stock.id}, portfolioId=${portfolio.id})}"
+                          >
+                            <span
+                              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              th:text="${stockSummary.stock.name}"
+                            ></span>
+                          </a>
+                        </td>
                         <td
-                          scope="row"
-                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          th:text="${transaction.stock.name}"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${stockSummary.stock.symbol}"
                         ></td>
                         <td
-                          scope="row"
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${transaction.stock.symbol}"
+                          th:text="${stockSummary.totalQuantity}"
                         ></td>
                         <td
-                          scope="row"
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${transaction.quantity}"
-                        ></td>
-                        <td
-                          scope="row"
-                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${transaction.quantity != null && transaction.stock?.marketPrice != null ? transaction.quantity * transaction.stock.marketPrice : 0}"
+                          th:text="${stockSummary.totalValue}"
                         ></td>
                       </tr>
                     </tbody>

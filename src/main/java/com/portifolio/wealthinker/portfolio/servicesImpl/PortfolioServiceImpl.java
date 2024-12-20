@@ -1,6 +1,9 @@
 package com.portifolio.wealthinker.portfolio.servicesImpl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.portifolio.wealthinker.exceptions.ResourceNotFoundException;
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
 import com.portifolio.wealthinker.portfolio.models.Stock;
+import com.portifolio.wealthinker.portfolio.models.StockSummary;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
 import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
 import com.portifolio.wealthinker.portfolio.repositories.StockRepo;
@@ -35,11 +39,22 @@ public class PortfolioServiceImpl implements PortfolioService {
         List<Portfolio> portfolios = portfolioRepo.findByUserId(userId);
         portfolios.forEach(portfolio -> {
             List<Transaction> transactions = transactionRepo.findByPortfolioId(portfolio.getId());
+
+            // Map to store aggregated stock data
+            Map<String, StockSummary> stockSummaryMap = new HashMap<>();
+
             transactions.forEach(transaction -> {
                 Stock stock = stockRepo.findById(transaction.getStock().getId()).orElse(null);
-                transaction.setStock(stock);
+                if (stock != null) {
+                    String stockId = stock.getId();
+                    StockSummary summary = stockSummaryMap.getOrDefault(stockId, new StockSummary(stock));
+                    summary.addTransaction(transaction);
+                    stockSummaryMap.put(stockId, summary);
+            }
             });
-            portfolio.setTransactions(transactions);
+            // portfolio.setTransactions(transactions);
+            // Set aggregated data
+            portfolio.setStocksSummary(new ArrayList<>(stockSummaryMap.values()));
         });
         return portfolioRepo.findByUserId(userId);
     }

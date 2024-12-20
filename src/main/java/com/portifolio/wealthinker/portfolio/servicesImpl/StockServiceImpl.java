@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portifolio.wealthinker.exceptions.ResourceNotFoundException;
 import com.portifolio.wealthinker.portfolio.models.Stock;
 import com.portifolio.wealthinker.portfolio.models.StockAdditionalInfo;
 import com.portifolio.wealthinker.portfolio.repositories.StockAdditionalInfoRepo;
@@ -28,6 +29,11 @@ public class StockServiceImpl implements StockService {
     private final StockAdditionalInfoRepo stockAdditionalInfoRepo;
 
     private final WebClient webClient;
+
+    @Override
+    public Stock getStockById(String id) {
+        return stockRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock not found"));
+    }
    
     @Override
     public List<Stock> searchStocks(String keyword) {

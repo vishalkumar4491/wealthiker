@@ -1,6 +1,7 @@
 package com.portifolio.wealthinker.portfolio.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
@@ -126,6 +127,26 @@ public class StockController {
         transactionRepo.save(transaction);
 
         return "redirect:/portfolios"; // Redirect to portfolio details page
+    }
+
+    // stock details page
+    @GetMapping("/details/{stockId}")
+    public String getStockDetails(@PathVariable String stockId, @RequestParam String portfolioId, Model model) {
+        // Fetch stock details
+        Stock stock = stockService.getStockById(stockId);
+
+        // Fetch transactions for the stock within the portfolio
+        List<Transaction> transactions = transactionService.getTransactionsByStockInPortfolio(portfolioId, stockId);
+
+        // Fetch transactions grouped by portfolio
+        Map<Portfolio, List<Transaction>> transactionsGroupedByPortfolio = transactionService.getTransactionsGroupedByPortfolioForStock(stockId);
+
+        model.addAttribute("transactions", transactions);
+        model.addAttribute("stock", stock);
+        model.addAttribute("portfolioId", portfolioId);
+        model.addAttribute("transactionsGroupedByPortfolio", transactionsGroupedByPortfolio);
+
+        return "stock/details";
     }
     
     

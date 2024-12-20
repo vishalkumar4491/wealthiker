@@ -2,6 +2,7 @@ package com.portifolio.wealthinker.portfolio.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,4 +38,10 @@ public class TransactionController {
         return "portfolio/transactions/stock_in_portfolio_transactions";
     }
 
+    // Fetch all transactions across the system
+    @GetMapping("/all")
+    public String getAllTransactions(Model model) {
+        model.addAttribute("transactions", transactionService.getAllTransactions());
+        return "portfolio/transactions/all_transactions";
+    }
 }

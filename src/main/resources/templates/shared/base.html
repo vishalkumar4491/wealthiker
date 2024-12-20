@@ -30,6 +30,12 @@
         <div data-th-replace="~{user/user_navbar :: user-navbar}"></div>
       </div>
 
+      <!-- if user logged in then this sidebar -->
+      <!-- <div th:if="${loggedInUser}">
+        <div data-th-replace="~{shared/sidebar :: sidebar}"></div>
+      </div> -->
+
+      <!-- if user is not logged in then this navbar -->
       <div th:unless="${loggedInUser}">
         <header th:replace="~{shared/navbar :: navbar}"></header>
       </div>

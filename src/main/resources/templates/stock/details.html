@@ -14,23 +14,25 @@
         <div class="md:col-span-2 lg:col-span-2 xl:col-span-2"></div>
         <div class="col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
           <h1
-            class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white text-center"
+            class="mb-1 text-3xl font-bold tracking-tight text-gray-900 dark:text-white text-center"
           >
             Stock Details
           </h1>
-          <p class="font-normal text-gray-400 dark:text-gray-500 text-center">
+          <p
+            class="font-normal text-gray-500 dark:text-gray-300 text-center mb-2"
+          >
             View detailed transactions for the selected stock
           </p>
 
           <!-- Stock Overview -->
           <div
-            class="p-6 bg-white border-t-8 rounded-lg shadow dark:bg-gray-800"
+            class="p-6 bg-white border-t-8 rounded-lg shadow dark:bg-gray-800 text-center"
           >
             <h2
               class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
               th:text="${stock.name}"
             ></h2>
-            <p class="mt-2 font-normal text-gray-500 dark:text-gray-400">
+            <p class="mt-2 font-normal text-gray-600 dark:text-gray-300">
               Symbol: <span th:text="${stock.symbol}"></span>
             </p>
           </div>
@@ -72,7 +74,7 @@
                     >
                       <td
                         class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                        th:text="${transaction.transactionAt}"
+                        th:text="${transaction.transactionAt != null ? #temporals.format(transaction.transactionAt, 'dd-MM-yyyy HH:mm:ss') : 'N/A'}"
                       ></td>
                       <td
                         class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"

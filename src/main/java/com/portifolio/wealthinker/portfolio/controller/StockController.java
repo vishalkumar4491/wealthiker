@@ -20,6 +20,7 @@ import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.PortfolioService;
 import com.portifolio.wealthinker.portfolio.services.StockService;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
+import com.portifolio.wealthinker.utils.SellType;
 import com.portifolio.wealthinker.utils.TransactionType;
 
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,18 @@ public class StockController {
         return "stock/add";
     }
 
+    // sell stock page
+    @GetMapping("/sell/{symbol}")
+    public String sellStockPage(@PathVariable String symbol, @RequestParam String portfolioId, @RequestParam String userId, @RequestParam String name, Model model) {
+        Stock stock = stockService.getStockDetails(symbol);
+        stock.setName(name);
+        Portfolio portfolio = portfolioService.getPortfolioById(portfolioId, userId);
+        model.addAttribute("portfolio", portfolio);
+        model.addAttribute("userId", userId);
+        model.addAttribute("stock", stock);
+        return "stock/sell";
+    }
+
     // Handle stock add request
     @PostMapping("/add")
     public String postMethodName(@RequestParam String portfolioId, 
@@ -85,9 +98,10 @@ public class StockController {
             @RequestParam(required = false) String otherNotes,
             @RequestParam Double price,
             @RequestParam Integer quantity,
-            @RequestParam TransactionType transactionType) {
+            @RequestParam TransactionType transactionType,
+            @RequestParam(required = false) SellType sellType) {
         
-                // Validate and fetch portfolio for the given user
+        // Validate and fetch portfolio for the given user
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId, userId);
         Stock stock = stockService.getStockDetails(symbol);
         if (stock == null) {
@@ -95,9 +109,18 @@ public class StockController {
             stock.setId(UUID.randomUUID().toString()); // Generate UUID if not set
            
         }
-         stock.setName(name);
-            stock.setSymbol(symbol);
-            stock.setPortfolio(portfolio);
+        
+        stock.setName(name);
+        stock.setSymbol(symbol);
+        stock.setPortfolio(portfolio);
+
+        
+        if(transactionType == TransactionType.SELL) {
+            if(sellType == SellType.PORTFOLIO) {
+                transactionService.sellStockFromPortfolio(stock.getId(), portfolioId, quantity);
+            }
+        }
+
         stock = stockService.saveOrGetStock(stock); // Ensure that stock is saved with ID
         // Add StockAdditionalInfo
         StockAdditionalInfo additionalInfo = new StockAdditionalInfo();
@@ -123,6 +146,12 @@ public class StockController {
         transaction.setQuantity(quantity);
         transaction.setTransactionType(transactionType);
         transaction.setTotalValue(price * quantity);
+
+        if(transactionType == TransactionType.SELL) {
+            if(sellType == SellType.PORTFOLIO) {
+                transaction.setSellType(sellType);
+            }
+        }
 
         transactionRepo.save(transaction);
 

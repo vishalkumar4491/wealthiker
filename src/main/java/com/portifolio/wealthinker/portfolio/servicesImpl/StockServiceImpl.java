@@ -81,7 +81,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock getStockDetails(String symbol) {
-        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&outputsize=compact&apikey=AIN9K17GZIV99WQ7";
+        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&outputsize=compact&apikey=1PC4ZHPGD21WWLW6";
 
         // Make an asynchronous request using WebClient
         String response = webClient.get().uri(apiUrl).

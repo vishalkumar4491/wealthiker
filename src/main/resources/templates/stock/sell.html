@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="shared/base :: parent(~{::#content}, ~{::#title}, ~{})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Sell Stocks</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <div
+            class="block p-6 bg-white border-t-8 border-blue-700 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700"
+          >
+            <!-- Message -->
+            <div th:replace="shared/message :: messagebox"></div>
+
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Sell Stock : <span th:text="${stock.name}"></span>
+            </h5>
+            <p class="font-normal text-gray-400 dark:text-gray-500">
+              Enter stock details to Sell Stock.
+            </p>
+
+            <!-- Form -->
+            <form action="/stock/add" method="post" class="mt-5" novalidate>
+              <!-- Portfolio ID and User ID -->
+              <input
+                type="hidden"
+                name="portfolioId"
+                th:value="${portfolio.id}"
+              />
+              <input type="hidden" name="userId" th:value="${userId}" />
+
+              <!-- Stock Symbol -->
+              <div class="mb-3">
+                <label
+                  for="symbol"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Stock Symbol
+                </label>
+                <input
+                  id="symbol"
+                  name="symbol"
+                  th:value="${stock.symbol}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  readonly
+                />
+              </div>
+
+              <!-- Stock Name -->
+              <div class="mb-3">
+                <label
+                  for="name"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Stock Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  th:value="${stock.name}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  readonly
+                />
+              </div>
+
+              <!-- Price per Share -->
+              <div class="mb-3">
+                <label
+                  for="price"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Price per Share
+                </label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  th:value="${stock.marketPrice}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <!-- Quantity -->
+              <div class="mb-3">
+                <label
+                  for="quantity"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <!-- Transaction Type -->
+              <input type="hidden" name="transactionType" value="SELL" />
+
+              <!-- Sell Type -->
+              <div class="mb-3">
+                <label
+                  for="transactionType"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Sell Type
+                </label>
+                <select
+                  id="sellType"
+                  name="sellType"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="PORTFOLIO">Portfolio</option>
+                  <option value="ANY">Any</option>
+                </select>
+              </div>
+
+              <!-- Additional Fields -->
+              <div class="mb-3">
+                <label
+                  for="whyAdding"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Why Selling
+                </label>
+                <textarea
+                  id="whyAdding"
+                  name="whyAdding"
+                  rows="4"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                ></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label
+                  for="otherNotes"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Other Notes
+                </label>
+                <textarea
+                  id="otherNotes"
+                  name="otherNotes"
+                  rows="4"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                ></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="mb-3 flex justify-center space-x-3">
+                <button
+                  type="submit"
+                  class="px-3 py-2 rounded bg-gray-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800 hover:bg-gray-900"
+                >
+                  Sell Stock
+                </button>
+                <button
+                  type="reset"
+                  class="px-3 py-2 rounded bg-yellow-700 text-white dark:bg-yellow-700 dark:hover:bg-yellow-800 hover:bg-yellow-900"
+                >
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

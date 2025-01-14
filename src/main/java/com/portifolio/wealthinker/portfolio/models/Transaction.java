@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.portifolio.wealthinker.utils.SellType;
 import com.portifolio.wealthinker.utils.TransactionType;
 
 import jakarta.persistence.*;
@@ -53,6 +54,10 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
     private TransactionType transactionType;  // "BUY" or "SALE"
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable=true)
+    private SellType sellType;  // "Selling from specific portfolio or from all portfolio" 
 
     @Column(nullable=true)
     private Double brokerageFee = 0.0;

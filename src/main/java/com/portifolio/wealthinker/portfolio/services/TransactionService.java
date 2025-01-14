@@ -16,4 +16,6 @@ public interface TransactionService {
     List<Transaction> getAllTransactions();
 
     Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId);
+    
+    void sellStockFromPortfolio(String stockId, String portfolioId, int quantity);
 }

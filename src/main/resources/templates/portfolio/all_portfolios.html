@@ -33,7 +33,7 @@
               <div class="absolute top-4 right-4 flex space-x-2">
                 <a
                   th:href="@{/stock/search(portfolioId=${portfolio.id}, userId=${userId})}"
-                  class="px-2 py-1 rounded bg-green-700 text-white text-sm dark:bg-green-700 dark:hover:bg-green-800 hover:bg-greens-900"
+                  class="px-2 py-1 rounded bg-green-700 text-white text-sm dark:bg-green-700 dark:hover:bg-green-800 hover:bg-green-900"
                   >Add Stock</a
                 >
                 <a
@@ -97,6 +97,10 @@
                           Quantity
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">Value</th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Add More
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">Sell</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -126,6 +130,20 @@
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
                           th:text="${stockSummary.totalValue}"
                         ></td>
+                        <td class="px-6 py-4 text-center">
+                          <a
+                            th:href="@{/stock/add/{symbol}(symbol=${stockSummary.stock.symbol}, portfolioId=${portfolio.id}, userId=${userId}, name=${stockSummary.stock.name})}"
+                            class="px-2 py-1 rounded bg-green-700 text-white text-sm dark:bg-green-700 dark:hover:bg-green-800 hover:bg-green-900"
+                            >BUY MORE</a
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <a
+                            th:href="@{/stock/sell/{symbol}(symbol=${stockSummary.stock.symbol}, portfolioId=${portfolio.id}, userId=${userId}, name=${stockSummary.stock.name})}"
+                            class="px-2 py-1 rounded bg-green-700 text-white text-sm dark:bg-red-700 dark:hover:bg-red-800 hover:bg-red-900"
+                            >SELL</a
+                          >
+                        </td>
                       </tr>
                     </tbody>
                   </table>

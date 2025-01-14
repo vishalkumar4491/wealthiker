@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
+import com.portifolio.wealthinker.portfolio.repositories.StockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
 
@@ -18,6 +20,10 @@ import lombok.RequiredArgsConstructor;
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepo transactionRepo;
+
+    private final PortfolioRepo portfolioRepo;
+
+    private final StockRepo stockRepo;
     @Override
     public List<Transaction> getTransactionsByPortfolio(String portfolioId) {
         return transactionRepo.findByPortfolioId(portfolioId);
@@ -42,6 +48,21 @@ public class TransactionServiceImpl implements TransactionService {
     public Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId) {
         List<Transaction> transactions = transactionRepo.findByStockId(stockId);
         return transactions.stream().collect(Collectors.groupingBy(Transaction::getPortfolio));
+    }
+
+    @Override
+    public void sellStockFromPortfolio(String stockId, String portfolioId, int quantity) {
+        List<Transaction> transactions = transactionRepo.findByPortfolioIdAndStockId(portfolioId, stockId);
+        int netQuantity = 0;
+        for (Transaction transaction : transactions) {
+            netQuantity += transaction.getQuantity();
+        }
+        if (netQuantity >= quantity) {
+            // sell the stock
+            netQuantity -= quantity;
+        }else{
+            throw new IllegalArgumentException("Insufficient quantity in portfolio");
+        }
     }
 
 }

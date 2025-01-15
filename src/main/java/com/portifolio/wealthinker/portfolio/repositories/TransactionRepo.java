@@ -18,4 +18,7 @@ public interface TransactionRepo extends JpaRepository<Transaction, String>{
 
     // fetch all transactions for a specific stock in a specific portfolio
     List<Transaction> findByPortfolioIdAndStockId(String portfolioId, String stockId);
+
+    // fetch all transactions for a specific stock in a specific portfolio
+    List<Transaction> findByPortfolioIdAndStockSymbol(String portfolioId, String stockSymbol);
 }

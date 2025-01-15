@@ -114,10 +114,12 @@ public class StockController {
         stock.setSymbol(symbol);
         stock.setPortfolio(portfolio);
 
+        System.out.println("Stock Details" + stock.getId() + " " + stock.getSymbol() + " " + stock.getName() + " " + stock.getPortfolio());
+
         
         if(transactionType == TransactionType.SELL) {
             if(sellType == SellType.PORTFOLIO) {
-                transactionService.sellStockFromPortfolio(stock.getId(), portfolioId, quantity);
+                transactionService.sellStockFromPortfolio(stock.getSymbol(), portfolioId, quantity);
             }
         }
 

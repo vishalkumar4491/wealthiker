@@ -51,10 +51,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void sellStockFromPortfolio(String stockId, String portfolioId, int quantity) {
-        List<Transaction> transactions = transactionRepo.findByPortfolioIdAndStockId(portfolioId, stockId);
+    public void sellStockFromPortfolio(String stockSymbol, String portfolioId, int quantity) {
+        List<Transaction> transactions = transactionRepo.findByPortfolioIdAndStockSymbol(portfolioId, stockSymbol);
+        System.out.println("Transaction: " + transactions.size());
         int netQuantity = 0;
         for (Transaction transaction : transactions) {
+            System.out.println("Transaction: " + transaction.getQuantity());
             netQuantity += transaction.getQuantity();
         }
         if (netQuantity >= quantity) {

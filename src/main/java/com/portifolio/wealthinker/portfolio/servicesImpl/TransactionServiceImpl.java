@@ -12,6 +12,7 @@ import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
 import com.portifolio.wealthinker.portfolio.repositories.StockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
+import com.portifolio.wealthinker.utils.TransactionType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -57,7 +58,11 @@ public class TransactionServiceImpl implements TransactionService {
         int netQuantity = 0;
         for (Transaction transaction : transactions) {
             System.out.println("Transaction: " + transaction.getQuantity());
-            netQuantity += transaction.getQuantity();
+            if(transaction.getTransactionType() == TransactionType.BUY){
+                netQuantity += transaction.getQuantity();
+            }else{
+                netQuantity -= transaction.getQuantity();
+            }
         }
         if (netQuantity >= quantity) {
             // sell the stock

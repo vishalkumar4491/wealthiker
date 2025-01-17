@@ -45,25 +45,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        // Check if the email already exists
-        // Optional<User> existingUser = userRepo.findByEmail(user.getEmail());
-        // if (existingUser.isPresent()) {
-        //      User foundUser = existingUser.get();
-        //     if (!foundUser.isEnabled()) {
-        //         throw new IllegalStateException("Email already exists but is not verified. Please verify your email.");
-        //     } else {
-        //         throw new IllegalArgumentException("User with this email already exists.");
-        //     }
-        // }
-
         // set the user role
         // Fetch default role
         Role defaultRole = roleRepo.findByName(AppConstants.ROLE_USER).orElseThrow(() -> new ResourceNotFoundException("Default role not found"));
         user.setRoles(Set.of(defaultRole));
 
         // user Id have to be generate
-        String userId = UUID.randomUUID().toString();
-        user.setId(userId);
+        user.setId(UUID.randomUUID().toString());
         // pasword encoding
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -72,35 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(User user) {
-        System.out.println("Updated user1 is " + user.toString());
-
-        User user2 = userRepo.findById(user.getId()).orElseThrow(() ->  new ResourceNotFoundException("User not found"));
-        // update user2 from user
-        user2.setName(user.getName());
-        user2.setEmail(user.getEmail());
-        // user2.setPassword(user.getPassword());
-        user2.setPhoneNumber(user.getPhoneNumber());
-        user2.setAbout(user.getAbout());
-        user2.setUsername(user.getUsername());
-        // user2.setProfilePic(user.getProfilePic());
-        // user2.setEnabled(user.isEnabled());
-        // user2.setEmailVerified(user.isEmailVerified());
-        // user2.setPhoneVerified(user.isPhoneVerified());
-        // user2.setProvider(user.getProvider());
-        // user2.setProviderUserId(user.getProviderUserId());
-
-        // user2.setPassword(passwordEncoder.encode(user2.getPassword()));
-
-
-        // save user in DB
-
-        System.out.println("Updated user2 Password is is " + user2.getPassword());
-        System.out.println("Updated user1 Password is is " + user.getPassword());
-        System.out.println("Updated user is " + user2.toString());
-
-        
-
-        User save = userRepo.save(user2);
+        User save = userRepo.save(user);
         return Optional.ofNullable(save);
     }
 

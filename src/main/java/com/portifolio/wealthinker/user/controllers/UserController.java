@@ -1,7 +1,6 @@
 package com.portifolio.wealthinker.user.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +16,7 @@ import com.portifolio.wealthinker.exceptions.ResourceNotFoundException;
 import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.user.services.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 
@@ -24,12 +24,7 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
-
+   
     @Autowired
     private UserService userService;
 
@@ -70,46 +65,22 @@ public class UserController {
 
     // update user details
     @RequestMapping(value="/update/{id}", method=RequestMethod.POST)
-    public String updateUser(@PathVariable String id, @Valid @ModelAttribute UserFormDTO userFormDTO,BindingResult result, Model model){
-        // Validate the form
-        System.out.println("Updated user0 is " + userFormDTO.toString());
-        // System.out.println("Updated user Password is is " + user2.getPassword());
-
+    public String updateUser(@PathVariable String id, @Valid @ModelAttribute UserFormDTO userFormDTO,BindingResult result, Model model, HttpSession session) {
+        
         var user2 = userService.getUserById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        System.out.println("Updated user0  pass is " + user2.getPassword());
-
-
-        // if (result.hasErrors()) {
-        //     return "user/update_user";
-        // }
-
-        System.out.println("Updated user2 is " + userFormDTO.toString());
-
-
-
-        System.out.println("Updated user3 is " + userFormDTO.toString());
-        System.out.println("Updated user4 is " + user2.toString());
-
-
 
         user2.setName(userFormDTO.getName());
         user2.setEmail(userFormDTO.getEmail());
         user2.setUsername(userFormDTO.getUsername());
         user2.setAbout(userFormDTO.getAbout());
         user2.setPhoneNumber(userFormDTO.getPhoneNumber());
-        // user2.setPassword(userFormDTO.getPassword());
-
-        // user2.setPassword(passwordEncoder.encode(user2.getPassword()));
-
-
-        System.out.println("Updated user2 is " + user2.toString());
-
+ 
+        // update the session attribute
+        session.setAttribute("loggedInUser", user2);
 
         userService.updateUser(user2);
 
         return "redirect:/home";
-
     }
 
     // delete user permanently

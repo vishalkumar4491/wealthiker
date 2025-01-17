@@ -38,6 +38,9 @@ public class Stock {
     private String name;
 
     @Column(nullable=true)
+    private Integer qunatity;
+
+    @Column(nullable=true)
     private String sector;
 
     @Column(name="market-price", nullable=true)

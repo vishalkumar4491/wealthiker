@@ -7,6 +7,7 @@ import com.portifolio.wealthinker.portfolio.models.StockAdditionalInfo;
 
 public interface StockService {
     Stock getStockById(String id);
+    Stock getStockBySymbol(String symbol);
     List<Stock> searchStocks(String keyword);
     Stock getStockDetails(String Symbol);
     void addStockAdditionalInfo(StockAdditionalInfo info);

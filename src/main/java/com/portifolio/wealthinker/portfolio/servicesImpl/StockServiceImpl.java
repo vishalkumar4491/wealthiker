@@ -92,34 +92,36 @@ public class StockServiceImpl implements StockService {
     }
 
     private Stock parseStockDetailResponse(String responseBody) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    Stock stock = new Stock();
-    try {
-        // Parse the JSON response
-        JsonNode rootNode = objectMapper.readTree(responseBody);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Stock stock = new Stock();
+        try {
+            // Parse the JSON response
+            JsonNode rootNode = objectMapper.readTree(responseBody);
 
-         // Extract metadata for symbol and other details
-        JsonNode metaData = rootNode.path("Meta Data");
-        String symbol = metaData.path("2. Symbol").asText();
-        String lastRefreshed = metaData.path("3. Last Refreshed").asText();
-        
-        // Extract the 'Time Series (Daily)' node
-        JsonNode timeSeries = rootNode.path("Time Series (Daily)");
+            // Extract metadata for symbol and other details
+            JsonNode metaData = rootNode.path("Meta Data");
+            String symbol = metaData.path("2. Symbol").asText();
+            String lastRefreshed = metaData.path("3. Last Refreshed").asText();
+            
+            // Extract the 'Time Series (Daily)' node
+            JsonNode timeSeries = rootNode.path("Time Series (Daily)");
 
-        // Get the latest date's data
-        JsonNode latestData = timeSeries.path(lastRefreshed);
+            // Get the latest date's data
+            JsonNode latestData = timeSeries.path(lastRefreshed);
 
-         // Extract required fields (e.g., closing price)
-        double closingPrice = latestData.path("4. close").asDouble();
-        
-         // Set values in the stock object
-        stock.setSymbol(symbol); // Symbol from metadata
-        stock.setName("StockName"); // Placeholder, replace with actual stock name if available
-        stock.setMarketPrice(closingPrice); // Latest closing price
+            // Extract required fields (e.g., closing price)
+            double closingPrice = latestData.path("4. close").asDouble();
+
+            System.out.println("Current Price "  + closingPrice);
+            
+            // Set values in the stock object
+            stock.setSymbol(symbol); // Symbol from metadata
+            stock.setName("StockName"); // Placeholder, replace with actual stock name if available
+            stock.setMarketPrice(closingPrice); // Latest closing price
 
         } catch (IOException e) {
-        e.printStackTrace();
-        // Handle errors, such as API limit exceeded or invalid JSON format
+            e.printStackTrace();
+            // Handle errors, such as API limit exceeded or invalid JSON format
         }
     return stock;
     }
@@ -134,6 +136,11 @@ public class StockServiceImpl implements StockService {
     public Stock saveOrGetStock(Stock stock) {
         Optional<Stock> existingStock = stockRepo.findBySymbol(stock.getSymbol());
         return existingStock.orElseGet(() -> stockRepo.save(stock));
+    }
+
+    @Override
+    public Stock getStockBySymbol(String symbol) {
+        return stockRepo.findBySymbol(symbol).orElse(null);
     }
     
 

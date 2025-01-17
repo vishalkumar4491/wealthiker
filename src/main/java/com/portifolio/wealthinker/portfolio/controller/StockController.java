@@ -63,12 +63,8 @@ public class StockController {
     // stock add page
     @GetMapping("/add/{symbol}")
     public String addStockPage(@PathVariable String symbol, @RequestParam String portfolioId, @RequestParam String userId, @RequestParam String name, Model model) {
-        System.out.println("Stock symbol" + symbol);
-        System.out.println("Stock name" + name);
         Stock stock = stockService.getStockDetails(symbol);
         stock.setName(name);
-        System.out.println("Stock Details" + stock);
-        System.out.println("Stock symbol 2" + stock.getSymbol());
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId, userId);
         model.addAttribute("portfolio", portfolio);
         model.addAttribute("userId", userId);
@@ -97,13 +93,15 @@ public class StockController {
             @RequestParam(required = false) String risks,
             @RequestParam(required = false) String otherNotes,
             @RequestParam Double price,
+            @RequestParam Double marketPrice,
             @RequestParam Integer quantity,
             @RequestParam TransactionType transactionType,
             @RequestParam(required = false) SellType sellType) {
         
         // Validate and fetch portfolio for the given user
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId, userId);
-        Stock stock = stockService.getStockDetails(symbol);
+        // Stock stock = stockService.getStockDetails(symbol);
+        Stock stock = stockService.getStockBySymbol(symbol);
         if (stock == null) {
             stock = new Stock();
             stock.setId(UUID.randomUUID().toString()); // Generate UUID if not set
@@ -113,6 +111,7 @@ public class StockController {
         stock.setName(name);
         stock.setSymbol(symbol);
         stock.setPortfolio(portfolio);
+        stock.setMarketPrice(marketPrice);
 
         System.out.println("Stock Details" + stock.getId() + " " + stock.getSymbol() + " " + stock.getName() + " " + stock.getPortfolio());
 

@@ -96,11 +96,15 @@
                         <th scope="col" class="px-6 py-3 text-center">
                           Current
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">Invested</th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Invested
+                        </th>
                         <th scope="col" class="px-6 py-3 text-center">
                           Returns
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">Actions</th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -120,17 +124,23 @@
                         </td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${stockSummary.stock.symbol}"
+                          th:text="${stockSummary.totalQuantity}"
                         ></td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${stockSummary.totalQuantity}"
+                          th:text="${stockSummary.stock.marketPrice * stockSummary.totalQuantity}"
                         ></td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
                           th:text="${stockSummary.totalValue}"
                         ></td>
-                        <td class="px-6 py-4 text-center flex justify-center space-x-4">
+                        <td
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${stockSummary.stock.marketPrice * stockSummary.totalQuantity - stockSummary.totalValue} + ' ( ' + (${stockSummary.stock.marketPrice * stockSummary.totalQuantity - stockSummary.totalValue} * 100 / ${stockSummary.totalValue}) +' % )'"
+                        ></td>
+                        <td
+                          class="px-6 py-4 text-center flex justify-center space-x-4"
+                        >
                           <!-- Buy More Button -->
                           <a
                             th:href="@{/stock/add/{symbol}(symbol=${stockSummary.stock.symbol}, portfolioId=${portfolio.id}, userId=${userId}, name=${stockSummary.stock.name})}"
@@ -138,7 +148,7 @@
                           >
                             Buy More
                           </a>
-                          
+
                           <!-- Sell Button -->
                           <a
                             th:href="@{/stock/sell/{symbol}(symbol=${stockSummary.stock.symbol}, portfolioId=${portfolio.id}, userId=${userId}, name=${stockSummary.stock.name})}"

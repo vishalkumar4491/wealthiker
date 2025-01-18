@@ -19,11 +19,10 @@ public class StockSummary {
     public void addTransaction(Transaction transaction) {
         if(transaction.getTransactionType() == TransactionType.BUY) {
             this.totalQuantity += transaction.getQuantity();
+            totalValue += transaction.getQuantity() * transaction.getPrice();
         }else {
             this.totalQuantity -= transaction.getQuantity();
-        }
-        if (transaction.getStock().getMarketPrice() != null) {
-            this.totalValue += transaction.getQuantity() * transaction.getStock().getMarketPrice();
+            totalValue -= transaction.getQuantity() * transaction.getPrice();
         }
     }
 }

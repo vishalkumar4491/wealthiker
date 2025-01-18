@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
+import com.portifolio.wealthinker.user.models.User;
 
 public interface TransactionService {
     List<Transaction> getTransactionsByPortfolio(String portfolioId);
@@ -15,7 +16,9 @@ public interface TransactionService {
 
     List<Transaction> getAllTransactions();
 
-    Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId);
+    Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId, User loggedInUser);
     
-    void sellStockFromPortfolio(String stockId, String portfolioId, int quantity);
+    void sellStockFromPortfolio(String stockSymbol, String portfolioId, int quantity);
+
+    void sellStockFromTotalHoldings(String stockSymbol, int quantity);
 }

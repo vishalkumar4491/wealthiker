@@ -12,6 +12,7 @@ import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
 import com.portifolio.wealthinker.portfolio.repositories.StockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
+import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.utils.TransactionType;
 
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId) {
-        List<Transaction> transactions = transactionRepo.findByStockId(stockId);
+    public Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId, User loggedInUser) {
+        // List<Transaction> transactions = transactionRepo.findByStockId(stockId);
+        List<Transaction> transactions = transactionRepo.findByStockIdAndUserId(stockId, loggedInUser.getId());
         return transactions.stream().collect(Collectors.groupingBy(Transaction::getPortfolio));
     }
 
@@ -70,6 +72,12 @@ public class TransactionServiceImpl implements TransactionService {
         }else{
             throw new IllegalArgumentException("Insufficient quantity in portfolio");
         }
+    }
+
+    @Override
+    public void sellStockFromTotalHoldings(String stockSymbol, int quantity) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sellStockFromTotalHoldings'");
     }
 
 }

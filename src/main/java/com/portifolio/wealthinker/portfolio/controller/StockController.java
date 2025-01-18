@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.PortfolioService;
 import com.portifolio.wealthinker.portfolio.services.StockService;
 import com.portifolio.wealthinker.portfolio.services.TransactionService;
+import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.utils.SellType;
 import com.portifolio.wealthinker.utils.TransactionType;
 
@@ -119,6 +121,8 @@ public class StockController {
         if(transactionType == TransactionType.SELL) {
             if(sellType == SellType.PORTFOLIO) {
                 transactionService.sellStockFromPortfolio(stock.getSymbol(), portfolioId, quantity);
+            }else{
+                transactionService.sellStockFromTotalHoldings(stock.getSymbol(), quantity);
             }
         }
 
@@ -161,7 +165,7 @@ public class StockController {
 
     // stock details page
     @GetMapping("/details/{stockId}")
-    public String getStockDetails(@PathVariable String stockId, @RequestParam String portfolioId, Model model) {
+    public String getStockDetails(@PathVariable String stockId, @RequestParam String portfolioId, @ModelAttribute("loggedInUser") User loggedInUser, Model model) {
         // Fetch stock details
         Stock stock = stockService.getStockById(stockId);
 
@@ -169,7 +173,7 @@ public class StockController {
         List<Transaction> transactions = transactionService.getTransactionsByStockInPortfolio(portfolioId, stockId);
 
         // Fetch transactions grouped by portfolio
-        Map<Portfolio, List<Transaction>> transactionsGroupedByPortfolio = transactionService.getTransactionsGroupedByPortfolioForStock(stockId);
+        Map<Portfolio, List<Transaction>> transactionsGroupedByPortfolio = transactionService.getTransactionsGroupedByPortfolioForStock(stockId, loggedInUser);
 
         model.addAttribute("transactions", transactions);
         model.addAttribute("stock", stock);

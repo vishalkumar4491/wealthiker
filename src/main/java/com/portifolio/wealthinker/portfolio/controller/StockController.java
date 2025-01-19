@@ -109,6 +109,14 @@ public class StockController {
             stock.setId(UUID.randomUUID().toString()); // Generate UUID if not set
            
         }
+
+        if(transactionType == TransactionType.SELL) {
+            if(sellType == SellType.PORTFOLIO) {
+                transactionService.sellStockFromPortfolio(stock.getSymbol(), portfolioId, quantity);
+            }else{
+                transactionService.sellStockFromTotalHoldings(stock.getSymbol(), quantity);
+            }
+        }
         
         stock.setName(name);
         stock.setSymbol(symbol);
@@ -118,13 +126,7 @@ public class StockController {
         System.out.println("Stock Details" + stock.getId() + " " + stock.getSymbol() + " " + stock.getName() + " " + stock.getPortfolio());
 
         
-        if(transactionType == TransactionType.SELL) {
-            if(sellType == SellType.PORTFOLIO) {
-                transactionService.sellStockFromPortfolio(stock.getSymbol(), portfolioId, quantity);
-            }else{
-                transactionService.sellStockFromTotalHoldings(stock.getSymbol(), quantity);
-            }
-        }
+        
 
         stock = stockService.saveOrGetStock(stock); // Ensure that stock is saved with ID
         // Add StockAdditionalInfo
@@ -156,6 +158,9 @@ public class StockController {
             if(sellType == SellType.PORTFOLIO) {
                 transaction.setSellType(sellType);
             }
+            portfolio.setTotalValue(portfolio.getTotalValue() - transaction.getTotalValue());
+        }else{
+            portfolio.setTotalValue(portfolio.getTotalValue() + transaction.getTotalValue());
         }
 
         transactionRepo.save(transaction);

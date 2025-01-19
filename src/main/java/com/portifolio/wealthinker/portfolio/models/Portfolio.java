@@ -2,7 +2,9 @@ package com.portifolio.wealthinker.portfolio.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -60,5 +62,11 @@ public class Portfolio {
 
     @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<StockAdditionalInfo> additionalInfo = new ArrayList<>();  // Associated stock additional info
+
+    // @ElementCollection(fetch = FetchType.LAZY)
+    // @CollectionTable(name = "portfolio_stock_quantities", joinColumns = @JoinColumn(name = "portfolio_id"))
+    // @MapKeyColumn(name = "stock_symbol")
+    // @Column(name = "quantity")
+    // private Map<String, Integer> stockQuantities = new HashMap<>();
 
 }

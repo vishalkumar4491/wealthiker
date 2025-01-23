@@ -23,6 +23,10 @@ public class StockAdditionalInfo {
     @JoinColumn(name="stock_id", nullable=false)
     private Stock stock;    // The stock being added
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="portfolio_stock_id", nullable=false)
+    private PortfolioStock portfolioStock;    // The stock being added
+
     @ManyToOne
     @JoinColumn(name="portfolio_id", nullable=false)
     private Portfolio portfolio;    // The portfolio to which the stock is being added

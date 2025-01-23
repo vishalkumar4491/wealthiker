@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
+import com.portifolio.wealthinker.portfolio.models.PortfolioStock;
 import com.portifolio.wealthinker.portfolio.models.Stock;
 import com.portifolio.wealthinker.portfolio.models.StockAdditionalInfo;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioStockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.PortfolioService;
 import com.portifolio.wealthinker.portfolio.services.StockService;
@@ -41,6 +43,8 @@ public class StockController {
     private final TransactionService transactionService;
 
     private final TransactionRepo transactionRepo;
+
+    private final PortfolioStockRepo portfolioStockRepo;
 
     // stock search page
     @GetMapping("/search")
@@ -130,6 +134,27 @@ public class StockController {
 
         stock = stockService.saveOrGetStock(stock); // Ensure that stock is saved with ID
         // Add StockAdditionalInfo
+
+        PortfolioStock portfolioStock = portfolioStockRepo.findByPortfolioAndStock(portfolio, stock).orElse(null);
+
+
+        if (portfolioStock == null) {
+            portfolioStock = new PortfolioStock();
+            portfolioStock.setId(UUID.randomUUID().toString());
+            portfolioStock.setPortfolio(portfolio);
+            portfolioStock.setStock(stock);
+            portfolioStock.setQuantity(quantity);
+            portfolioStock.setTotalValue(price * quantity);
+            portfolioStock.setLatestPrice(marketPrice);
+            portfolioStockRepo.save(portfolioStock);
+        }else{
+            portfolioStock.setQuantity(portfolioStock.getQuantity() + quantity);
+            portfolioStock.setTotalValue(portfolioStock.getTotalValue() + price * quantity);
+            portfolioStockRepo.save(portfolioStock);
+        }
+
+
+
         StockAdditionalInfo additionalInfo = new StockAdditionalInfo();
         String uuid = UUID.randomUUID().toString();
         additionalInfo.setId(uuid);
@@ -139,6 +164,8 @@ public class StockController {
         additionalInfo.setFundamentalCatalysts(fundamentalCatalysts);
         additionalInfo.setRisks(risks);
         additionalInfo.setOtherNotes(otherNotes);
+
+        additionalInfo.setPortfolioStock(portfolioStock);
 
         stockService.addStockAdditionalInfo(additionalInfo);
 
@@ -153,6 +180,8 @@ public class StockController {
         transaction.setQuantity(quantity);
         transaction.setTransactionType(transactionType);
         transaction.setTotalValue(price * quantity);
+
+        transaction.setPortfolioStock(portfolioStock);
 
         if(transactionType == TransactionType.SELL) {
             if(sellType == SellType.PORTFOLIO) {

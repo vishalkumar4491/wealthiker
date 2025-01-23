@@ -36,6 +36,10 @@ public class Transaction {
     @JoinColumn(name="stock_id", nullable=false)
     private Stock stock;    // The stock this transaction relates to
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="portfolio_stock_id", nullable=false)
+    private PortfolioStock portfolioStock;    // The stock being added
+
     @Column(nullable=false)
     private String stockSymbol;
 

@@ -65,4 +65,7 @@ public class Portfolio {
 
     @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<PortfolioStock> portfolioStocks = new ArrayList<>();
+
+    @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<PortfolioHistory> portfolioHistories = new ArrayList<>();
 }

@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portifolio.wealthinker.portfolio.models.Portfolio;
+import com.portifolio.wealthinker.portfolio.models.PortfolioHistory;
 import com.portifolio.wealthinker.portfolio.models.PortfolioStock;
+import com.portifolio.wealthinker.portfolio.models.PortfolioStockHistory;
 import com.portifolio.wealthinker.portfolio.models.Stock;
 import com.portifolio.wealthinker.portfolio.models.StockAdditionalInfo;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioHistoryRepo;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioStockHistoryRepo;
 import com.portifolio.wealthinker.portfolio.repositories.PortfolioStockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.PortfolioService;
@@ -45,6 +49,10 @@ public class StockController {
     private final TransactionRepo transactionRepo;
 
     private final PortfolioStockRepo portfolioStockRepo;
+
+    private final PortfolioHistoryRepo portfolioHistoryRepo;
+
+    private final PortfolioStockHistoryRepo portfolioStockHistoryRepo;
 
     // stock search page
     @GetMapping("/search")
@@ -124,10 +132,10 @@ public class StockController {
         
         stock.setName(name);
         stock.setSymbol(symbol);
-        stock.setPortfolio(portfolio);
+        // stock.setPortfolio(portfolio);
         stock.setMarketPrice(marketPrice);
 
-        System.out.println("Stock Details" + stock.getId() + " " + stock.getSymbol() + " " + stock.getName() + " " + stock.getPortfolio());
+        // System.out.println("Stock Details" + stock.getId() + " " + stock.getSymbol() + " " + stock.getName() + " " + stock.getPortfolio());
 
         
         
@@ -146,14 +154,19 @@ public class StockController {
             portfolioStock.setQuantity(quantity);
             portfolioStock.setTotalValue(price * quantity);
             portfolioStock.setLatestPrice(marketPrice);
-            portfolioStockRepo.save(portfolioStock);
+            portfolioStock.setAveragePrice(price);
         }else{
-            portfolioStock.setQuantity(portfolioStock.getQuantity() + quantity);
-            portfolioStock.setTotalValue(portfolioStock.getTotalValue() + price * quantity);
-            portfolioStockRepo.save(portfolioStock);
+            if(transactionType == TransactionType.BUY){
+                portfolioStock.setQuantity(portfolioStock.getQuantity() + quantity);
+                portfolioStock.setTotalValue(portfolioStock.getTotalValue() + price * quantity);
+            }else{
+                portfolioStock.setQuantity(portfolioStock.getQuantity() - quantity);
+                portfolioStock.setTotalValue(portfolioStock.getTotalValue() - price * quantity);
+            }
         }
-
-
+        portfolioStock.setAveragePrice(portfolioStock.getTotalValue() / portfolioStock.getQuantity());
+        portfolioStock.setLatestPrice(marketPrice);
+        portfolioStockRepo.save(portfolioStock);
 
         StockAdditionalInfo additionalInfo = new StockAdditionalInfo();
         String uuid = UUID.randomUUID().toString();
@@ -193,6 +206,28 @@ public class StockController {
         }
 
         transactionRepo.save(transaction);
+        
+
+        PortfolioHistory portfolioHistory = new PortfolioHistory();
+        portfolioHistory.setId(UUID.randomUUID().toString());
+        portfolioHistory.setPortfolio(portfolio);
+        portfolioHistory.setTotalValue(portfolio.getTotalValue());
+        portfolioHistory.setTotalInvestment(portfolio.getTotalValue());
+        portfolioHistory.setNetGains(price);
+
+        portfolioHistoryRepo.save(portfolioHistory);
+
+
+        PortfolioStockHistory portfolioStockHistory = new PortfolioStockHistory();
+        portfolioStockHistory.setId(UUID.randomUUID().toString());
+        portfolioStockHistory.setQuantity(portfolioStock.getQuantity());
+        portfolioStockHistory.setPortfolioStock(portfolioStock);
+        portfolioStockHistory.setLatestPrice(marketPrice);
+        portfolioStockHistory.setAveragePrice(portfolioStock.getAveragePrice());
+        portfolioStockHistory.setValue(portfolioStock.getTotalValue());
+
+        portfolioStockHistoryRepo.save(portfolioStockHistory);
+
 
         return "redirect:/portfolios"; // Redirect to portfolio details page
     }

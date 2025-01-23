@@ -52,14 +52,14 @@ public class Stock {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy="stock", cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<Transaction> transactions = new ArrayList<>();
+    // @OneToMany(mappedBy="stock", cascade=CascadeType.ALL, orphanRemoval=true)
+    // private List<Transaction> transactions = new ArrayList<>();
 
-    @OneToMany(mappedBy="stock")
-    private List<StockAdditionalInfo> additionalInfo = new ArrayList<>();
+    // @OneToMany(mappedBy="stock")
+    // private List<StockAdditionalInfo> additionalInfo = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolio_id", nullable = false) // Ensure this matches your DB schema
-    private Portfolio portfolio;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "portfolio_id", nullable = false) // Ensure this matches your DB schema
+    // private Portfolio portfolio;
 
 }

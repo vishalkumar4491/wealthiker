@@ -27,4 +27,7 @@ public interface TransactionRepo extends JpaRepository<Transaction, String>{
     @Query("SELECT t FROM Transaction t WHERE t.stock.id = :stockId AND t.portfolio.user.id = :userId")
     List<Transaction> findByStockIdAndUserId(@Param("stockId") String stockId, @Param("userId") String userId);
 
+    @Query("SELECT t FROM Transaction t WHERE t.portfolio.user.id = :userId ORDER BY t.transactionAt DESC LIMIT 5")
+    List<Transaction> findRecentTransactionsForUser(@Param("userId") String userId);
+
 }

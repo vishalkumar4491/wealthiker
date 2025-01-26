@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <script src="/js/dashboard.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <h1>Portfolio Dashboard</h1>
+      <div class="navbar-links">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/portfolios">Portfolios</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Horizontal Line Chart -->
+    <div class="line-chart-container">
+      <canvas id="investmentValueChart"></canvas>
+    </div>
+
+    <!-- Top 3 Portfolios -->
+    <section class="top-portfolios">
+      <h2>Top 3 Portfolios</h2>
+      <div class="portfolio-cards">
+        <div class="portfolio-card" th:each="portfolio : ${topPortfolios}">
+          <h3 th:text="${portfolio.name}"></h3>
+          <p>
+            Total Invested: <span th:text="${portfolio.totalInvested}"></span>
+          </p>
+          <p>
+            Current Value: <span th:text="${portfolio.currentValue}"></span>
+          </p>
+          <p>Returns: <span th:text="${portfolio.returns}"></span></p>
+          <canvas
+            class="mini-chart"
+            id="miniChart"
+            th:attr="id='miniChart'+${portfolio.id}"
+          ></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Metrics Section -->
+    <section class="metrics">
+      <div class="metric-card">
+        <h3>Latest 5 Transactions</h3>
+        <ul>
+          <li th:each="transaction : ${recentTransactions}">
+            <span th:text="${transaction.transactionAt}"></span> -
+            <span th:text="${transaction.stock.name}"></span>
+            (<span th:text="${transaction.transactionType}"></span>): ₹<span
+              th:text="${transaction.price}"
+            ></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="metric-card">
+        <h3>Top Performing Stocks</h3>
+        <ul>
+          <li th:each="stock : ${topPerformingStocks}">
+            <span th:text="${stock.stock.name}"></span> - Returns:
+            <span th:text="${stock.totalValue}"></span>%
+          </li>
+        </ul>
+      </div>
+
+      <div class="metric-card">
+        <h3>Total Returns</h3>
+        <p>Invested: ₹<span th:text="${totalInvested}"></span></p>
+        <p>Value: ₹<span th:text="${currentValue}"></span></p>
+        <p>Net Returns: <span th:text="${netReturns}"></span>%</p>
+      </div>
+    </section>
+
+    <!-- Donut Chart for Sector and Portfolio -->
+    <section class="donut-charts">
+      <h2>Sector and Portfolio Breakdown</h2>
+      <div class="donut-chart-container">
+        <div>
+          <h3>Sector-wise Distribution</h3>
+          <canvas id="sectorWiseChart"></canvas>
+        </div>
+        <div>
+          <h3>Portfolio-wise Distribution</h3>
+          <canvas id="portfolioWiseChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <!-- <script>
+        // Chart.js configuration for the line chart
+        const investmentValueChartCtx = document.getElementById('investmentValueChart').getContext('2d');
+        new Chart(investmentValueChartCtx, {
+            type: 'line',
+            data: {
+                labels: /* Labels (dates) */,
+                datasets: [
+                    {
+                        label: 'Total Invested',
+                        data: /* Total Invested Data */,
+                        borderColor: 'blue',
+                        fill: false,
+                    },
+                    {
+                        label: 'Total Value',
+                        data: /* Total Value Data */,
+                        borderColor: 'green',
+                        fill: false,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Date' } },
+                    y: { title: { display: true, text: 'Amount (₹)' } }
+                }
+            }
+        });
+
+        // Similar configurations for mini charts and donut charts can be added here
+    </script> -->
+  </body>
+</html>

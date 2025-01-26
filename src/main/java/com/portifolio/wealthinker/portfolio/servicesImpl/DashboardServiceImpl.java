@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.portifolio.wealthinker.portfolio.models.Stock;
+import com.portifolio.wealthinker.portfolio.models.PortfolioStock;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioStockRepo;
 import com.portifolio.wealthinker.portfolio.repositories.TransactionRepo;
 import com.portifolio.wealthinker.portfolio.services.DashboardService;
 
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class DashboardServiceImpl implements DashboardService {
 
     private final TransactionRepo transactionRepo;
+    private final PortfolioStockRepo portfolioStockRepo;
 
     @Override
     public List<Transaction> getRecentTransactions(String userId) {
@@ -23,9 +25,8 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<Stock> getTopPerformingStocks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTopPerformingStocks'");
+    public List<PortfolioStock> getTopPerformingStocks(String userId) {
+        return portfolioStockRepo.findTopPerformingStocksForUser(userId);
     }
 
 }

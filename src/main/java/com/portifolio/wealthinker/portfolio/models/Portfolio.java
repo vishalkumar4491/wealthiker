@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="portfolios")
+@Table(name="portfolios", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class Portfolio {
     // user's investment portfolio
 
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();;
 
     @Column(nullable=false)
     private String name;  // Portfolio name (ex: Retirement portfolio)
@@ -44,8 +45,8 @@ public class Portfolio {
     @Column
     private String description;
 
-    @Transient
-    private List<StockSummary> stocksSummary;  // for total stock in a portfolio
+    // @Transient
+    // private List<StockSummary> stocksSummary;  // for total stock in a portfolio
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -57,7 +58,7 @@ public class Portfolio {
     @JoinColumn(name="user_id", nullable=false)
     private User user;  // Linked to User entity
 
-    @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="portfolio", fetch=FetchType.LAZY)
     private List<Transaction> transactions;  // List of associated stock transactions
 
     @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -66,6 +67,6 @@ public class Portfolio {
     @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<PortfolioStock> portfolioStocks = new ArrayList<>();
 
-    @OneToMany(mappedBy="portfolio", cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy="portfolio", fetch=FetchType.LAZY)
     private List<PortfolioHistory> portfolioHistories = new ArrayList<>();
 }

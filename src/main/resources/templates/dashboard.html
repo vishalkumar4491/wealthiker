@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/dashboard.css" />
     <script src="/js/dashboard.js"></script>
   </head>
-  <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
+  <body> -->
+<!-- Navigation Bar -->
+<!-- <nav class="navbar">
       <h1>Portfolio Dashboard</h1>
       <div class="navbar-links">
         <a href="/dashboard">Dashboard</a>
@@ -15,15 +15,15 @@
         <a href="/transactions">Transactions</a>
         <a href="/logout">Logout</a>
       </div>
-    </nav>
+    </nav> -->
 
-    <!-- Horizontal Line Chart -->
-    <div class="line-chart-container">
+<!-- Horizontal Line Chart -->
+<!-- <div class="line-chart-container">
       <canvas id="investmentValueChart"></canvas>
-    </div>
+    </div> -->
 
-    <!-- Top 3 Portfolios -->
-    <section class="top-portfolios">
+<!-- Top 3 Portfolios -->
+<!-- <section class="top-portfolios">
       <h2>Top 3 Portfolios</h2>
       <div class="portfolio-cards">
         <div class="portfolio-card" th:each="portfolio : ${topPortfolios}">
@@ -42,10 +42,10 @@
           ></canvas>
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <!-- Key Metrics Section -->
-    <section class="metrics">
+<!-- Key Metrics Section -->
+<!-- <section class="metrics">
       <div class="metric-card">
         <h3>Latest 5 Transactions</h3>
         <ul>
@@ -75,10 +75,10 @@
         <p>Value: ₹<span th:text="${currentValue}"></span></p>
         <p>Net Returns: <span th:text="${netReturns}"></span>%</p>
       </div>
-    </section>
+    </section> -->
 
-    <!-- Donut Chart for Sector and Portfolio -->
-    <section class="donut-charts">
+<!-- Donut Chart for Sector and Portfolio -->
+<!-- <section class="donut-charts">
       <h2>Sector and Portfolio Breakdown</h2>
       <div class="donut-chart-container">
         <div>
@@ -90,10 +90,10 @@
           <canvas id="portfolioWiseChart"></canvas>
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <!-- Scripts -->
-    <!-- <script>
+<!-- Scripts -->
+<!-- <script>
         // Chart.js configuration for the line chart
         const investmentValueChartCtx = document.getElementById('investmentValueChart').getContext('2d');
         new Chart(investmentValueChartCtx, {
@@ -126,5 +126,385 @@
 
         // Similar configurations for mini charts and donut charts can be added here
     </script> -->
+<!-- </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Your Portfolios</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+  <div id="content">
+    <div class="grid grid-cols-12">
+      <div class="xl:col-span-1"></div>
+      <div class="col-span-12 xl:col-span-10">
+        <!-- Navbar using your provided sample code -->
+        <nav class="flex justify-between items-center py-4 bg-gray-100 dark:bg-gray-800 px-4">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Wealthinker</h1>
+          <div class="space-x-4">
+            <a href="/dashboard" class="text-gray-800 dark:text-gray-200">Dashboard</a>
+            <a href="/portfolios" class="text-gray-800 dark:text-gray-200">Portfolios</a>
+            <a href="/transactions" class="text-gray-800 dark:text-gray-200">Transactions</a>
+            <a href="/user/profile" class="text-gray-800 dark:text-gray-200">Profile</a>
+            <a href="/logout" class="text-gray-800 dark:text-gray-200">Logout</a>
+          </div>
+        </nav>
+        
+        <!-- Main Dashboard Content -->
+        <div class="mt-6 space-y-6">
+          <!-- Toggle Bar for Main Graph (above the line chart) -->
+          <div class="flex justify-center space-x-4">
+            <button id="dailyToggle" class="px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-800">Daily</button>
+            <button id="weeklyToggle" class="px-3 py-1 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Weekly</button>
+            <button id="monthlyToggle" class="px-3 py-1 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Monthly</button>
+            <button id="yearlyToggle" class="px-3 py-1 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Yearly</button>
+          </div>
+          
+          <!-- Top Section: Main Line Chart (30vh) -->
+          <div class="w-full bg-white dark:bg-gray-800 p-4 rounded-lg shadow" style="height:30vh;">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+              Investment vs. Current Value Over Time
+            </h2>
+            <canvas id="investmentValueChart" class="w-full h-full"></canvas>
+          </div>
+          
+          <!-- Middle Section: Top 3 Portfolio Cards (30vh) -->
+          <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style="height:30vh;">
+            <!-- Portfolio Card 1 -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Portfolio A</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Retirement Portfolio</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Invested: ₹50,000</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Current: ₹60,000</p>
+                <p class="text-sm font-semibold text-green-500 dark:text-green-500">Return: 20.00%</p>
+              </div>
+              <div class="mt-2 h-24">
+                <canvas id="miniChart1" class="w-full h-full"></canvas>
+              </div>
+              <div class="mt-2 text-center">
+                <a href="/portfolios/1" class="px-4 py-2 rounded bg-blue-700 text-white text-sm hover:bg-blue-800 transition-colors duration-300">
+                  View Details
+                </a>
+              </div>
+            </div>
+            <!-- Portfolio Card 2 -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Portfolio B</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Growth Portfolio</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Invested: ₹30,000</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Current: ₹35,000</p>
+                <p class="text-sm font-semibold text-green-500 dark:text-green-500">Return: 16.67%</p>
+              </div>
+              <div class="mt-2 h-24">
+                <canvas id="miniChart2" class="w-full h-full"></canvas>
+              </div>
+              <div class="mt-2 text-center">
+                <a href="/portfolios/2" class="px-4 py-2 rounded bg-blue-700 text-white text-sm hover:bg-blue-800 transition-colors duration-300">
+                  View Details
+                </a>
+              </div>
+            </div>
+            <!-- Portfolio Card 3 -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Portfolio C</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Balanced Portfolio</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Invested: ₹40,000</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Current: ₹38,000</p>
+                <p class="text-sm font-semibold text-red-500 dark:text-red-500">Return: -5.00%</p>
+              </div>
+              <div class="mt-2 h-24">
+                <canvas id="miniChart3" class="w-full h-full"></canvas>
+              </div>
+              <div class="mt-2 text-center">
+                <a href="/portfolios/3" class="px-4 py-2 rounded bg-blue-700 text-white text-sm hover:bg-blue-800 transition-colors duration-300">
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bottom Section: Insight Cards (30vh) -->
+          <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style="height:30vh;">
+            <!-- Insight Card 1: Donut Chart for Portfolio Distribution -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                Portfolio Distribution
+              </h3>
+              <div class="h-40">
+                <canvas id="portfolioDonutChart" class="w-full h-full"></canvas>
+              </div>
+              <div class="text-center mt-2">
+                <a href="/portfolios" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  View All Portfolios
+                </a>
+              </div>
+            </div>
+            <!-- Insight Card 2: Donut Chart for Stock Distribution -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                Stock Distribution
+              </h3>
+              <div class="h-40">
+                <canvas id="stockDonutChart" class="w-full h-full"></canvas>
+              </div>
+              <div class="text-center mt-2">
+                <a href="/stocks" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  View All Stocks
+                </a>
+              </div>
+            </div>
+            <!-- Insight Card 3: Donut Chart for Total Profit/Loss -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                Total Profit/Loss
+              </h3>
+              <div class="h-40">
+                <canvas id="profitLossDonutChart" class="w-full h-full"></canvas>
+              </div>
+              <div class="text-center mt-2">
+                <a href="/transactions" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  View Transactions
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart.js Scripts for Graphs -->
+    <script>
+      window.onload = function() {
+        // Sample Data for 10 Days for Main Line Chart
+        const sampleGraphData = {
+          dates: [
+            "2025-01-01", "2025-01-02", "2025-01-03", "2025-01-04", "2025-01-05",
+            "2025-01-06", "2025-01-07", "2025-01-08", "2025-01-09", "2025-01-10"
+          ],
+          totalInvestments: [10000, 10500, 11000, 11500, 12000, 12500, 13000, 13500, 14000, 14500],
+          totalValues: [11000, 10800, 11200, 11700, 12300, 12800, 13500, 13800, 14200, 15000]
+        };
+
+        // Toggle Data Setup: For simplicity, sample data remains same for all toggles.
+        const toggleOptions = {
+          daily: sampleGraphData,
+          weekly: sampleGraphData,   // Replace with weekly sample data if available
+          monthly: sampleGraphData,  // Replace with monthly sample data if available
+          yearly: sampleGraphData    // Replace with yearly sample data if available
+        };
+
+        let currentToggle = 'daily';
+
+        // Function to update main chart with new data
+        function updateMainChart(data) {
+          mainLineChart.data.labels = data.dates;
+          mainLineChart.data.datasets[0].data = data.totalInvestments;
+          mainLineChart.data.datasets[1].data = data.totalValues;
+          mainLineChart.update();
+        }
+
+        // Set up toggle buttons
+        document.getElementById('dailyToggle').addEventListener('click', function() {
+          currentToggle = 'daily';
+          updateMainChart(toggleOptions.daily);
+          setActiveToggle(this);
+        });
+        document.getElementById('weeklyToggle').addEventListener('click', function() {
+          currentToggle = 'weekly';
+          updateMainChart(toggleOptions.weekly);
+          setActiveToggle(this);
+        });
+        document.getElementById('monthlyToggle').addEventListener('click', function() {
+          currentToggle = 'monthly';
+          updateMainChart(toggleOptions.monthly);
+          setActiveToggle(this);
+        });
+        document.getElementById('yearlyToggle').addEventListener('click', function() {
+          currentToggle = 'yearly';
+          updateMainChart(toggleOptions.yearly);
+          setActiveToggle(this);
+        });
+
+        // Helper to set active toggle button styles
+        function setActiveToggle(activeButton) {
+          document.querySelectorAll('#dailyToggle, #weeklyToggle, #monthlyToggle, #yearlyToggle').forEach(btn => {
+            btn.classList.remove('bg-blue-700');
+            btn.classList.add('bg-gray-300');
+          });
+          activeButton.classList.remove('bg-gray-300');
+          activeButton.classList.add('bg-blue-700');
+        }
+
+        // Line Chart for Total Investment vs. Total Value Over Time
+        const lineCtx = document.getElementById('investmentValueChart').getContext('2d');
+        const mainLineChart = new Chart(lineCtx, {
+          type: 'line',
+          data: {
+            labels: toggleOptions[currentToggle].dates,
+            datasets: [
+              {
+                label: 'Total Invested',
+                data: toggleOptions[currentToggle].totalInvestments,
+                borderColor: 'blue',
+                fill: false,
+                tension: 0.3
+              },
+              {
+                label: 'Total Value',
+                data: toggleOptions[currentToggle].totalValues,
+                borderColor: 'green',
+                fill: false,
+                tension: 0.3
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: 'Date' } },
+              y: { title: { display: true, text: 'Amount (₹)' } }
+            }
+          }
+        });
+
+        // Donut Chart for Portfolio Distribution
+        const portfolioDonutCtx = document.getElementById('portfolioDonutChart').getContext('2d');
+        const samplePortfolioDonutData = {
+          labels: ['Portfolio A', 'Portfolio B', 'Portfolio C'],
+          datasets: [{
+            data: [45, 35, 20],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
+          }]
+        };
+        new Chart(portfolioDonutCtx, {
+          type: 'doughnut',
+          data: samplePortfolioDonutData,
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Donut Chart for Stock Distribution
+        const stockDonutCtx = document.getElementById('stockDonutChart').getContext('2d');
+        const sampleStockDonutData = {
+          labels: ['Stock A', 'Stock B', 'Stock C', 'Stock D'],
+          datasets: [{
+            data: [30, 25, 25, 20],
+            backgroundColor: ['#FF5722', '#9C27B0', '#03A9F4', '#8BC34A']
+          }]
+        };
+        new Chart(stockDonutCtx, {
+          type: 'doughnut',
+          data: sampleStockDonutData,
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Donut Chart for Total Profit/Loss
+        const profitLossDonutCtx = document.getElementById('profitLossDonutChart').getContext('2d');
+        const sampleProfitLossDonutData = {
+          labels: ['Profit', 'Loss'],
+          datasets: [{
+            data: [60, 40],
+            backgroundColor: ['#4CAF50', '#F44336']
+          }]
+        };
+        new Chart(profitLossDonutCtx, {
+          type: 'doughnut',
+          data: sampleProfitLossDonutData,
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Mini Chart for Portfolio Card 1 (Portfolio A)
+        const miniChart1Ctx = document.getElementById('miniChart1').getContext('2d');
+        new Chart(miniChart1Ctx, {
+          type: 'line',
+          data: {
+            labels: ["Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5"],
+            datasets: [{
+              label: 'Trend',
+              data: [10000, 10200, 10100, 10300, 10500],
+              borderColor: '#4CAF50',
+              fill: false,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            },
+            plugins: {
+              legend: { display: false }
+            }
+          }
+        });
+
+        // Mini Chart for Portfolio Card 2 (Portfolio B)
+        const miniChart2Ctx = document.getElementById('miniChart2').getContext('2d');
+        new Chart(miniChart2Ctx, {
+          type: 'line',
+          data: {
+            labels: ["Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5"],
+            datasets: [{
+              label: 'Trend',
+              data: [30000, 30200, 30100, 30300, 30500],
+              borderColor: '#2196F3',
+              fill: false,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            },
+            plugins: {
+              legend: { display: false }
+            }
+          }
+        });
+
+        // Mini Chart for Portfolio Card 3 (Portfolio C)
+        const miniChart3Ctx = document.getElementById('miniChart3').getContext('2d');
+        new Chart(miniChart3Ctx, {
+          type: 'line',
+          data: {
+            labels: ["Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5"],
+            datasets: [{
+              label: 'Trend',
+              data: [40000, 39800, 39500, 39200, 39000],
+              borderColor: '#F44336',
+              fill: false,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            },
+            plugins: {
+              legend: { display: false }
+            }
+          }
+        });
+      };
+    </script>
   </body>
 </html>
+

@@ -54,6 +54,10 @@ public class Portfolio {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    // Transient field for mini chart data; not persisted in DB.
+    @Transient
+    private Map<String, Object> miniChartData;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id", nullable=false)
     private User user;  // Linked to User entity

@@ -3,6 +3,8 @@ package com.portifolio.wealthinker.portfolio.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.portifolio.wealthinker.portfolio.models.PortfolioHistory;
@@ -20,4 +22,7 @@ public interface PortfolioHistoryRepo extends JpaRepository<PortfolioHistory, St
     // List<PortfolioHistoryDTO> findByUserId(@Param("userId") String userId);
 
     List<PortfolioHistory> findByPortfolio_User_IdOrderBySnapshotDateTimeAsc(String userId);
+
+    @Query("SELECT ph FROM PortfolioHistory ph WHERE ph.portfolio.id = :portfolioId ORDER BY ph.snapshotDateTime ASC")
+    List<PortfolioHistory> findByPortfolioIdOrderBySnapshotDateTimeAsc(@Param("portfolioId") String portfolioId);
 }

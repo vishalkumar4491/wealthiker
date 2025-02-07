@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portifolio.wealthinker.portfolio.models.Portfolio;
 import com.portifolio.wealthinker.portfolio.models.PortfolioHistory;
 import com.portifolio.wealthinker.portfolio.models.PortfolioStock;
 import com.portifolio.wealthinker.portfolio.models.Transaction;
 import com.portifolio.wealthinker.portfolio.repositories.PortfolioHistoryRepo;
+import com.portifolio.wealthinker.portfolio.repositories.PortfolioRepo;
 import com.portifolio.wealthinker.portfolio.services.DashboardService;
 import com.portifolio.wealthinker.user.models.User;
 
@@ -34,12 +36,55 @@ public class DashboardController {
 
     private final PortfolioHistoryRepo portfolioHistoryRepo;
 
+    private final PortfolioRepo portfolioRepo;
+
     @GetMapping
     public String getDashboardPage(Model model, @AuthenticationPrincipal User user) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         List<Transaction> recentTransactions = dashboardservice.getRecentTransactions(user.getId());
         List<PortfolioStock> topPerformingStocks = dashboardservice.getTopPerformingStocks(user.getId());
         model.addAttribute("recentTransactions", recentTransactions);
         model.addAttribute("topPerformingStocks", topPerformingStocks);
+
+        // Top performing Portfolios
+        List<Portfolio> topPortfolios = dashboardservice.getTopPerformingPortfolios(user.getId());
+        // model.addAttribute("topPortfolios", topPortfolios);
+
+        for(Portfolio portfolio : topPortfolios){
+            List<PortfolioHistory> singlePortfolioHistories = portfolioHistoryRepo.findByPortfolioIdOrderBySnapshotDateTimeAsc(portfolio.getId());
+
+            // Use LinkedHashMap to preserve order
+            Map<String, Double> aggInvestments = new LinkedHashMap<>();
+            Map<String, Double> aggValues = new LinkedHashMap<>();
+            Map<String, Double> aggNetGains = new LinkedHashMap<>();
+
+            for (PortfolioHistory ph : singlePortfolioHistories) {
+                String date = ph.getSnapshotDateTime().format(formatter);
+                aggInvestments.merge(date, ph.getTotalInvestment(), Double::sum);
+                aggValues.merge(date, ph.getTotalValue(), Double::sum);
+                aggNetGains.merge(date, ph.getNetGains(), Double::sum);
+            }
+
+            List<String> dates = new ArrayList<>(aggInvestments.keySet());
+            List<Double> totalInvestments = new ArrayList<>(aggInvestments.values());
+            List<Double> totalValues = new ArrayList<>(aggValues.values());
+            List<Double> netGains = new ArrayList<>(aggNetGains.values());
+
+            // Create a map for mini chart data.
+            Map<String, Object> miniChartData = new HashMap<>();
+            miniChartData.put("dates", dates);
+            miniChartData.put("totalInvestments", totalInvestments);
+            miniChartData.put("totalValues", totalValues);
+            miniChartData.put("netGains", netGains);
+
+            // Attach the aggregated mini chart data to the portfolio.
+            portfolio.setMiniChartData(miniChartData);
+        }
+
+        model.addAttribute("topPortfolios", topPortfolios);
+
+        System.out.println("PortfolioLength " + topPortfolios.size());
 
         // Fetch portfolio history data
         List<PortfolioHistory> historyList = portfolioHistoryRepo.findByPortfolio_User_IdOrderBySnapshotDateTimeAsc(user.getId());
@@ -48,7 +93,7 @@ public class DashboardController {
         Map<String, Double> aggregatedInvestments = new LinkedHashMap<>();
         Map<String, Double> aggregatedValues = new LinkedHashMap<>();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
 
         for (PortfolioHistory ph : historyList) {
             String date = ph.getSnapshotDateTime().format(formatter);

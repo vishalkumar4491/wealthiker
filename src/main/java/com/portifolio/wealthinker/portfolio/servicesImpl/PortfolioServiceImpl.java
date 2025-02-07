@@ -1,7 +1,6 @@
 package com.portifolio.wealthinker.portfolio.servicesImpl;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -70,7 +69,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 
         // Check if the user has reached the portfolio limit
         long portfolioCount = portfolioRepo.countByUserId(userId);
-        if (portfolioCount >= 3) {
+        if (portfolioCount >= 5) {
             throw new IllegalStateException("You can only create up to 3 portfolios.");
         }
 

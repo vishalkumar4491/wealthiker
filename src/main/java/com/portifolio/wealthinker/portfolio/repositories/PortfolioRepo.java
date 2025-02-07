@@ -20,4 +20,7 @@ public interface PortfolioRepo extends JpaRepository<Portfolio, String>{
 
     @Query("SELECT p FROM Portfolio p WHERE p.id=:portfolioId AND p.user.id = :userId")
     Optional<Portfolio> findPortfolioByPortfolioId(@Param("portfolioId") String portfolioId, @Param("userId") String userId);
+
+    @Query("SELECT p FROM Portfolio p WHERE p.user.id=:userId ORDER BY p.totalValue DESC LIMIT 3")
+    List<Portfolio> findTopPerformingPortfoliosForUser(String userId);
 }

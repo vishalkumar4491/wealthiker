@@ -130,18 +130,44 @@
 </html> -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" 
-      >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="title">Dashboard</title>
     <!-- Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       /* Ensure the main chart canvas takes 100% width */
+      /* Constrain the chart container width so it doesn’t stretch too far on large screens */
+      /* .chart-container {
+        max-width: 800px; 
+        margin: 0 auto;
+      } */
+
+      /* Fixed styles for axis fonts */
+      .chart-axis-title {
+        font-size: 14px !important;
+      }
+      .chart-tick-font {
+        font-size: 12px !important;
+      }
+      /* Fixed indicator styles */
+      .indicator {
+        width: 100%;
+        text-align: left;
+      }
+      .indicator .label {
+        font-size: 1rem;
+      }
+      .indicator .value {
+        font-size: 1.25rem;
+      }
       #investmentValueChart {
         width: 100% !important;
       }
@@ -152,87 +178,192 @@
       <div class="grid grid-cols-12">
         <div class="xl:col-span-0"></div>
         <div class="col-span-12">
-          
           <!-- Main Dashboard Content -->
           <div class="mt-2 space-y-6">
             <!-- Top Section: Line Chart -->
-            <div class="w-full bg-white dark:bg-gray-800 p-4 rounded-lg shadow" style="height:100vh;">          
-              <canvas id="investmentValueChart" class="w-full h-full"></canvas>
+            <!-- Top Section: Card with Indicators and Graph -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-lg shadow chart-container relative"
+              style="height: 30vh"
+            >
+              <div class="flex flex-col md:flex-row h-full">
+                <!-- Left Box: Indicators (30% width on md+, 100% on small screens) -->
+                <div
+                  class="w-full md:w-1/3 p-4 flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200"
+                >
+                  <div class="indicator mb-2">
+                    <p class="label text-blue-700">Total Invested</p>
+                    <p class="value" th:text="${totalInvested}">₹0</p>
+                  </div>
+                  <div class="indicator mb-2">
+                    <p class="label text-green-700">Total Value</p>
+                    <p class="value" th:text="${currentValue}">₹0</p>
+                  </div>
+                  <div class="indicator">
+                    <p class="label text-gray-700">Net Returns</p>
+                    <p class="value" th:text="${netReturns}">0%</p>
+                  </div>
+                </div>
+                <!-- Right Box: Graph (70% width on md+, 100% on small screens) -->
+                <div class="w-full md:w-2/3 relative ml-2">
+                  <canvas
+                    id="investmentValueChart"
+                    class="w-full h-full"
+                  ></canvas>
+                </div>
+              </div>
             </div>
 
             <!-- Middle Section: Top 3 Portfolio Cards -->
-            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style="height:100vh;">
-              <div th:each="portfolio : ${topPortfolios}" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+            <div
+              class="w-full grid grid-cols-1 md:grid-cols-3 gap-4"
+              style="height: 100vh"
+            >
+              <div
+                th:each="portfolio : ${topPortfolios}"
+                class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow"
+              >
                 <div class="mb-2">
-                  <h3 class="text-2xl font-bold text-gray-900 dark:text-white" th:text="${portfolio.name}"></h3>
-                  <p class="text-sm text-gray-500 dark:text-gray-400" th:text="${portfolio.description}"></p>
+                  <h3
+                    class="text-2xl font-bold text-gray-900 dark:text-white"
+                    th:text="${portfolio.name}"
+                  ></h3>
+                  <p
+                    class="text-sm text-gray-500 dark:text-gray-400"
+                    th:text="${portfolio.description}"
+                  ></p>
                   <p class="text-sm text-gray-600 dark:text-gray-300">
-                    Invested: ₹<span th:text="${portfolio.totalInvested}"></span>
+                    Invested: ₹<span
+                      th:text="${portfolio.totalInvested}"
+                    ></span>
                   </p>
                   <p class="text-sm text-gray-600 dark:text-gray-300">
                     Current: ₹<span th:text="${portfolio.totalValue}"></span>
                   </p>
-                  <p class="text-sm font-semibold" 
-                     th:class="${portfolio.totalValue - portfolio.totalInvested < 0 ? 'text-red-500' : 'text-green-500'}">
-                     Return: <span th:text="${T(java.lang.String).format('%.2f', ((portfolio.totalValue - portfolio.totalInvested) * 100 / portfolio.totalInvested))}"></span>%
+                  <p
+                    class="text-sm font-semibold"
+                    th:class="${portfolio.totalValue - portfolio.totalInvested < 0 ? 'text-red-500' : 'text-green-500'}"
+                  >
+                    Return:
+                    <span
+                      th:text="${T(java.lang.String).format('%.2f', ((portfolio.totalValue - portfolio.totalInvested) * 100 / portfolio.totalInvested))}"
+                    ></span
+                    >%
                   </p>
                 </div>
                 <div class="w-full h-20">
-                  <canvas th:attr="id='miniChart' + ${portfolio.id}" class="w-full h-full"></canvas>
+                  <canvas
+                    th:attr="id='miniChart' + ${portfolio.id}"
+                    class="w-full h-full"
+                  ></canvas>
                 </div>
                 <div class="mt-2 text-center">
-                  <a th:href="@{'/portfolios/' + ${portfolio.id}}" 
-                     class="px-4 py-2 rounded bg-blue-700 text-white text-sm hover:bg-blue-800 transition-colors duration-300">
-                     View Details
+                  <a
+                    th:href="@{'/portfolios/' + ${portfolio.id}}"
+                    class="px-4 py-2 rounded bg-blue-700 text-white text-sm hover:bg-blue-800 transition-colors duration-300"
+                  >
+                    View Details
                   </a>
                 </div>
               </div>
             </div>
 
             <!-- Bottom Section: Insight Cards -->
-            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style="height:25vh;">
+            <div
+              class="w-full grid grid-cols-1 md:grid-cols-3 gap-4"
+              style="height: 25vh"
+            >
               <!-- Donut Chart for Portfolio Distribution -->
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+                >
                   Portfolio Distribution
                 </h3>
                 <canvas id="portfolioDonutChart" class="w-full h-40"></canvas>
                 <div class="text-center mt-2">
-                  <a href="/portfolios" class="text-blue-600 dark:text-blue-400 hover:underline">View All Portfolios</a>
+                  <a
+                    href="/portfolios"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                    >View All Portfolios</a
+                  >
                 </div>
               </div>
               <!-- Donut Chart for Stock Distribution -->
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+                >
                   Stock Distribution
                 </h3>
                 <canvas id="stockDonutChart" class="w-full h-40"></canvas>
                 <div class="text-center mt-2">
-                  <a href="/stocks" class="text-blue-600 dark:text-blue-400 hover:underline">View All Stocks</a>
+                  <a
+                    href="/stocks"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                    >View All Stocks</a
+                  >
                 </div>
               </div>
               <!-- Donut Chart for Total Profit/Loss -->
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+                >
                   Total Profit/Loss
                 </h3>
                 <canvas id="profitLossDonutChart" class="w-full h-40"></canvas>
                 <div class="text-center mt-2">
-                  <a href="/transactions" class="text-blue-600 dark:text-blue-400 hover:underline">View Transactions</a>
+                  <a
+                    href="/transactions"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                    >View Transactions</a
+                  >
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- Chart.js Scripts for Graphs -->
     <script th:inline="javascript">
+      /*<![CDATA[*/
+      // First, register a custom plugin to draw an inner legend inside the chart area.
+      Chart.register({
+        id: "innerLegend",
+        afterDraw: function (chart) {
+          const ctx = chart.ctx;
+          const datasets = chart.data.datasets;
+          const chartArea = chart.chartArea;
+          // Set starting coordinates inside the chart area (adjust as needed)
+          let x = chartArea.left + 10;
+          let y = chartArea.top + 20;
+          ctx.save();
+          // ctx.font = "12px sans-serif";
+          ctx.fillStyle = "black";
+          datasets.forEach((dataset, i) => {
+            // Draw the line symbol with dash pattern
+            ctx.beginPath();
+            // ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = dataset.borderColor;
+            ctx.moveTo(x, y + i * 20);
+            ctx.lineTo(x + 30, y + i * 20);
+            ctx.stroke();
+            // ctx.setLineDash([]); // reset dash
+            // Draw the label text next to the symbol
+            ctx.fillText(dataset.label, x + 40, y + i * 20 + 4);
+          });
+          ctx.restore();
+        },
+      });
+
       // Line Chart for Total Investment vs. Total Value Over Time
       console.log("Graph Data: ", /*[[${graphData}]]*/ {});
-      const lineCtx = document.getElementById('investmentValueChart').getContext('2d');
+      const lineCtx = document
+        .getElementById("investmentValueChart")
+        .getContext("2d");
       // Replace the following with your dynamic data or bind via Thymeleaf (e.g., [[${graphData}]])
       console.log("Canvas Found:", lineCtx);
       var graphData = /*[[${graphData}]]*/ {};
@@ -242,81 +373,138 @@
       console.log("Graph Data Parsed: ", graphData);
       console.log("Dates: ", graphData.dates); // Should log an array
 
+      // Determine legend position based on screen width.
+      const legendPosition = window.innerWidth > 100 ? "left" : "top";
 
       // console.log("Graph Dates: ", graphData);
       new Chart(lineCtx, {
-          type: 'line',
-          data: {
-              labels: graphData.dates,
-              datasets: [
-                  {
-                      label: 'Total Invested',
-                      data: graphData.totalInvestments,
-                      borderColor: 'blue',
-                      fill: false,
-                      tension: 0.3
-                  },
-                  {
-                      label: 'Total Value',
-                      data: graphData.totalValues,
-                      borderColor: 'green',
-                      fill: false,
-                      tension: 0.3
-                  }
-              ]
+        type: "line",
+        data: {
+          labels: graphData.dates,
+          datasets: [
+            {
+              label: "Total Invested",
+              data: graphData.totalInvestments,
+              borderColor: "blue",
+              fill: false,
+              tension: 0.3,
+            },
+            {
+              label: "Total Value",
+              data: graphData.totalValues,
+              borderColor: "green",
+              fill: false,
+              tension: 0.3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              position: "bottom",
+              title: {
+                display: false,
+                text: "Date",
+                font: {
+                  size: 14,
+                },
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+              },
+            },
+            y: {
+              position: "left",
+              title: {
+                display: true,
+                text: "Amount (₹)",
+                font: {
+                  size: 14,
+                },
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+              },
+            },
           },
-          options: {
-              responsive: true,
-              scales: {
-                  x: { title: { display: true, text: 'Date' } },
-                  y: { title: { display: true, text: 'Amount (₹)' } }
-              }
-          }
+          plugins: {
+            // Optionally, you can force the legend font size as well:
+            legend: {
+              display: false,
+              labels: {
+                font: {
+                  size: 12,
+                },
+              },
+              layout: {
+                padding: -30, // Adjust negative padding to move legend into chart area
+              },
+            },
+          },
+        },
       });
 
       // Donut Chart for Portfolio Distribution
-      const portfolioDonutCtx = document.getElementById('portfolioDonutChart').getContext('2d');
+      const portfolioDonutCtx = document
+        .getElementById("portfolioDonutChart")
+        .getContext("2d");
       const portfolioDonutData = {
-          labels: ['Portfolio A', 'Portfolio B', 'Portfolio C'],
-          datasets: [{
-              data: [40, 35, 25],
-              backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
-          }]
+        labels: ["Portfolio A", "Portfolio B", "Portfolio C"],
+        datasets: [
+          {
+            data: [40, 35, 25],
+            backgroundColor: ["#4CAF50", "#2196F3", "#FFC107"],
+          },
+        ],
       };
       new Chart(portfolioDonutCtx, {
-          type: 'doughnut',
-          data: portfolioDonutData,
-          options: { responsive: true }
+        type: "doughnut",
+        data: portfolioDonutData,
+        options: { responsive: true },
       });
 
       // Donut Chart for Stock Distribution
-      const stockDonutCtx = document.getElementById('stockDonutChart').getContext('2d');
+      const stockDonutCtx = document
+        .getElementById("stockDonutChart")
+        .getContext("2d");
       const stockDonutData = {
-          labels: ['Stock X', 'Stock Y', 'Stock Z'],
-          datasets: [{
-              data: [50, 30, 20],
-              backgroundColor: ['#FF5722', '#9C27B0', '#03A9F4']
-          }]
+        labels: ["Stock X", "Stock Y", "Stock Z"],
+        datasets: [
+          {
+            data: [50, 30, 20],
+            backgroundColor: ["#FF5722", "#9C27B0", "#03A9F4"],
+          },
+        ],
       };
       new Chart(stockDonutCtx, {
-          type: 'doughnut',
-          data: stockDonutData,
-          options: { responsive: true }
+        type: "doughnut",
+        data: stockDonutData,
+        options: { responsive: true },
       });
 
       // Donut Chart for Total Profit/Loss
-      const profitLossDonutCtx = document.getElementById('profitLossDonutChart').getContext('2d');
+      const profitLossDonutCtx = document
+        .getElementById("profitLossDonutChart")
+        .getContext("2d");
       const profitLossDonutData = {
-          labels: ['Profit', 'Loss'],
-          datasets: [{
-              data: [70, 30],
-              backgroundColor: ['#4CAF50', '#F44336']
-          }]
+        labels: ["Profit", "Loss"],
+        datasets: [
+          {
+            data: [70, 30],
+            backgroundColor: ["#4CAF50", "#F44336"],
+          },
+        ],
       };
       new Chart(profitLossDonutCtx, {
-          type: 'doughnut',
-          data: profitLossDonutData,
-          options: { responsive: true }
+        type: "doughnut",
+        data: profitLossDonutData,
+        options: { responsive: true },
       });
 
       // Mini Charts for Portfolio Cards can be initialized similarly using each card's canvas element,
@@ -324,5 +512,3 @@
     </script>
   </body>
 </html>
-
-

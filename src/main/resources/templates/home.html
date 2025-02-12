@@ -7,10 +7,264 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="title">Home Page</title>
+    <!-- Font Awesome for icons (optional) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
+      integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* Custom styles for responsiveness and fixed sizes */
+      .hero-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .feature-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .feature-card img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+      }
+      .about-img {
+        height: 300px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+      }
+      /* Simple auto-scrolling carousel for testimonials */
+      .carousel {
+        overflow: hidden;
+        position: relative;
+      }
+      .carousel-track {
+        display: flex;
+        animation: scroll 15s linear infinite;
+      }
+      .carousel-item {
+        min-width: 100%;
+        padding: 1rem;
+      }
+      @keyframes scroll {
+        0% { transform: translateX(0%); }
+        33% { transform: translateX(-100%); }
+        66% { transform: translateX(-200%); }
+        100% { transform: translateX(0%); }
+      }
+    </style>
   </head>
   <body>
     <div id="content">
-      <h1 class="text-red-700 text-5xl text-center">Home Page</h1>
+
+    <!-- Hero Section -->
+    <header class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==');">
+      <!-- Faded overlay with very high opacity -->
+      <div class="absolute inset-0 bg-black" style="opacity: 0.5;"></div>
+      <!-- Centered content -->
+      <div class="relative container mx-auto px-4 flex items-center justify-center h-full">
+        <!-- Hero Text Card -->
+        <div class="bg-white dark:bg-gray-800 bg-opacity-90 rounded-lg p-8 shadow-lg max-w-2xl">
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white text-center">
+            Welcome to Wealthinker
+          </h1>
+          <p class="mt-4 text-lg md:text-2xl text-gray-700 dark:text-gray-300 text-center">
+            Manage your finances, portfolios, and investments all in one place.
+          </p>
+          <div class="mt-6 text-center">
+            <a href="/signup" class="px-6 py-3 bg-blue-700 text-white font-bold rounded hover:bg-blue-800 transition-colors duration-300">
+              Get Started
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    
+
+    <!-- Features Section -->
+    <section id="features" class="py-12">
+      <div class="container mx-auto px-4">
+        <!-- Large Card Container for the entire Features section -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">
+            Our Features
+          </h2>
+          <!-- Responsive Grid: 1 column on mobile, 2 on small, 3 on large screens -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Feature Card 1: Image on left, text on right -->
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col">
+              <!-- Top Half: Image -->
+              <div class="h-40">
+                <img src="https://via.placeholder.com/300x200" 
+                     alt="Portfolio Management" 
+                     class="w-full h-full object-cover" />
+              </div>
+              <!-- Bottom Half: Details -->
+              <div class="h-40 p-4 flex flex-col justify-center">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                  Portfolio Management
+                </h3>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">
+                  Track your investments, view detailed performance, and manage transactions effortlessly.
+                </p>
+              </div>
+            </div>
+            <!-- Feature Card 2: Reverse layout (Image on right, text on left) -->
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col">
+              <!-- For reverse layout, on larger screens we can use flex-row-reverse for the inner content -->
+              <div class="flex flex-col md:flex-row-reverse h-full">
+                <!-- Image: fixed height -->
+                <div class="md:w-1/2 h-40">
+                  <img src="https://via.placeholder.com/300x200" 
+                       alt="Financial Planning" 
+                       class="w-full h-full object-cover" />
+                </div>
+                <!-- Details -->
+                <div class="md:w-1/2 h-40 p-4 flex flex-col justify-center">
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                    Financial Planning
+                  </h3>
+                  <p class="mt-2 text-gray-600 dark:text-gray-300">
+                    Create budgets, plan for retirement, and set savings goals using our comprehensive tools.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Feature Card 3: Standard layout (Image on left, text on right) -->
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden flex flex-col">
+              <!-- Top Half: Image -->
+              <div class="h-40">
+                <img src="https://via.placeholder.com/300x200" 
+                     alt="Stock Analysis" 
+                     class="w-full h-full object-cover" />
+              </div>
+              <!-- Bottom Half: Details -->
+              <div class="h-40 p-4 flex flex-col justify-center">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                  Stock Analysis
+                </h3>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">
+                  Access real-time stock data, technical indicators, and market news for informed decision-making.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
+
+    <!-- About Section -->
+    <section id="about" class="py-12">
+      <div class="container mx-auto px-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="About Us" class="about-img">
+          </div>
+          <div class="md:w-1/2 md:pl-8 mt-6 md:mt-0 m-4">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">About Us</h2>
+            <p class="text-gray-700 dark:text-gray-300 text-lg">
+              Wealthinker is a comprehensive platform that empowers you to take control of your finances. With our advanced tools for portfolio management, financial planning, and stock analysis, you can effortlessly track and grow your wealth.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+     <!-- Testimonials Section -->
+    <section id="testimonials" class="py-12 bg-gray-100 dark:bg-gray-800">
+      <div class="container mx-auto px-4">
+        <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-6">
+          <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">Testimonials</h2>
+          <!-- Simple auto-scrolling carousel -->
+                    
+
+          <div id="default-carousel" class="relative w-full" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                <!-- Item 1 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 2 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                  <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-6">
+                    <p class="italic text-gray-600 dark:text-gray-300">
+                      "Wealthinker transformed my financial planning. Everything is so easy to manage!"
+                    </p>
+                    <p class="mt-4 font-bold text-gray-800 dark:text-white">– John Doe</p>
+                  </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <h1>My Testimonial</h1>
+                </div>
+                <!-- Item 4 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="https://images.unsplash.com/photo-1551590192-8070a16d9f67?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 5 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="https://images.unsplash.com/photo-1528747045269-390fe33c19f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+            </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+            </div>
+            <!-- Slider controls -->
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Call-to-Action Section -->
+    <section class="py-12">
+      <div class="container mx-auto px-4">
+        <div class="bg-blue-600 dark:bg-blue-800 rounded-lg shadow p-6 text-center">
+          <h2 class="text-3xl font-bold text-white mb-4">Ready to take control of your finances?</h2>
+          <a href="/signup" class="inline-block px-6 py-3 bg-white text-blue-700 font-bold rounded hover:bg-gray-100">
+            Sign Up Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+
     </div>
   </body>
 </html>

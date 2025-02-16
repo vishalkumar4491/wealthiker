@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  th:replace="shared/base :: parent(~{::#content}, ~{::#title}, ~{})"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="title">Home Page</title>
-    <!-- Font Awesome for icons (optional) -->
+    <title>Wealthinker</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" data-th-href="@{/css/output.css}" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
@@ -16,81 +18,57 @@
       referrerpolicy="no-referrer"
     />
     <style>
-      /* Custom styles for responsiveness and fixed sizes */
-      .hero-card {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 0.5rem;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .feature-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .feature-card img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-      }
-      .about-img {
-        height: 300px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-      }
-      /* Simple auto-scrolling carousel for testimonials */
-      .carousel {
-        overflow: hidden;
+      /* Hero Section Customizations */
+      .hero-bg {
         position: relative;
+        background: url("https://images.pexels.com/photos/276267/pexels-photo-276267.jpeg?auto=compress&cs=tinysrgb&w=600")
+          no-repeat center center/cover;
       }
-      .carousel-track {
-        display: flex;
-        animation: scroll 15s linear infinite;
+      .hero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(
+          0,
+          0,
+          0,
+          0.7
+        ); /* Dark overlay for better text contrast */
+        /* filter: blur(2px); */
+        z-index: 1;
       }
-      .carousel-item {
-        min-width: 100%;
-        padding: 1rem;
-      }
-      @keyframes scroll {
-        0% { transform: translateX(0%); }
-        33% { transform: translateX(-100%); }
-        66% { transform: translateX(-200%); }
-        100% { transform: translateX(0%); }
+      .hero-content {
+        position: relative;
+        z-index: 2;
       }
     </style>
   </head>
-  <body>
-    <div id="content">
-
-    <!-- Hero Section -->
-    <header class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==');">
-      <!-- Faded overlay with very high opacity -->
-      <div class="absolute inset-0 bg-black" style="opacity: 0.5;"></div>
-      <!-- Centered content -->
-      <div class="relative container mx-auto px-4 flex items-center justify-center h-full">
-        <!-- Hero Text Card -->
-        <div class="bg-white dark:bg-gray-800 bg-opacity-90 rounded-lg p-8 shadow-lg max-w-2xl">
-          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white text-center">
-            Welcome to Wealthinker
-          </h1>
-          <p class="mt-4 text-lg md:text-2xl text-gray-700 dark:text-gray-300 text-center">
-            Manage your finances, portfolios, and investments all in one place.
-          </p>
-          <div class="mt-6 text-center">
-            <a href="/signup" class="px-6 py-3 bg-blue-700 text-white font-bold rounded hover:bg-blue-800 transition-colors duration-300">
-              Get Started
-            </a>
-          </div>
+  <body class="bg-white dark:bg-gray-900">
+    <!-- HERO SECTION (Full-screen with blurred background) -->
+    <!-- if user is not logged in then this navbar -->
+    <div th:unless="${loggedInUser}">
+      <header th:replace="~{shared/navbar :: navbar}"></header>
+    </div>
+    <header class="hero-bg h-screen flex items-center justify-center">
+      <div class="hero-content text-center px-4">
+        <h1 class="text-4xl md:text-6xl font-bold text-white">
+          Welcome to Wealthinker
+        </h1>
+        <p class="mt-4 text-lg md:text-2xl text-white">
+          Manage your finances, portfolios, and investments all in one place.
+        </p>
+        <div class="mt-6">
+          <a
+            href="/signup"
+            class="px-6 py-3 bg-teal-500 text-white font-bold rounded hover:bg-teal-600 transition-colors duration-300"
+          >
+            Get Started
+          </a>
         </div>
       </div>
     </header>
-    
-    
 
-    <!-- Features Section -->
+    <!-- FEATURES SECTION -->
     <section id="features" class="py-12">
       <div>
         <!-- Large Card Container for the entire Features section -->
@@ -450,9 +428,9 @@
           <!-- Simple auto-scrolling carousel -->
                     
 
-          <div id="default-carousel" class="relative w-full" data-carousel="slide">
+          <div id="default-carousel" class="relative w-full  z-10" data-carousel="slide">
             <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+            <div class="relative  overflow-hidden rounded-lg md:h-96">
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
@@ -535,5 +513,8 @@
 
 
     </div>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script data-th-src="@{'/js/script.js'}"></script>
+    <!-- <th:block th:replace="${script}"></th:block> -->
   </body>
 </html>

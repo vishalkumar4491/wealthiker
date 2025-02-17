@@ -21,7 +21,7 @@
       /* Hero Section Customizations */
       .hero-bg {
         position: relative;
-        background: url("https://images.pexels.com/photos/276267/pexels-photo-276267.jpeg?auto=compress&cs=tinysrgb&w=600")
+        background: url("images/hero-1.jpg")
           no-repeat center center/cover;
       }
       .hero-bg::before {
@@ -32,7 +32,7 @@
           0,
           0,
           0,
-          0.7
+          0.8
         ); /* Dark overlay for better text contrast */
         /* filter: blur(2px); */
         z-index: 1;
@@ -43,33 +43,72 @@
       }
     </style>
   </head>
-  <body class="bg-white dark:bg-gray-900">
+  <body class="dark:bg-gray-900 dark:text-white bg-gray-100">
     <!-- HERO SECTION (Full-screen with blurred background) -->
     <!-- if user is not logged in then this navbar -->
     <div th:unless="${loggedInUser}">
       <header th:replace="~{shared/navbar :: navbar}"></header>
     </div>
-    <header class="hero-bg h-screen flex items-center justify-center">
-      <div class="hero-content text-center px-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-white">
-          Welcome to Wealthinker
-        </h1>
-        <p class="mt-4 text-lg md:text-2xl text-white">
-          Manage your finances, portfolios, and investments all in one place.
-        </p>
-        <div class="mt-6">
-          <a
-            href="/signup"
-            class="px-6 py-3 bg-teal-500 text-white font-bold rounded hover:bg-teal-600 transition-colors duration-300"
-          >
-            Get Started
-          </a>
-        </div>
-      </div>
-    </header>
 
+
+    <header class="hero-bg h-screen flex items-center justify-center relative">
+        <div class="hero-content text-center px-6">
+          <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-wide">
+            WealThinker
+          </h1>
+          
+          <h2 class="mt-4 text-3xl md:text-5xl font-semibold text-white leading-tight">
+            Think Wealth, Manage Smart  
+            <span class="block text-xl md:text-2xl font-light text-teal-300 mt-2">
+              Your One-Stop Investment Hub
+            </span>
+          </h2>
+          
+          <p class="mt-6 text-lg md:text-2xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            Take control of your finances, track portfolios, and make smarter investment decisions— 
+            all in one powerful platform.
+          </p>
+          
+          <div class="mt-8">
+            <a href="/signup"
+              class="px-8 py-3 text-lg md:text-xl bg-teal-500 text-white font-bold rounded-lg shadow-lg 
+                     hover:bg-teal-600 transition-transform duration-300 transform hover:scale-105">
+              Get Started for Free
+            </a>
+          </div>
+        </div>
+        
+      </header>
+      
+<!-- Features Section Overlapping Hero Using Negative Margin -->
+<section id="features" class=" relative bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mx-auto"  style="margin-top: -80px !important; z-index: 100; width: 80%;">
+    <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-4">
+      Our Features
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Feature Item 1 -->
+      <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+        <img class="w-full h-32 object-cover rounded-t-lg mb-2" src="https://via.placeholder.com/300x200?text=Portfolio" alt="Portfolio Management">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white text-center">Portfolio Management</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300 text-center">Monitor, analyze, and optimize your investments.</p>
+      </div>
+      <!-- Feature Item 2 -->
+      <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+        <img class="w-full h-32 object-cover rounded-t-lg mb-2" src="https://via.placeholder.com/300x200?text=Planning" alt="Financial Planning">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white text-center">Financial Planning</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300 text-center">Build budgets, set goals, and secure your future.</p>
+      </div>
+      <!-- Feature Item 3 -->
+      <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+        <img class="w-full h-32 object-cover rounded-t-lg mb-2" src="https://via.placeholder.com/300x200?text=Expenses" alt="Expense Tracking">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white text-center">Expense Tracking</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300 text-center">Keep track of every rupee effortlessly.</p>
+      </div>
+      <!-- Add more feature items as needed -->
+    </div>
+  </section>
     <!-- FEATURES SECTION -->
-    <section id="features" class="py-12">
+    <section id="features">
       <div>
         <!-- Large Card Container for the entire Features section -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8">

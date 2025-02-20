@@ -29,6 +29,7 @@
         background: url("images/hero-light.jpg") no-repeat center center / cover;
       }
 
+
       .hero-bg::before {
         content: "";
         position: absolute;
@@ -54,7 +55,7 @@
     </style>
   </head>
   <body
-    class="dark:bg-dark-background dark:text-dark-text text-light-text bg-light-background"
+    class="dark:bg-dark-background dark:text-dark-primary text-light-primary bg-light-background"
   >
     <!-- if user is not logged in then this navbar -->
     <div th:unless="${loggedInUser}">
@@ -83,7 +84,7 @@
           </h2>
 
           <p
-            class="mt-6 text-2xl dark:text-dark-text text-light-text max-w-2xl mx-auto leading-relaxed"
+            class="mt-6 text-2xl dark:text-dark-secondary text-light-secondary max-w-2xl mx-auto leading-relaxed"
           >
             Take control of your finances, track portfolios, and make smarter
             investment decisions— all in one powerful platform.
@@ -108,14 +109,24 @@
       style="margin-top: -20vh !important; z-index: 10"
     >
       <h2
-        class="text-3xl font-bold text-center text-light-primary dark:text-dark-primary mb-8"
+        class="text-3xl font-bold text-center text-light-primary dark:text-dark-primary mb-4"
       >
         Our Features
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h3
+        class="text-2xl font-bold text-center text-light-secondary dark:text-dark-secondary mb-2"
+      >
+        All-in-One Financial Powerhouse
+      </h3>
+      <p
+        class="text-xl text-center text-light-tertiary dark:text-dark-tertiary mb-8"
+      >
+      Explore our suite of advanced tools designed to help you manage, plan, and grow your wealth with confidence.
+    </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Feature Item 1 -->
         <div
-          class="bg-light-accent dark:bg-dark-accent p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
         >
           <img
             class="w-full h-48 object-cover rounded-t-lg mb-2"
@@ -123,85 +134,88 @@
             alt="Portfolio Management"
           />
           <h2
-            class="text-2xl font-semibold text-light-text dark:text-dark-text text-center"
+            class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center mt-3"
           >
             Portfolio Management
           </h2>
-          <p class="text-md text-light-text dark:text-dark-text text-center">
-            Monitor, analyze, and optimize your investments.
-          </p>
-        </div>
-        <!-- Feature Item 1 -->
-        <div
-          class="bg-light-accent dark:bg-dark-accent p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
-        >
-          <img
-            class="w-full h-48 object-cover rounded-t-lg mb-2"
-            src="images/dashboard-1.jpg"
-            alt="Portfolio Management"
-          />
-          <h2
-            class="text-2xl font-semibold text-light-text dark:text-dark-text text-center"
-          >
-            Portfolio Management
-          </h2>
-          <p class="text-md text-light-text dark:text-dark-text text-center">
-            Monitor, analyze, and optimize your investments.
-          </p>
-        </div>
-        <!-- Feature Item 1 -->
-        <div
-          class="bg-light-accent dark:bg-dark-accent p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
-        >
-          <img
-            class="w-full h-48 object-cover rounded-t-lg mb-2"
-            src="images/dashboard-1.jpg"
-            alt="Portfolio Management"
-          />
-          <h2
-            class="text-2xl font-semibold text-light-text dark:text-dark-text text-center"
-          >
-            Portfolio Management
-          </h2>
-          <p class="text-md text-light-text dark:text-dark-text text-center">
-            Monitor, analyze, and optimize your investments.
+          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+            Monitor, analyze, and optimize your investments with precisions.
           </p>
         </div>
 
-        <!-- Feature Item 1 -->
+        <!-- Feature Item 2 -->
         <div
-          class="bg-light-accent dark:bg-dark-accent p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
         >
           <img
             class="w-full h-48 object-cover rounded-t-lg mb-2"
-            src="images/dashboard-1.jpg"
-            alt="Portfolio Management"
+            src="images/financial_planning.jpg"
+            alt="Financial Planning"
           />
           <h2
-            class="text-2xl font-semibold text-light-text dark:text-dark-text text-center"
+            class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center mt-3"
           >
-            Portfolio Management
+            Financial Planning & Budgeting
           </h2>
-          <p class="text-md text-light-text dark:text-dark-text text-center">
-            Monitor, analyze, and optimize your investments.
+          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+            Plan Your Tomorrow, Today – Build budgets, set goals, and secure your financial future.
           </p>
         </div>
-        <!-- Feature Item 1 -->
+
+        <!-- Feature Item 3 -->
         <div
-          class="bg-light-accent dark:bg-dark-accent p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
         >
           <img
             class="w-full h-48 object-cover rounded-t-lg mb-2"
-            src="images/dashboard-1.jpg"
-            alt="Portfolio Management"
+            src="images/expense_tracker.jpg"
+            alt="Personal Finance & Expense Tracking"
           />
           <h2
-            class="text-2xl font-semibold text-light-text dark:text-dark-text text-center"
+            class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center mt-3"
           >
-            Portfolio Management
+            Personal Finance & Expense Tracking
           </h2>
-          <p class="text-md text-light-text dark:text-dark-text text-center">
-            Monitor, analyze, and optimize your investments.
+          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+            Stay on Top of Your Spending – Track every rupee with ease
+          </p>
+        </div>
+
+        <!-- Feature Item 4 -->
+        <div
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
+        >
+          <img
+            class="w-full h-48 object-cover rounded-t-lg mb-2"
+            src="images/retirement.jpg"
+            alt="Retirement Planning & Future Forecasting"
+          />
+          <h2
+            class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center mt-3"
+          >
+           Retirement Planning & Future Forecasting
+          </h2>
+          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+            Build the Future You Deserve – Comprehensive retirement planning made simple.
+          </p>
+        </div>
+
+        <!-- Feature Item 5 -->
+        <div
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
+        >
+          <img
+            class="w-full h-48 object-cover rounded-t-lg mb-2"
+            src="images/mobile_dashboard.jpg"
+            alt="Mobile-Responsive Design"
+          />
+          <h2
+            class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center"
+          >
+            Mobile Responsive Design
+          </h2>
+          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center">
+            Invest On-the-Go – All the Power of Desktop in Your Pocket.
           </p>
         </div>
 
@@ -210,32 +224,144 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-12">
-      <div class="container mx-auto px-4">
-        <div
-          class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 flex flex-col md:flex-row items-center"
-        >
-          <div class="md:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="About Us"
-              class="about-img"
-            />
-          </div>
-          <div class="md:w-1/2 md:pl-8 mt-6 md:mt-0 m-4">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              About Us
+    <section
+  id="features"
+  class="relative bg-light-background_secondary dark:bg-dark-background_secondary rounded-lg shadow-lg p-8 mx-auto mt-10 w-full max-w-[90%]" style="width: 95%;"
+>
+
+      <h2
+        class="text-3xl font-bold text-center text-light-primary dark:text-dark-primary mb-4"
+      >
+        About Wealthinker
+      </h2>
+      <h3
+        class="text-2xl font-bold text-center text-light-secondary dark:text-dark-secondary mb-2"
+      >
+      Empowering You to Master Your Financial Future with a Comprehensive Platform – Your All-in-One Investment Dashboard for Investments, Budgeting, Expense Tracking, and Future Planning.
+      </h3>
+      
+      <div class="bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 rounded-lg shadow p-8 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2">
+          <!-- Light Mode Image -->
+          <img
+            src="images/about_dashboard_light.jpg"
+            alt="Dashboard Preview Light"
+            class="rounded-lg block dark:hidden w-full"
+          />
+          <!-- Dark Mode Image -->
+          <img
+            src="images/about_dashboard_dark.jpg"
+            alt="Dashboard Preview Dark"
+            class="rounded-lg hidden dark:block w-full"
+          />
+        </div>
+        <div class="md:w-1/2 md:pl-8 mt-6 md:mt-0">
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Take Full Control of Your Investments
+          </h1>
+          <p class="text-gray-700 dark:text-gray-300 text-lg">
+            At Wealthinker, we empower you with a comprehensive platform that integrates an all-in-one investment dashboard with robust budgeting, expense tracking, and future planning tools. 
+            Seamlessly track your investments, monitor daily spending, and visualize your entire financial landscape with interactive graphs and real-time insights—giving you complete control over every aspect of your financial journey.
+          </p>
+        </div>
+      </div>
+
+
+
+      <div>
+        <div class="w-full mt-8">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+              Our Mission
             </h2>
-            <p class="text-gray-700 dark:text-gray-300 text-lg">
-              Wealthinker is a comprehensive platform that empowers you to take
-              control of your finances. With our advanced tools for portfolio
-              management, financial planning, and stock analysis, you can
-              effortlessly track and grow your wealth.
+            <p class="text-gray-700 dark:text-gray-300 text-lg mb-4">
+              At Wealthinker, our mission is to empower you with deep financial insights by delivering a comprehensive, user-centric platform. 
+              We believe everyone deserves a transparent, all-encompassing view of their financial world—free from traditional intermediaries.
             </p>
+            <p class="text-gray-700 dark:text-gray-300 text-lg">
+              Our innovative platform seamlessly centralizes your investment dashboard, budgeting, expense tracking, retirement planning, 
+              and more, transforming raw data into actionable strategies that put you in control of your financial future.
+            </p>
+            
           </div>
         </div>
       </div>
-    </section>
+
+
+      <!-- How It Works Section -->
+   
+      <div class="w-full mt-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+            How It Works
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                <span class="text-white font-bold">1</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Connect or Input & Consolidate Data
+              </h3>
+              <p class="text-center text-gray-700 dark:text-gray-300">
+                Securely import data from connected accounts or manually enter your financial details to create a unified view.
+              </p>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                <span class="text-white font-bold">2</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Visualize & Analyze
+              </h3>
+              <p class="text-center text-gray-700 dark:text-gray-300">
+                Dive into detailed graphs, charts, and real-time data to monitor investments, track expenses, and manage your financial health.
+              </p>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                <span class="text-white font-bold">3</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Plan & Optimize
+              </h3>
+              <p class="text-center text-gray-700 dark:text-gray-300">
+                Utilize robust planning tools to budget, forecast retirement, manage debt, and secure your financial future.
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    
+
+      <!-- Our Technology & Security Section -->
+      <div class="mt-8">
+        <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-8">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+            Built on Innovation & Trust
+          </h2>
+          <p class="text-gray-700 dark:text-gray-300 text-lg">
+            Our platform leverages cutting-edge technology to ensure a secure and
+            seamless experience. With robust data encryption, real-time analytics, and
+            an intuitive interface, Wealthinker keeps your financial information safe
+            while delivering actionable insights.
+          </p>
+        </div>
+      </div>
+    
+
+
+      
+      </section>
+
+
+
+      
+    
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-12 bg-gray-100 dark:bg-gray-800">

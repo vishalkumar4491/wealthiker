@@ -17,6 +17,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
 
     <style>
       /* Hero Section Customizations */
@@ -28,7 +33,6 @@
       .dark .hero-bg {
         background: url("images/hero-light.jpg") no-repeat center center / cover;
       }
-
 
       .hero-bg::before {
         content: "";
@@ -46,7 +50,7 @@
 
       /* When dark mode is active, e.g. on <body class="dark"> */
       .dark .hero-bg::before {
-        background: rgba(0, 0, 0, 0.8); /* Adjust opacity as needed */
+        background: rgba(0, 0, 0, 0.7); /* Adjust opacity as needed */
       }
       .hero-content {
         position: relative;
@@ -92,10 +96,10 @@
 
           <div class="mt-8">
             <a
-              href="/signup"
-              class="px-8 py-3 text-lg md:text-xl bg-light-accent dark:bg-dark-accent text-light-primary font-bold rounded-lg shadow-lg hover:bg-light-accent_hover dark:hover:bg-dark-accent_hover transition-transform duration-300 transform hover:scale-105"
+              th:href="@{'/register'}"
+              class="px-8 py-3 text-lg md:text-xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white font-bold rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105"
             >
-              Get Started for Free
+              Get Start Here
             </a>
           </div>
         </div>
@@ -121,8 +125,9 @@
       <p
         class="text-xl text-center text-light-tertiary dark:text-dark-tertiary mb-8"
       >
-      Explore our suite of advanced tools designed to help you manage, plan, and grow your wealth with confidence.
-    </p>
+        Explore our suite of advanced tools designed to help you manage, plan,
+        and grow your wealth with confidence.
+      </p>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Feature Item 1 -->
         <div
@@ -138,7 +143,9 @@
           >
             Portfolio Management
           </h2>
-          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+          <p
+            class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1"
+          >
             Monitor, analyze, and optimize your investments with precisions.
           </p>
         </div>
@@ -157,8 +164,11 @@
           >
             Financial Planning & Budgeting
           </h2>
-          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
-            Plan Your Tomorrow, Today – Build budgets, set goals, and secure your financial future.
+          <p
+            class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1"
+          >
+            Plan Your Tomorrow, Today – Build budgets, set goals, and secure
+            your financial future.
           </p>
         </div>
 
@@ -176,7 +186,9 @@
           >
             Personal Finance & Expense Tracking
           </h2>
-          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
+          <p
+            class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1"
+          >
             Stay on Top of Your Spending – Track every rupee with ease
           </p>
         </div>
@@ -193,10 +205,13 @@
           <h2
             class="text-2xl font-semibold text-light-primary dark:text-dark-primary text-center mt-3"
           >
-           Retirement Planning & Future Forecasting
+            Retirement Planning & Future Forecasting
           </h2>
-          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1">
-            Build the Future You Deserve – Comprehensive retirement planning made simple.
+          <p
+            class="text-md text-light-tertiary dark:text-dark-tertiary text-center mt-1"
+          >
+            Build the Future You Deserve – Comprehensive retirement planning
+            made simple.
           </p>
         </div>
 
@@ -214,7 +229,9 @@
           >
             Mobile Responsive Design
           </h2>
-          <p class="text-md text-light-tertiary dark:text-dark-tertiary text-center">
+          <p
+            class="text-md text-light-tertiary dark:text-dark-tertiary text-center"
+          >
             Invest On-the-Go – All the Power of Desktop in Your Pocket.
           </p>
         </div>
@@ -225,34 +242,38 @@
 
     <!-- About Section -->
     <section
-  id="features"
-  class="relative bg-light-background_secondary dark:bg-dark-background_secondary rounded-lg shadow-lg p-8 mx-auto mt-10 w-full max-w-[90%]" style="width: 95%;"
->
-
+      id="about"
+      class="relative bg-light-background_secondary dark:bg-dark-background_secondary rounded-lg shadow-lg p-8 mx-auto mt-10 w-full max-w-[90%]"
+      style="width: 95%"
+    >
       <h2
         class="text-3xl font-bold text-center text-light-primary dark:text-dark-primary mb-4"
       >
         About Wealthinker
       </h2>
       <h3
-        class="text-2xl font-bold text-center text-light-secondary dark:text-dark-secondary mb-2"
+        class="text-2xl font-bold text-center text-light-secondary dark:text-dark-secondary mb-6"
       >
-      Empowering You to Master Your Financial Future with a Comprehensive Platform – Your All-in-One Investment Dashboard for Investments, Budgeting, Expense Tracking, and Future Planning.
+        Empowering You to Master Your Financial Future with a Comprehensive
+        Platform – Your All-in-One Investment Dashboard for Investments,
+        Budgeting, Expense Tracking, and Future Planning.
       </h3>
-      
-      <div class="bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 rounded-lg shadow p-8 flex flex-col md:flex-row items-center">
+
+      <div
+        class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-8 flex flex-col md:flex-row items-center"
+      >
         <div class="md:w-1/2">
           <!-- Light Mode Image -->
           <img
             src="images/about_dashboard_light.jpg"
             alt="Dashboard Preview Light"
-            class="rounded-lg block dark:hidden w-full"
+            class="rounded-lg block dark:hidden w-full max-h-96 object-cover"
           />
           <!-- Dark Mode Image -->
           <img
             src="images/about_dashboard_dark.jpg"
             alt="Dashboard Preview Dark"
-            class="rounded-lg hidden dark:block w-full"
+            class="rounded-lg hidden dark:block w-full max-h-96 object-cover"
           />
         </div>
         <div class="md:w-1/2 md:pl-8 mt-6 md:mt-0">
@@ -260,284 +281,254 @@
             Take Full Control of Your Investments
           </h1>
           <p class="text-gray-700 dark:text-gray-300 text-lg">
-            At Wealthinker, we empower you with a comprehensive platform that integrates an all-in-one investment dashboard with robust budgeting, expense tracking, and future planning tools. 
-            Seamlessly track your investments, monitor daily spending, and visualize your entire financial landscape with interactive graphs and real-time insights—giving you complete control over every aspect of your financial journey.
+            At Wealthinker, we empower you with a comprehensive platform that
+            integrates an all-in-one investment dashboard with robust budgeting,
+            expense tracking, and future planning tools. Seamlessly track your
+            investments, monitor daily spending, and visualize your entire
+            financial landscape with interactive graphs and real-time
+            insights—giving you complete control over every aspect of your
+            financial journey.
           </p>
         </div>
       </div>
 
-
-
       <div>
         <div class="w-full mt-8">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+          <div
+            class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-8"
+          >
+            <h2
+              class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center"
+            >
               Our Mission
             </h2>
             <p class="text-gray-700 dark:text-gray-300 text-lg mb-4">
-              At Wealthinker, our mission is to empower you with deep financial insights by delivering a comprehensive, user-centric platform. 
-              We believe everyone deserves a transparent, all-encompassing view of their financial world—free from traditional intermediaries.
+              At Wealthinker, our mission is to empower you with deep financial
+              insights by delivering a comprehensive, user-centric platform. We
+              believe everyone deserves a transparent, all-encompassing view of
+              their financial world—free from traditional intermediaries.
             </p>
             <p class="text-gray-700 dark:text-gray-300 text-lg">
-              Our innovative platform seamlessly centralizes your investment dashboard, budgeting, expense tracking, retirement planning, 
-              and more, transforming raw data into actionable strategies that put you in control of your financial future.
+              Our innovative platform seamlessly centralizes your investment
+              dashboard, budgeting, expense tracking, retirement planning, and
+              more, transforming raw data into actionable strategies that put
+              you in control of your financial future.
             </p>
-            
           </div>
         </div>
       </div>
 
-
       <!-- How It Works Section -->
-   
+
       <div class="w-full mt-8">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+        <div
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-8"
+        >
+          <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center"
+          >
             How It Works
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Step 1 -->
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+              <div
+                class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4"
+              >
                 <span class="text-white font-bold">1</span>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3
+                class="text-xl font-semibold text-gray-900 dark:text-white mb-2"
+              >
                 Connect or Input & Consolidate Data
               </h3>
               <p class="text-center text-gray-700 dark:text-gray-300">
-                Securely import data from connected accounts or manually enter your financial details to create a unified view.
+                Securely import data from connected accounts or manually enter
+                your financial details to create a unified view.
               </p>
             </div>
             <!-- Step 2 -->
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+              <div
+                class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4"
+              >
                 <span class="text-white font-bold">2</span>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3
+                class="text-xl font-semibold text-gray-900 dark:text-white mb-2"
+              >
                 Visualize & Analyze
               </h3>
               <p class="text-center text-gray-700 dark:text-gray-300">
-                Dive into detailed graphs, charts, and real-time data to monitor investments, track expenses, and manage your financial health.
+                Dive into detailed graphs, charts, and real-time data to monitor
+                investments, track expenses, and manage your financial health.
               </p>
             </div>
             <!-- Step 3 -->
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+              <div
+                class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4"
+              >
                 <span class="text-white font-bold">3</span>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3
+                class="text-xl font-semibold text-gray-900 dark:text-white mb-2"
+              >
                 Plan & Optimize
               </h3>
               <p class="text-center text-gray-700 dark:text-gray-300">
-                Utilize robust planning tools to budget, forecast retirement, manage debt, and secure your financial future.
+                Utilize robust planning tools to budget, forecast retirement,
+                manage debt, and secure your financial future.
               </p>
             </div>
           </div>
-          
         </div>
       </div>
-    
 
       <!-- Our Technology & Security Section -->
       <div class="mt-8">
-        <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-8">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+        <div
+          class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-8"
+        >
+          <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center"
+          >
             Built on Innovation & Trust
           </h2>
           <p class="text-gray-700 dark:text-gray-300 text-lg">
-            Our platform leverages cutting-edge technology to ensure a secure and
-            seamless experience. With robust data encryption, real-time analytics, and
-            an intuitive interface, Wealthinker keeps your financial information safe
-            while delivering actionable insights.
+            Our platform leverages cutting-edge technology to ensure a secure
+            and seamless experience. With robust data encryption, real-time
+            analytics, and an intuitive interface, Wealthinker keeps your
+            financial information safe while delivering actionable insights.
           </p>
         </div>
       </div>
-    
-
-
-      
-      </section>
-
-
-
-      
-    
+    </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-12 bg-gray-100 dark:bg-gray-800">
+    <section
+      id="testimonials"
+      class="relative bg-light-background_secondary dark:bg-dark-background_secondary rounded-lg shadow-lg p-8 mx-auto mt-10 w-full"
+    >
       <div class="container mx-auto px-4">
-        <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-6">
-          <h2
-            class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8"
-          >
-            Testimonials
-          </h2>
-          <!-- Simple auto-scrolling carousel -->
-
-          <div
-            id="default-carousel"
-            class="relative w-full z-10"
-            data-carousel="slide"
-          >
-            <!-- Carousel wrapper -->
-            <div class="relative overflow-hidden rounded-lg md:h-96">
-              <!-- Item 1 -->
-              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <h2
+          class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8"
+        >
+          Testimonials
+        </h2>
+        <!-- Swiper -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-6 flex flex-col items-center"
+              >
                 <img
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                  alt="..."
+                  class="w-24 h-24 rounded-full object-cover"
+                  src="https://randomuser.me/api/portraits/men/1.jpg"
+                  alt="John Doe"
                 />
-              </div>
-              <!-- Item 2 -->
-              <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <div class="bg-white dark:bg-gray-700 rounded-lg shadow p-6">
-                  <p class="italic text-gray-600 dark:text-gray-300">
-                    "Wealthinker transformed my financial planning. Everything
-                    is so easy to manage!"
-                  </p>
-                  <p class="mt-4 font-bold text-gray-800 dark:text-white">
-                    – John Doe
-                  </p>
-                </div>
-              </div>
-              <!-- Item 3 -->
-              <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <h1>My Testimonial</h1>
-              </div>
-              <!-- Item 4 -->
-              <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img
-                  src="https://images.unsplash.com/photo-1551590192-8070a16d9f67?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                  alt="..."
-                />
-              </div>
-              <!-- Item 5 -->
-              <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img
-                  src="https://images.unsplash.com/photo-1528747045269-390fe33c19f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                  alt="..."
-                />
+                <p
+                  class="mt-4 italic text-gray-600 dark:text-gray-300 text-center"
+                >
+                  "Wealthinker transformed my financial planning. Everything is
+                  so easy to manage!"
+                </p>
+                <p class="mt-4 font-bold text-gray-800 dark:text-white">
+                  - John Doe
+                </p>
               </div>
             </div>
-            <!-- Slider indicators -->
-            <div
-              class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"
-            >
-              <button
-                type="button"
-                class="w-3 h-3 rounded-full"
-                aria-current="true"
-                aria-label="Slide 1"
-                data-carousel-slide-to="0"
-              ></button>
-              <button
-                type="button"
-                class="w-3 h-3 rounded-full"
-                aria-current="false"
-                aria-label="Slide 2"
-                data-carousel-slide-to="1"
-              ></button>
-              <button
-                type="button"
-                class="w-3 h-3 rounded-full"
-                aria-current="false"
-                aria-label="Slide 3"
-                data-carousel-slide-to="2"
-              ></button>
-              <button
-                type="button"
-                class="w-3 h-3 rounded-full"
-                aria-current="false"
-                aria-label="Slide 4"
-                data-carousel-slide-to="3"
-              ></button>
-              <button
-                type="button"
-                class="w-3 h-3 rounded-full"
-                aria-current="false"
-                aria-label="Slide 5"
-                data-carousel-slide-to="4"
-              ></button>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-6 flex flex-col items-center"
+              >
+                <img
+                  class="w-24 h-24 rounded-full object-cover"
+                  src="https://randomuser.me/api/portraits/women/2.jpg"
+                  alt="Jane Smith"
+                />
+                <p
+                  class="mt-4 italic text-gray-600 dark:text-gray-300 text-center"
+                >
+                  "I love how simple and user-friendly the platform is!"
+                </p>
+                <p class="mt-4 font-bold text-gray-800 dark:text-white">
+                  - Jane Smith
+                </p>
+              </div>
             </div>
-            <!-- Slider controls -->
-            <button
-              type="button"
-              class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-              data-carousel-prev
-            >
-              <span
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-6 flex flex-col items-center"
               >
-                <svg
-                  class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
+                <img
+                  class="w-24 h-24 rounded-full object-cover"
+                  src="https://randomuser.me/api/portraits/men/3.jpg"
+                  alt="Alex Johnson"
+                />
+                <p
+                  class="mt-4 italic text-gray-600 dark:text-gray-300 text-center"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 1 1 5l4 4"
-                  />
-                </svg>
-                <span class="sr-only">Previous</span>
-              </span>
-            </button>
-            <button
-              type="button"
-              class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-              data-carousel-next
-            >
-              <span
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+                  "A game-changer in financial management, highly recommended."
+                </p>
+                <p class="mt-4 font-bold text-gray-800 dark:text-white">
+                  - Alex Johnson
+                </p>
+              </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+              <div
+                class="bg-light-background_tertiary dark:bg-dark-background_tertiary rounded-lg shadow p-6 flex flex-col items-center"
               >
-                <svg
-                  class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
+                <img
+                  class="w-24 h-24 rounded-full object-cover"
+                  src="https://randomuser.me/api/portraits/women/4.jpg"
+                  alt="Emily Davis"
+                />
+                <p
+                  class="mt-4 italic text-gray-600 dark:text-gray-300 text-center"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 9 4-4-4-4"
-                  />
-                </svg>
-                <span class="sr-only">Next</span>
-              </span>
-            </button>
+                  "The best experience I've ever had with an online platform."
+                </p>
+                <p class="mt-4 font-bold text-gray-800 dark:text-white">
+                  - Emily Davis
+                </p>
+              </div>
+            </div>
+            <!-- Add more slides as needed -->
           </div>
+          <!-- Pagination (if you want dots) -->
+          <div class="swiper-pagination"></div>
+          <!-- Navigation buttons -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
     </section>
 
     <!-- Call-to-Action Section -->
-    <section class="py-12">
+    <section id="call-to-action" class="py-12">
       <div class="container mx-auto px-4 text-center">
         <div
-          class="h-40 block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          class="max-w-full p-8 bg-light-background_secondary dark:bg-dark-background_secondary border-gray-200 rounded-lg shadow-lg hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 transition duration-300"
         >
           <h5
-            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            class="mb-4 text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white"
           >
             Ready to take control of your finances?
           </h5>
           <a
-            href="#"
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            th:href="@{'/register'}"
+            class="inline-flex items-center px-6 py-3 text-lg font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transform hover:scale-105 transition duration-300"
           >
-            Read more
+            Join Now – It’s Free!
             <svg
-              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              class="rtl:rotate-180 w-5 h-5 ml-2"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -556,8 +547,43 @@
       </div>
     </section>
 
+    <!-- Footer -->
+    <footer th:replace="~{shared/footer :: footer}"></footer>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script data-th-src="@{'/js/script.js'}"></script>
     <!-- <th:block th:replace="${script}"></th:block> -->
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".swiper-container", {
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        slidesPerView: 1,
+        spaceBetween: 30,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          // when window width is >= 768px (tablets)
+          768: {
+            slidesPerView: 2,
+          },
+          // when window width is >= 1024px (large screens)
+          1024: {
+            slidesPerView: 3,
+          },
+        },
+      });
+    </script>
   </body>
 </html>

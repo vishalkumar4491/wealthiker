@@ -43,6 +43,7 @@ public class SecurityConfig {
             // authorize.requestMatchers("/home").authenticated();
             authorize.requestMatchers("/user/**").authenticated();
             authorize.requestMatchers("/portfolios/**").authenticated();
+            authorize.requestMatchers("/dashboard").authenticated();
 
             authorize.anyRequest().permitAll();
         });

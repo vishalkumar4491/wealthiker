@@ -14,7 +14,7 @@ public interface TransactionService {
 
     List<Transaction> getTransactionsByStockInPortfolio(String portfolioId, String stockId);
 
-    List<Transaction> getAllTransactions();
+    List<Transaction> getAllTransactions(String userId);
 
     Map<Portfolio, List<Transaction>> getTransactionsGroupedByPortfolioForStock(String stockId, User loggedInUser);
     

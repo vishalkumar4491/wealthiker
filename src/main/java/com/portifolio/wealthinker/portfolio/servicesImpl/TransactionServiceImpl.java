@@ -42,8 +42,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getAllTransactions() {
-        return transactionRepo.findAll();
+    public List<Transaction> getAllTransactions(String userId) {
+        return transactionRepo.findAllByUserId(userId);
     }
 
     @Override

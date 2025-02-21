@@ -78,11 +78,11 @@ public class AuthController {
 
         // message = "Registration Successfull"
     
-        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+        Message message = Message.builder().content("Registration Successful Please Login").type(MessageType.green).build();
     
         session.setAttribute("message", message);
     
         // redirect
-        return "redirect:/register";
+        return "redirect:/login";
     }
 }

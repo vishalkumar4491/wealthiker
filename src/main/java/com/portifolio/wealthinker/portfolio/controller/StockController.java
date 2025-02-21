@@ -187,6 +187,7 @@ public class StockController {
         transaction.setId(UUID.randomUUID().toString());
         transaction.setPortfolio(portfolio);
         transaction.setStock(stock);
+        transaction.setUserId(userId);
         transaction.setStockSymbol(symbol);
         transaction.setCompanyName(stock.getName());
         transaction.setPrice(price);

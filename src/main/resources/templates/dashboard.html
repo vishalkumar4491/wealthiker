@@ -43,27 +43,29 @@
       }
 
       @media (min-width: 768px) {
-  /* For medium screens: left 35% and right 65% */
-  .left-md {
-    width: 40% !important;
-  }
-  .right-md {
-    width: 60% !important;
-  }
-}
+        /* For medium screens: left 35% and right 65% */
+        .left-md {
+          width: 40% !important;
+        }
+        .right-md {
+          width: 60% !important;
+        }
+      }
 
-@media (min-width: 1024px) {
-  /* For large screens: left 30% and right 70% */
-  .left-lg {
-    width: 30% !important;
-  }
-  .right-lg {
-    width: 70% !important;
-  }
-}
+      @media (min-width: 1024px) {
+        /* For large screens: left 30% and right 70% */
+        .left-lg {
+          width: 30% !important;
+        }
+        .right-lg {
+          width: 70% !important;
+        }
+      }
     </style>
   </head>
-  <body class="dark:bg-dark-background dark:text-dark-primary text-light-primary bg-light-background">
+  <body
+    class="dark:bg-dark-background dark:text-dark-primary text-light-primary bg-light-background"
+  >
     <!-- if user is logged in then this navbar -->
     <div th:if="${loggedInUser}">
       <div data-th-replace="~{user/user_navbar :: user-navbar}"></div>
@@ -75,46 +77,48 @@
         <div class="col-span-12">
           <!-- Main Dashboard Content -->
           <div class="mt-20">
-
             <!-- Top Section: Line Chart -->
-            
-              <div class="flex flex-col md:flex-row gap-4 mb-4">
-                <!-- Card 1: Indicators -->
-                <div class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow w-full left-lg left-md flex flex-col justify-center items-start gap-2">
-                  <div class="indicator mb-2">
-                    <p class="label text-light-primary dark:text-dark-primary">Total Invested</p>
-                    <p class="value" th:text="${totalInvested}">₹0</p>
-                  </div>
-                  <div class="indicator mb-2">
-                    <p class="label text-light-primary dark:text-dark-primary">Total Value</p>
-                    <p class="value" th:text="${currentValue}">₹0</p>
-                  </div>
-                  <div class="indicator">
-                    <p class="label text-light-primary dark:text-dark-primary">Net Returns</p>
-                    <p class="value" th:text="${netReturns}">0%</p>
-                  </div>
+
+            <div class="flex flex-col md:flex-row gap-4 mb-4">
+              <!-- Card 1: Indicators -->
+              <div
+                class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow w-full left-lg left-md flex flex-col justify-center items-start gap-2"
+              >
+                <div class="indicator mb-2">
+                  <p class="label text-light-primary dark:text-dark-primary">
+                    Total Investedssss
+                  </p>
+                  <p class="value" th:text="${totalInvested}">₹0</p>
                 </div>
-                <!-- Card 2: Graph -->
-                <div class="bg-light-background_secondary dark:bg-dark-background_secondary p-1 rounded-lg shadow w-full right-lg right-md">
-                  <canvas id="investmentValueChart" class="w-full h-48"></canvas>
+                <div class="indicator mb-2">
+                  <p class="label text-light-primary dark:text-dark-primary">
+                    Total Value
+                  </p>
+                  <p class="value" th:text="${currentValue}">₹0</p>
+                </div>
+                <div class="indicator">
+                  <p class="label text-light-primary dark:text-dark-primary">
+                    Net Returns
+                  </p>
+                  <p class="value" th:text="${netReturns}">0%</p>
                 </div>
               </div>
-            
-
-
-
+              <!-- Card 2: Graph -->
+              <div
+                class="bg-light-background_secondary dark:bg-dark-background_secondary p-1 rounded-lg shadow w-full right-lg right-md"
+              >
+                <canvas id="investmentValueChart" class="w-full h-48"></canvas>
+              </div>
+            </div>
 
             <!-- Middle Section: Top 3 Portfolio Cards -->
-            <div
-              class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
-            >
+            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div
                 th:each="portfolio : ${topPortfolios}"
                 class="bg-light-background_secondary dark:bg-dark-background_secondary p-3 rounded-lg shadow"
               >
                 <div class="flex flex-row justify-between gap-2 mb-4">
                   <div class="pl-4">
-
                     <h3
                       class="text-2xl font-bold text-light-primary dark:text-dark-primary"
                       th:text="${portfolio.name}"
@@ -125,14 +129,17 @@
                     ></p>
                   </div>
                   <div class="pr-6">
-
                     <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">
-                      Invested : ₹<span class="ml-0.5"
+                      Invested : ₹<span
+                        class="ml-0.5"
                         th:text="${portfolio.totalValue}"
                       ></span>
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                      Current : ₹<span class="ml-0.5" th:text="${portfolio.totalValue}"></span>
+                      Current : ₹<span
+                        class="ml-0.5"
+                        th:text="${portfolio.totalValue}"
+                      ></span>
                     </p>
                   </div>
                   <!-- <p
@@ -166,50 +173,82 @@
             <!-- Bottom Section: Insight Cards -->
             <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <!-- Donut Chart for Portfolio Distribution -->
-              <div class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center">
+              <div
+                class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow"
+              >
+                <h3
+                  class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center"
+                >
                   Portfolio Distribution
                 </h3>
                 <div class="flex justify-center">
                   <!-- Fixed size canvas -->
-                  <canvas id="portfolioDonutChart" width="128" height="128"></canvas>
+                  <canvas
+                    id="portfolioDonutChart"
+                    width="128"
+                    height="128"
+                  ></canvas>
                 </div>
                 <div class="text-center mt-2">
-                  <a href="/portfolios" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  <a
+                    href="/portfolios"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
                     View All Portfolios
                   </a>
                 </div>
               </div>
               <!-- Donut Chart for Stock Distribution -->
-              <div class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center">
+              <div
+                class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow"
+              >
+                <h3
+                  class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center"
+                >
                   Stock Distribution
                 </h3>
                 <div class="flex justify-center">
-                  <canvas id="stockDonutChart" width="160" height="160"></canvas>
+                  <canvas
+                    id="stockDonutChart"
+                    width="160"
+                    height="160"
+                  ></canvas>
                 </div>
                 <div class="text-center mt-2">
-                  <a href="/stocks" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  <a
+                    href="/stocks"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
                     View All Stocks
                   </a>
                 </div>
               </div>
               <!-- Donut Chart for Total Profit/Loss -->
-              <div class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center">
+              <div
+                class="bg-light-background_secondary dark:bg-dark-background_secondary p-4 rounded-lg shadow"
+              >
+                <h3
+                  class="text-xl font-bold text-light-primary dark:text-dark-primary mb-2 text-center"
+                >
                   Total Profit/Loss
                 </h3>
                 <div class="flex justify-center">
-                  <canvas id="profitLossDonutChart" width="128" height="128"></canvas>
+                  <canvas
+                    id="profitLossDonutChart"
+                    width="128"
+                    height="128"
+                  ></canvas>
                 </div>
                 <div class="text-center mt-2">
-                  <a href="/transactions" class="text-blue-600 dark:text-blue-400 hover:underline">
+                  <a
+                    href="/transactions"
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
                     View Transactions
                   </a>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
@@ -337,120 +376,132 @@
       });
 
       // Donut Chart for Portfolio Distribution
-      const portfolioDonutCtx = document.getElementById('portfolioDonutChart').getContext('2d');
-    new Chart(portfolioDonutCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['A', 'B', 'C'],
-        datasets: [{
-          data: [40, 35, 25],
-          backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
-        }]
-      },
-      options: {
-        responsive: false, // Disable responsiveness to use fixed canvas size
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
+      const portfolioDonutCtx = document
+        .getElementById("portfolioDonutChart")
+        .getContext("2d");
+      new Chart(portfolioDonutCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["A", "B", "C"],
+          datasets: [
+            {
+              data: [40, 35, 25],
+              backgroundColor: ["#4CAF50", "#2196F3", "#FFC107"],
+            },
+          ],
+        },
+        options: {
+          responsive: false, // Disable responsiveness to use fixed canvas size
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
 
-    // Stock Distribution Donut Chart
-    const stockDonutCtx = document.getElementById('stockDonutChart').getContext('2d');
-    new Chart(stockDonutCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['X', 'Y', 'Z'],
-        datasets: [{
-          data: [50, 30, 20],
-          backgroundColor: ['#FF5722', '#9C27B0', '#03A9F4']
-        }]
-      },
-      options: {
-        responsive: false,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
+      // Stock Distribution Donut Chart
+      const stockDonutCtx = document
+        .getElementById("stockDonutChart")
+        .getContext("2d");
+      new Chart(stockDonutCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["X", "Y", "Z"],
+          datasets: [
+            {
+              data: [50, 30, 20],
+              backgroundColor: ["#FF5722", "#9C27B0", "#03A9F4"],
+            },
+          ],
+        },
+        options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
 
-    // Total Profit/Loss Donut Chart
-    const profitLossDonutCtx = document.getElementById('profitLossDonutChart').getContext('2d');
-    new Chart(profitLossDonutCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Profit', 'Loss'],
-        datasets: [{
-          data: [70, 30],
-          backgroundColor: ['#4CAF50', '#F44336']
-        }]
-      },
-      options: {
-        responsive: false,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
+      // Total Profit/Loss Donut Chart
+      const profitLossDonutCtx = document
+        .getElementById("profitLossDonutChart")
+        .getContext("2d");
+      new Chart(profitLossDonutCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Profit", "Loss"],
+          datasets: [
+            {
+              data: [70, 30],
+              backgroundColor: ["#4CAF50", "#F44336"],
+            },
+          ],
+        },
+        options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
 
       // Mini Charts for Portfolio Cards can be initialized similarly using each card's canvas element,
       // which is identified by an id like "miniChart{portfolio.id}"
     </script>
 
     <!-- Inline script to initialize mini charts for each portfolio -->
-<script th:each="portfolio : ${topPortfolios}" th:inline="javascript">
-  // Set global default (optional)
-  Chart.defaults.plugins.legend.display = false;
-  /*<![CDATA[*/
-  // Disable legend globally for all charts
-  Chart.defaults.plugins.legend.display = false;
-    // Retrieve the mini chart data for the current portfolio.
-    var miniData = /*[[${portfolio.miniChartData}]]*/ {};
-    // Get the canvas element using the portfolio id.
-    var miniCanvas = document.getElementById("miniChart" + /*[[${portfolio.id}]]*/ "");
-    if (miniCanvas && miniData && miniData.dates) {
-      new Chart(miniCanvas.getContext("2d"), {
-        type: 'line',
-        data: {
-          labels: miniData.dates,
-          datasets: [
-            {
-              label: 'Total Invested',
-              data: miniData.totalInvestments,
-              borderColor: 'blue',
-              fill: false,
-              tension: 0.3
-            },
-            {
-              label: 'Total Value',
-              data: miniData.totalValues,
-              borderColor: 'green',
-              fill: false,
-              tension: 0.3
-            }
-          ]
-        },
-        
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          // Hide the scales for a compact mini chart
-          scales: {
-            x: { display: true },
-            y: { display: true }
+    <script th:each="portfolio : ${topPortfolios}" th:inline="javascript">
+      // Set global default (optional)
+      Chart.defaults.plugins.legend.display = false;
+      /*<![CDATA[*/
+      // Disable legend globally for all charts
+      Chart.defaults.plugins.legend.display = false;
+      // Retrieve the mini chart data for the current portfolio.
+      var miniData = /*[[${portfolio.miniChartData}]]*/ {};
+      // Get the canvas element using the portfolio id.
+      var miniCanvas = document.getElementById(
+        "miniChart" + /*[[${portfolio.id}]]*/ ""
+      );
+      if (miniCanvas && miniData && miniData.dates) {
+        new Chart(miniCanvas.getContext("2d"), {
+          type: "line",
+          data: {
+            labels: miniData.dates,
+            datasets: [
+              {
+                label: "Total Invested",
+                data: miniData.totalInvestments,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3,
+              },
+              {
+                label: "Total Value",
+                data: miniData.totalValues,
+                borderColor: "green",
+                fill: false,
+                tension: 0.3,
+              },
+            ],
           },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
-    }
-  /*]]>*/
-  </script>
-  
 
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            // Hide the scales for a compact mini chart
+            scales: {
+              x: { display: true },
+              y: { display: true },
+            },
+            plugins: {
+              legend: { display: false },
+            },
+          },
+        });
+      }
+      /*]]>*/
+    </script>
   </body>
 </html>

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.portifolio.wealthinker.user.models.User;
 import com.portifolio.wealthinker.utils.SellType;
 import com.portifolio.wealthinker.utils.TransactionType;
 
@@ -39,6 +40,8 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="portfolio_stock_id", nullable=false)
     private PortfolioStock portfolioStock;    // The stock being added
+
+    String userId;  // The user who made the transaction
 
     @Column(nullable=false)
     private String stockSymbol;

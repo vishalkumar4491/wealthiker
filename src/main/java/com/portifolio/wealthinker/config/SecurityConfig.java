@@ -65,7 +65,7 @@ public class SecurityConfig {
             //formLogin.defaultSuccessUrl("/user/dashboard", true);
             
             // this will redirect where user want to redirect after login
-            formLogin.defaultSuccessUrl("/home");
+            formLogin.defaultSuccessUrl("/dashboard");
 
             // fail hone par jo chlega
             formLogin.failureForwardUrl("/login?error=true");

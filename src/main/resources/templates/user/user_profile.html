@@ -14,45 +14,45 @@
         <div class="md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
         <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
           <div
-            class="block p-6 bg-white border-t-8 border-blue-700 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-blue-700 dark:hover:bg-gray-700 text-center"
+            class="block p-6 bg-light-background_secondary border-t-8 border-blue-700 rounded-lg shadow hover:bg-gray-100 dark:bg-dark-background_secondary dark:border-blue-700 dark:hover:bg-gray-700 text-center"
           >
             <!-- Message  -->
             <!-- <div th:replace="shared/message :: messagebox"></div> -->
 
             <h5
-              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+              class="mb-2 text-2xl font-bold tracking-tight text-light-primary dark:text-dark-primary"
             >
               Profile
             </h5>
-            <p class="font-normal text-gray-400 text-lg">
+            <p class="font-normal text-light-secondary dark:text-dark-secondary text-lg">
               Your only portfolio manager for wealth
             </p>
 
             <img
               src="https://via.placeholder.com/100"
               alt="Profile Picture"
-              class="w-24 h-24 mx-auto rounded-full border-2 border-gray-300 mt-5 mb-2"
+              class="w-24 h-24 mx-auto rounded-full border-2 border-dartext-dark-secondary mt-5 mb-2"
             />
             <h1 th:text="${loggedInUser.name}" class="mb-2 text-2xl font-bold">
               User Name
             </h1>
-            <p class="text-gray-400 text-lg" th:text="${loggedInUser.about}">
+            <p class="text-light-secondary dark:text-dark-secondary text-lg" th:text="${loggedInUser.about}">
               About the user...
             </p>
 
             <!-- Profile Details -->
             <div
-              class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow mt-5"
+              class="bg-light-background_tertiary dark:bg-dark-background_tertiary p-4 rounded-lg shadow mt-5"
             >
               <!-- Username -->
               <div class="mb-4">
                 <h2
-                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                  class="text-sm font-medium text-light-tertiary dark:text-dark-tertiary"
                 >
                   Username
                 </h2>
                 <p
-                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  class="text-lg text-light-secondary dark:text-dark-secondary font-semibold"
                   th:text="${loggedInUser.username}"
                 >
                   example_username
@@ -62,12 +62,12 @@
               <!-- Email -->
               <div class="mb-4">
                 <h2
-                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                  class="text-sm font-medium text-gray-700 dark:text-dark-tertiary"
                 >
                   Email
                 </h2>
                 <p
-                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  class="text-lg text-light-secondary dark:text-dark-secondary font-semibold"
                   th:text="${loggedInUser.email}"
                 >
                   user@example.com
@@ -77,12 +77,12 @@
               <!-- Phone -->
               <div class="mb-4">
                 <h2
-                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                  class="text-sm font-medium text-gray-700 dark:text-dark-tertiary"
                 >
                   Contact Number
                 </h2>
                 <p
-                  class="text-lg text-gray-800 dark:text-gray-300 font-semibold"
+                  class="text-lg text-light-secondary dark:text-dark-secondary font-semibold"
                   th:text="${loggedInUser.phoneNumber}"
                 >
                   123-456-7890
@@ -92,12 +92,12 @@
               <!-- About -->
               <div class="mb-4">
                 <h2
-                  class="text-sm font-medium text-gray-700 dark:text-gray-400"
+                  class="text-sm font-medium text-gray-700 dark:text-dark-tertiary"
                 >
                   About
                 </h2>
                 <p
-                  class="text-lg text-gray-800 dark:text-gray-300"
+                  class="text-lg text-light-secondary dark:text-dark-secondary"
                   th:text="${loggedInUser.about}"
                 >
                   This is a brief about the user...

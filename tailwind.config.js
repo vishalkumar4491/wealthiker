@@ -18,7 +18,7 @@ module.exports = {
         },
         dark: {
           background: "#1A202C",
-          background_secondary: "#2D3748",
+          background_secondary: "#1F2937",
           background_tertiary: "#3A4558",
           primary: "#EDF2F7",
           primary_hover: "#EAE9FC",

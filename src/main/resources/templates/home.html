@@ -56,6 +56,10 @@
         position: relative;
         z-index: 2;
       }
+
+      html {
+      scroll-behavior: smooth;
+    }
     </style>
   </head>
   <body
@@ -67,7 +71,7 @@
     </div>
 
     <!-- Hero Section -->
-    <header class="hero-bg h-[120vh] flex relative">
+    <header id="hero" class="hero-bg h-[120vh] flex relative">
       <div class="flex items-center justify-center h-screen w-full">
         <div class="hero-content text-center px-6">
           <h1
@@ -551,7 +555,9 @@
     <footer th:replace="~{shared/footer :: footer}"></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
     <script data-th-src="@{'/js/script.js'}"></script>
+    
     <!-- <th:block th:replace="${script}"></th:block> -->
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

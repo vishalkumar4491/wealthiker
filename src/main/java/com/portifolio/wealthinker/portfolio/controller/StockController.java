@@ -152,20 +152,32 @@ public class StockController {
             portfolioStock.setPortfolio(portfolio);
             portfolioStock.setStock(stock);
             portfolioStock.setQuantity(quantity);
-            portfolioStock.setTotalValue(price * quantity);
-            portfolioStock.setLatestPrice(marketPrice);
+            portfolioStock.setTotalInvestedValue(price * quantity);
+            portfolioStock.setTotalCurrentValue(marketPrice * quantity);
+            portfolio.setTotalCurrentValue(marketPrice * quantity);
             portfolioStock.setAveragePrice(price);
+            portfolioStock.setUnrealizedProfitLoss(marketPrice * quantity - price * quantity);
+            portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() + portfolioStock.getUnrealizedProfitLoss());
         }else{
             if(transactionType == TransactionType.BUY){
                 portfolioStock.setQuantity(portfolioStock.getQuantity() + quantity);
-                portfolioStock.setTotalValue(portfolioStock.getTotalValue() + price * quantity);
+                portfolioStock.setTotalInvestedValue(portfolioStock.getTotalInvestedValue() + price * quantity);
+                portfolioStock.setAveragePrice(portfolioStock.getTotalInvestedValue() / portfolioStock.getQuantity());
+                portfolioStock.setUnrealizedProfitLoss(marketPrice * portfolioStock.getQuantity() - portfolioStock.getAveragePrice() * portfolioStock.getQuantity());
+                portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() + portfolioStock.getUnrealizedProfitLoss());
+                portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() + marketPrice * quantity);
+
             }else{
                 portfolioStock.setQuantity(portfolioStock.getQuantity() - quantity);
-                portfolioStock.setTotalValue(portfolioStock.getTotalValue() - price * quantity);
+                portfolioStock.setTotalInvestedValue(portfolioStock.getTotalInvestedValue() - portfolioStock.getAveragePrice() * quantity);
+                portfolioStock.setRealizedProfitLoss(price * quantity - portfolioStock.getAveragePrice() * quantity);
+                portfolio.setRealizedProfitLoss(portfolio.getRealizedProfitLoss() + portfolioStock.getRealizedProfitLoss());
+                portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() - marketPrice * quantity);
+
             }
         }
-        portfolioStock.setAveragePrice(portfolioStock.getTotalValue() / portfolioStock.getQuantity());
-        portfolioStock.setLatestPrice(marketPrice);
+        portfolioStock.setCurrentPrice(marketPrice);
+        portfolioStock.setTotalCurrentValue(marketPrice * portfolioStock.getQuantity());
         portfolioStockRepo.save(portfolioStock);
 
         StockAdditionalInfo additionalInfo = new StockAdditionalInfo();
@@ -201,9 +213,9 @@ public class StockController {
             if(sellType == SellType.PORTFOLIO) {
                 transaction.setSellType(sellType);
             }
-            portfolio.setTotalValue(portfolio.getTotalValue() - transaction.getTotalValue());
+            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() - transaction.getTotalValue());
         }else{
-            portfolio.setTotalValue(portfolio.getTotalValue() + transaction.getTotalValue());
+            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() + transaction.getTotalValue());
         }
 
         transactionRepo.save(transaction);
@@ -212,8 +224,8 @@ public class StockController {
         PortfolioHistory portfolioHistory = new PortfolioHistory();
         portfolioHistory.setId(UUID.randomUUID().toString());
         portfolioHistory.setPortfolio(portfolio);
-        portfolioHistory.setTotalValue(portfolio.getTotalValue());
-        portfolioHistory.setTotalInvestment(portfolio.getTotalValue());
+        portfolioHistory.setTotalCurrentValue(portfolio.getTotalCurrentValue());
+        portfolioHistory.setTotalInvestedValue(portfolio.getTotalInvestedValue());
         portfolioHistory.setNetGains(price);
 
         portfolioHistoryRepo.save(portfolioHistory);
@@ -223,9 +235,9 @@ public class StockController {
         portfolioStockHistory.setId(UUID.randomUUID().toString());
         portfolioStockHistory.setQuantity(portfolioStock.getQuantity());
         portfolioStockHistory.setPortfolioStock(portfolioStock);
-        portfolioStockHistory.setLatestPrice(marketPrice);
+        portfolioStockHistory.setCurrentPrice(marketPrice);
         portfolioStockHistory.setAveragePrice(portfolioStock.getAveragePrice());
-        portfolioStockHistory.setValue(portfolioStock.getTotalValue());
+        portfolioStockHistory.setTotalCurrentValue(portfolioStock.getTotalInvestedValue());
 
         portfolioStockHistoryRepo.save(portfolioStockHistory);
 

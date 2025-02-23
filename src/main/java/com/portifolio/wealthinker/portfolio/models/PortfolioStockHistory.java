@@ -37,10 +37,10 @@ public class PortfolioStockHistory {
     private Double averagePrice;
 
     @Column(nullable = false)
-    private Double latestPrice;
+    private Double currentPrice;
 
     @Column(nullable = false)
-    private Double value; // quantity * latestPrice
+    private Double totalCurrentValue; // quantity * currentPrice
 
     @CreationTimestamp
     private LocalDateTime snapshotDateTime;

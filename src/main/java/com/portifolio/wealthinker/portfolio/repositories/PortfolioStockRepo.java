@@ -16,9 +16,9 @@ import com.portifolio.wealthinker.portfolio.models.Stock;
 public interface PortfolioStockRepo extends JpaRepository<PortfolioStock, String> {
     Optional<PortfolioStock> findByPortfolioAndStock(Portfolio portfolio, Stock stock);
 
-    @Query("SELECT ps FROM PortfolioStock ps WHERE ps.portfolio.id = :portfolioId ORDER BY ps.totalValue DESC")
+    @Query("SELECT ps FROM PortfolioStock ps WHERE ps.portfolio.id = :portfolioId ORDER BY ps.totalCurrentValue DESC")
     List<PortfolioStock> findPortfolioStocksByPortfolioId(@Param("portfolioId") String portfolioId);
 
-    @Query("SELECT ps FROM PortfolioStock ps WHERE ps.portfolio.user.id = :userId ORDER BY (ps.latestPrice - ps.averagePrice)/ps.averagePrice DESC")
+    @Query("SELECT ps FROM PortfolioStock ps WHERE ps.portfolio.user.id = :userId ORDER BY (ps.currentPrice - ps.averagePrice)/ps.averagePrice DESC")
     List<PortfolioStock> findTopPerformingStocksForUser(String userId);
 }

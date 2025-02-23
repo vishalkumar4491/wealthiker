@@ -67,8 +67,24 @@
               <p
                 class="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
               >
-                Total Value: <span th:text="${portfolio.totalValue}"></span>
+                Total Current Value: <span th:text="${portfolio.totalCurrentValue}"></span>
               </p>
+              <p
+                class="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
+              >
+                Total Invested Value: <span th:text="${portfolio.totalInvestedValue}"></span>
+              </p>
+              <p
+                class="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
+              >
+                Total Realized Profit: <span th:text="${portfolio.realizedProfitLoss}"></span>
+              </p>
+              <p
+                class="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
+              >
+                Total Unrealized Profit: <span th:text="${portfolio.unrealizedProfitLoss}"></span>
+              </p>
+              
 
               <!-- Stocks List -->
               <div
@@ -94,10 +110,13 @@
                           Quantity
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                          Current
+                          Average Price
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                          Invested
+                          Total Current Value
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                          Total Invested Value
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                           Returns
@@ -128,17 +147,21 @@
                         ></td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${portfolioStock.latestPrice * portfolioStock.quantity}"
+                          th:text="${portfolioStock.averagePrice}"
                         ></td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${portfolioStock.averagePrice * portfolioStock.quantity}"
+                          th:text="${portfolioStock.totalCurrentValue}"
                         ></td>
                         <td
                           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                          th:text="${T(java.lang.String).format('%.2f', (portfolioStock.latestPrice * portfolioStock.quantity - portfolioStock.totalValue))} + ' (' +
-                                  ${T(java.lang.String).format('%.2f', ((portfolioStock.latestPrice * portfolioStock.quantity - portfolioStock.totalValue) * 100) / portfolioStock.totalValue)} + ' %)'"
-                          th:class="${(portfolioStock.latestPrice * portfolioStock.quantity - portfolioStock.totalValue) < 0 ? 'text-red-500 font-medium  text-center' : 'text-green-500 font-medium  text-center'}"
+                          th:text="${portfolioStock.totalInvestedValue}"
+                        ></td>
+                        <td
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          th:text="${T(java.lang.String).format('%.2f', (portfolioStock.totalCurrentValue - portfolioStock.totalInvestedValue))} + ' (' +
+                                  ${T(java.lang.String).format('%.2f', ((portfolioStock.totalCurrentValue - portfolioStock.totalInvestedValue) * 100) / portfolioStock.totalInvestedValue)} + ' %)'"
+                          th:class="${(portfolioStock.totalCurrentValue - portfolioStock.totalInvestedValue) < 0 ? 'text-red-500 font-medium  text-center' : 'text-green-500 font-medium  text-center'}"
                         />
                         <td
                           class="px-6 py-4 text-center flex justify-center space-x-4"

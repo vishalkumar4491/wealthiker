@@ -60,10 +60,13 @@ public class PortfolioStock {
     private Double averagePrice = 0.0; // Average purchase price
 
     @Column(nullable = false)
-    private Double totalValue = 0.0; // Total value of the stock in the portfolio
+    private Double currentPrice = 0.0;  // Current Price of per stock
 
     @Column(nullable = false)
-    private Double latestPrice = 0.0;
+    private Double totalInvestedValue = 0.0; // Total value of the stock in the portfolio
+
+    @Column(nullable = false)
+    private Double totalCurrentValue = 0.0; // Total value of the stock in the portfolio
 
     @Column
     private Double unrealizedProfitLoss = 0.0; // Unrealized profit/loss (calculated periodically)

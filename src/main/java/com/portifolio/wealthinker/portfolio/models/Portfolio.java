@@ -39,8 +39,17 @@ public class Portfolio {
     @Column(nullable=false)
     private Boolean isActive = true;  // soft delete mechanism
 
-    @Column(name="total_value", nullable=false)
-    private Double totalValue = 0.0;
+    @Column(name="total_invested_value", nullable=false)
+    private Double totalInvestedValue = 0.0;
+
+    @Column(name="total_current_value", nullable=false)
+    private Double totalCurrentValue = 0.0;
+
+    @Column
+    private Double unrealizedProfitLoss = 0.0; // Unrealized profit/loss (calculated periodically)
+
+    @Column
+    private Double realizedProfitLoss = 0.0; // Realized profit/loss from selling the stock
 
     @Column
     private String description;

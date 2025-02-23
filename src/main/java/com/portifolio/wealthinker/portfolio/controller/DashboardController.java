@@ -61,8 +61,8 @@ public class DashboardController {
 
             for (PortfolioHistory ph : singlePortfolioHistories) {
                 String date = ph.getSnapshotDateTime().format(formatter);
-                aggInvestments.merge(date, ph.getTotalInvestment(), Double::sum);
-                aggValues.merge(date, ph.getTotalValue(), Double::sum);
+                aggInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
+                aggValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
                 aggNetGains.merge(date, ph.getNetGains(), Double::sum);
             }
 
@@ -97,8 +97,8 @@ public class DashboardController {
 
         for (PortfolioHistory ph : historyList) {
             String date = ph.getSnapshotDateTime().format(formatter);
-            aggregatedInvestments.merge(date, ph.getTotalInvestment(), Double::sum);
-            aggregatedValues.merge(date, ph.getTotalValue(), Double::sum);
+            aggregatedInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
+            aggregatedValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
         }
 
         // Convert maps to lists for Chart.js

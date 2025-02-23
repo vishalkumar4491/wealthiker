@@ -33,10 +33,10 @@ public class PortfolioHistory {
     private Portfolio portfolio;
 
     @Column(nullable = false)
-    private Double totalValue; // Sum of (quantity * latestPrice) for all stocks in the portfolio
+    private Double totalCurrentValue; // Sum of (quantity * latestPrice) for all stocks in the portfolio
 
     @Column(nullable = false)
-    private Double totalInvestment; // Sum of (quantity * averagePrice) for all stocks in the portfolio
+    private Double totalInvestedValue; // Sum of (quantity * averagePrice) for all stocks in the portfolio
 
     @Column(nullable = false)
     private Double netGains; // totalValue - totalInvestment

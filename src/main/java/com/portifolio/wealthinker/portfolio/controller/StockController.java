@@ -154,30 +154,59 @@ public class StockController {
             portfolioStock.setQuantity(quantity);
             portfolioStock.setTotalInvestedValue(price * quantity);
             portfolioStock.setTotalCurrentValue(marketPrice * quantity);
-            portfolio.setTotalCurrentValue(marketPrice * quantity);
             portfolioStock.setAveragePrice(price);
             portfolioStock.setUnrealizedProfitLoss(marketPrice * quantity - price * quantity);
+            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() + price * quantity);
+            portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() + marketPrice * quantity);
             portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() + portfolioStock.getUnrealizedProfitLoss());
         }else{
+
+            double prevCurrent = portfolioStock.getTotalCurrentValue();
+            double prevInvested = portfolioStock.getTotalInvestedValue();
+            double prevRealized = portfolioStock.getRealizedProfitLoss();
+            double prevUnrealized = portfolioStock.getUnrealizedProfitLoss();
+
+
             if(transactionType == TransactionType.BUY){
-                portfolioStock.setQuantity(portfolioStock.getQuantity() + quantity);
-                portfolioStock.setTotalInvestedValue(portfolioStock.getTotalInvestedValue() + price * quantity);
-                portfolioStock.setAveragePrice(portfolioStock.getTotalInvestedValue() / portfolioStock.getQuantity());
-                portfolioStock.setUnrealizedProfitLoss(marketPrice * portfolioStock.getQuantity() - portfolioStock.getAveragePrice() * portfolioStock.getQuantity());
-                portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() + portfolioStock.getUnrealizedProfitLoss());
-                portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() + marketPrice * quantity);
+                int newQty = portfolioStock.getQuantity() + quantity;
+                double newInvested = prevInvested + price * quantity;
+                double newAvg = newInvested / newQty;
+
+                portfolioStock.setQuantity(newQty);
+                portfolioStock.setTotalInvestedValue(newInvested);
+                portfolioStock.setAveragePrice(newAvg);
+                // portfolioStock.setUnrealizedProfitLoss(marketPrice * portfolioStock.getQuantity() - portfolioStock.getAveragePrice() * portfolioStock.getQuantity());
+                // portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() + portfolioStock.getUnrealizedProfitLoss());
+                // portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() + marketPrice * quantity);
 
             }else{
-                portfolioStock.setQuantity(portfolioStock.getQuantity() - quantity);
-                portfolioStock.setTotalInvestedValue(portfolioStock.getTotalInvestedValue() - portfolioStock.getAveragePrice() * quantity);
-                portfolioStock.setRealizedProfitLoss(price * quantity - portfolioStock.getAveragePrice() * quantity);
-                portfolio.setRealizedProfitLoss(portfolio.getRealizedProfitLoss() + portfolioStock.getRealizedProfitLoss());
-                portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() - marketPrice * quantity);
+                int newQty = portfolioStock.getQuantity() - quantity;
+                portfolioStock.setQuantity(newQty);
+
+                double realized = (price - portfolioStock.getAveragePrice()) * quantity;
+                portfolioStock.setRealizedProfitLoss(prevRealized + realized);
+
+                double newInvested = prevInvested - portfolioStock.getAveragePrice() * quantity;
+                portfolioStock.setTotalInvestedValue(newInvested);
+
+                portfolio.setRealizedProfitLoss(portfolio.getRealizedProfitLoss() + realized);
+                // portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() - marketPrice * quantity);
 
             }
+            double newCurrent = marketPrice * portfolioStock.getQuantity();
+            double newUnrealized = newCurrent - portfolioStock.getTotalInvestedValue();
+
+            portfolioStock.setTotalCurrentValue(newCurrent);
+            portfolioStock.setUnrealizedProfitLoss(newUnrealized);
+
+            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() - prevInvested + portfolioStock.getTotalInvestedValue());
+
+            portfolio.setTotalCurrentValue(portfolio.getTotalCurrentValue() - prevCurrent + newCurrent);
+
+            portfolio.setUnrealizedProfitLoss(portfolio.getUnrealizedProfitLoss() - prevUnrealized + newUnrealized);
         }
-        portfolioStock.setCurrentPrice(marketPrice);
-        portfolioStock.setTotalCurrentValue(marketPrice * portfolioStock.getQuantity());
+        // portfolioStock.setCurrentPrice(marketPrice);
+        // portfolioStock.setTotalCurrentValue(marketPrice * portfolioStock.getQuantity());
         portfolioStockRepo.save(portfolioStock);
 
         StockAdditionalInfo additionalInfo = new StockAdditionalInfo();

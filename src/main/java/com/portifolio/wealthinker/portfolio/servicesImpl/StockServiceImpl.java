@@ -79,9 +79,13 @@ public class StockServiceImpl implements StockService {
         return stockList;
     }
 
+    // Ids E1344LXX21SVZCAU, S753VMJ9O92MMVV2, 8ATIEHYC19AS4AAW, FO3N3NMLOALAHIPA
+
+
+
     @Override
     public Stock getStockDetails(String symbol) {
-        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&outputsize=compact&apikey=E1344LXX21SVZCAU";
+        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&outputsize=compact&apikey=S753VMJ9O92MMVV2";
 
         // Make an asynchronous request using WebClient
         String response = webClient.get().uri(apiUrl).

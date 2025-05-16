@@ -1,5 +1,6 @@
 package com.portifolio.wealthinker.portfolio.repositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +26,8 @@ public interface PortfolioHistoryRepo extends JpaRepository<PortfolioHistory, St
 
     @Query("SELECT ph FROM PortfolioHistory ph WHERE ph.portfolio.id = :portfolioId ORDER BY ph.snapshotDateTime ASC")
     List<PortfolioHistory> findByPortfolioIdOrderBySnapshotDateTimeAsc(@Param("portfolioId") String portfolioId);
+
+    @Query("SELECT ph FROM PortfolioHistory ph WHERE ph.portfolio.id = :portfolioId AND ph.snapshotDateTime BETWEEN :start AND :end")
+    PortfolioHistory findByPortfolioIdAndSnapshotDateTimeBetween(@Param("portfolioId") String portfolioId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
 }

@@ -42,6 +42,54 @@ public class DashboardController {
     public String getDashboardPage(Model model, @AuthenticationPrincipal User user) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        // Fetch portfolio history data
+        List<PortfolioHistory> historyList = portfolioHistoryRepo.findByPortfolio_User_IdOrderBySnapshotDateTimeAsc(user.getId());
+        System.out.println("HistoryList Length" + historyList.size());
+        // Aggregate data by date
+        Map<String, Double> aggregatedInvestments = new LinkedHashMap<>();
+        Map<String, Double> aggregatedValues = new LinkedHashMap<>();
+
+        
+
+        for (PortfolioHistory ph : historyList) {
+            System.out.println("Portfolio " + ph.getPortfolio().getName() + "Date " + ph.getSnapshotDateTime() + "Invested " + ph.getTotalInvestedValue());
+
+            String date = ph.getSnapshotDateTime().format(formatter);
+            aggregatedInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
+            aggregatedValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
+        }
+
+        // Convert maps to lists for Chart.js
+        List<String> ndates = new ArrayList<>(aggregatedInvestments.keySet());
+        List<Double> ntotalInvestments = new ArrayList<>(aggregatedInvestments.values());
+        List<Double> ntotalValues = new ArrayList<>(aggregatedValues.values());
+
+        String currentDate = "";
+        Double totalInvested = 0.0;
+        Double totalCurrent = 0.0;
+
+        if(!aggregatedInvestments.isEmpty()){
+            currentDate = ndates.get(ndates.size() - 1);
+            totalInvested = aggregatedInvestments.get(currentDate);
+            totalCurrent = aggregatedValues.get(currentDate);
+        }
+        model.addAttribute("currentDate", currentDate);
+        model.addAttribute("totalInvested", totalInvested);
+        model.addAttribute("totalCurrent", totalCurrent);
+
+        System.out.println("Datessssss " + currentDate + " totalInvested " + totalInvested + " totalCurrent " + totalCurrent);
+
+        // Prepare data for frontend
+        Map<String, Object> graphData = new HashMap<>();
+        graphData.put("dates", ndates);
+        graphData.put("totalInvestments", ntotalInvestments);
+        graphData.put("totalValues", ntotalValues);
+
+        // ObjectMapper mapper = new ObjectMapper();
+        // String graphDataJson = mapper.writeValueAsString(graphData);
+        System.out.println("graphDataJson " + graphData);
+        model.addAttribute("graphData", graphData);
+
         List<Transaction> recentTransactions = dashboardservice.getRecentTransactions(user.getId());
         List<PortfolioStock> topPerformingStocks = dashboardservice.getTopPerformingStocks(user.getId());
         model.addAttribute("recentTransactions", recentTransactions);
@@ -61,8 +109,11 @@ public class DashboardController {
 
             for (PortfolioHistory ph : singlePortfolioHistories) {
                 String date = ph.getSnapshotDateTime().format(formatter);
-                aggInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
-                aggValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
+                System.out.println("Date format " + date);
+                // aggInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
+                aggInvestments.put(date, ph.getTotalInvestedValue());
+                // aggValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
+                aggValues.put(date, ph.getTotalCurrentValue());
                 aggNetGains.merge(date, ph.getNetGains(), Double::sum);
             }
 
@@ -86,36 +137,7 @@ public class DashboardController {
 
         System.out.println("PortfolioLength " + topPortfolios.size());
 
-        // Fetch portfolio history data
-        List<PortfolioHistory> historyList = portfolioHistoryRepo.findByPortfolio_User_IdOrderBySnapshotDateTimeAsc(user.getId());
-
-        // Aggregate data by date
-        Map<String, Double> aggregatedInvestments = new LinkedHashMap<>();
-        Map<String, Double> aggregatedValues = new LinkedHashMap<>();
-
         
-
-        for (PortfolioHistory ph : historyList) {
-            String date = ph.getSnapshotDateTime().format(formatter);
-            aggregatedInvestments.merge(date, ph.getTotalInvestedValue(), Double::sum);
-            aggregatedValues.merge(date, ph.getTotalCurrentValue(), Double::sum);
-        }
-
-        // Convert maps to lists for Chart.js
-        List<String> dates = new ArrayList<>(aggregatedInvestments.keySet());
-        List<Double> totalInvestments = new ArrayList<>(aggregatedInvestments.values());
-        List<Double> totalValues = new ArrayList<>(aggregatedValues.values());
-
-        // Prepare data for frontend
-        Map<String, Object> graphData = new HashMap<>();
-        graphData.put("dates", dates);
-        graphData.put("totalInvestments", totalInvestments);
-        graphData.put("totalValues", totalValues);
-
-        ObjectMapper mapper = new ObjectMapper();
-        // String graphDataJson = mapper.writeValueAsString(graphData);
-        System.out.println("graphDataJson " + graphData);
-        model.addAttribute("graphData", graphData);
         return "dashboard";
     }
 

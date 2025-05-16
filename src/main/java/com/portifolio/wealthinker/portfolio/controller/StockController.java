@@ -1,5 +1,8 @@
 package com.portifolio.wealthinker.portfolio.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -242,24 +245,36 @@ public class StockController {
             if(sellType == SellType.PORTFOLIO) {
                 transaction.setSellType(sellType);
             }
-            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() - transaction.getTotalValue());
+            // portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() - transaction.getTotalValue());
         }else{
-            portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() + transaction.getTotalValue());
+            // portfolio.setTotalInvestedValue(portfolio.getTotalInvestedValue() + transaction.getTotalValue());
         }
 
         transactionRepo.save(transaction);
         
 
-        PortfolioHistory portfolioHistory = new PortfolioHistory();
-        portfolioHistory.setId(UUID.randomUUID().toString());
-        portfolioHistory.setPortfolio(portfolio);
-        portfolioHistory.setTotalCurrentValue(portfolio.getTotalCurrentValue());
-        portfolioHistory.setTotalInvestedValue(portfolio.getTotalInvestedValue());
-        portfolioHistory.setNetGains(price);
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
 
-        portfolioHistoryRepo.save(portfolioHistory);
+        PortfolioHistory existingHistory = portfolioHistoryRepo.findByPortfolioIdAndSnapshotDateTimeBetween(portfolio.getId(), startOfDay, endOfDay);
+        if(existingHistory != null){
+            existingHistory.setTotalCurrentValue(portfolio.getTotalCurrentValue());
+            existingHistory.setTotalInvestedValue(portfolio.getTotalInvestedValue());
+            existingHistory.setNetGains(portfolio.getTotalCurrentValue() - portfolio.getTotalInvestedValue());
+            portfolioHistoryRepo.save(existingHistory);
+        }else{
+            PortfolioHistory portfolioHistory = new PortfolioHistory();
+            portfolioHistory.setId(UUID.randomUUID().toString());
+            portfolioHistory.setPortfolio(portfolio);
+            portfolioHistory.setTotalCurrentValue(portfolio.getTotalCurrentValue());
+            portfolioHistory.setTotalInvestedValue(portfolio.getTotalInvestedValue());
+            portfolioHistory.setNetGains(price);
+            portfolioHistory.setSnapshotDateTime(LocalDateTime.now());
 
+            portfolioHistoryRepo.save(portfolioHistory);
 
+            }
         PortfolioStockHistory portfolioStockHistory = new PortfolioStockHistory();
         portfolioStockHistory.setId(UUID.randomUUID().toString());
         portfolioStockHistory.setQuantity(portfolioStock.getQuantity());
